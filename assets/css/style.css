@@ -1,121 +1,101 @@
 /* assets/css/style.css */
 :root {
-    --vanta-deep: #020202;
-    --vanta-surface: #0a0a0b;
-    --cyber-green: #00ffcc;
-    --border-color: #1a1a1a;
-    --text-primary: #f0f0f0;
-    --nav-height: 90px;
+    --vanta-black: #020202;
+    --vanta-surface: #08080a;
+    --cyber-neon: #00ffcc;
+    --cyber-blue: #00aaff;
+    --border: #1a1a1a;
+    --text: #e0e0e0;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
 body {
-    background-color: var(--vanta-deep);
-    color: var(--text-primary);
+    background-color: var(--vanta-black);
+    color: var(--text);
     font-family: 'JetBrains Mono', monospace;
-    display: flex;
-    flex-direction: column;
     min-height: 100vh;
+    display: flex; flex-direction: column;
 }
 
-/* NAVBAR: Profesyonel ve Geniş */
+/* NAVBAR: Logo büyütüldü ve merkezlendi */
 .navbar {
-    position: fixed;
-    top: 0; width: 100%; height: var(--nav-height);
-    background: rgba(2, 2, 2, 0.98);
-    border-bottom: 2px solid var(--border-color);
+    height: 100px;
+    background: rgba(2,2,2,0.95);
+    border-bottom: 2px solid var(--border);
     display: flex; justify-content: space-between; align-items: center;
-    padding: 0 5%; z-index: 1000;
+    padding: 0 5%; position: fixed; width: 100%; top: 0; z-index: 1000;
 }
-
-.nav-brand { display: flex; align-items: center; gap: 20px; }
 
 .nav-logo {
-    height: 65px; /* Logo büyütüldü */
+    height: 80px; /* İstediğin gibi daha büyük */
     width: auto;
-    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(0,255,204,0.2));
 }
 
-.brand-name {
-    font-size: 1.5rem; letter-spacing: 4px; font-weight: 800; color: #fff;
-}
+.brand-name { font-size: 1.6rem; letter-spacing: 5px; font-weight: 800; color: #fff; margin-left: 15px; }
 
 .nav-links a {
-    color: #666; text-decoration: none; margin-left: 35px;
-    font-size: 0.85rem; text-transform: uppercase; transition: 0.3s;
+    color: #555; text-decoration: none; margin-left: 40px;
+    font-size: 0.9rem; text-transform: uppercase; transition: 0.3s;
 }
 
-.nav-links a:hover, .nav-links a.active { color: var(--cyber-green); }
+.nav-links a.active, .nav-links a:hover { color: var(--cyber-neon); text-shadow: 0 0 10px var(--cyber-neon); }
 
-/* MAIN CONTENT: Yan yana düzen (Side-by-Side) */
-.main-content {
-    flex: 1;
-    padding-top: calc(var(--nav-height) + 50px);
-    padding-bottom: 50px;
-    display: flex; justify-content: center;
-}
+/* WORKSPACE: Profesyonel Grid */
+.main-content { padding-top: 140px; display: flex; justify-content: center; flex: 1; }
+.container { width: 95%; max-width: 1300px; background: var(--vanta-surface); border: 1px solid var(--border); padding: 40px; }
 
-.container {
-    width: 95%; max-width: 1300px;
-    background: var(--vanta-surface);
-    border: 1px solid var(--border-color);
-    padding: 40px;
-}
-
-.tool-header { margin-bottom: 30px; text-align: left; }
-
-.status-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-.status-dot { width: 8px; height: 8px; background: var(--cyber-green); border-radius: 50%; box-shadow: 0 0 10px var(--cyber-green); animation: blink 2s infinite; }
-.status-text { font-size: 0.7rem; color: var(--cyber-green); letter-spacing: 2px; }
-
-@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-/* GRID WORKSPACE */
-.workspace-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 25px;
-}
-
-@media (max-width: 1000px) { .workspace-grid { grid-template-columns: 1fr; } }
-
-.label-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.8rem; color: #555; }
+.workspace-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+.editor-box { position: relative; }
+.box-header { font-size: 0.7rem; color: #444; margin-bottom: 8px; letter-spacing: 2px; }
 
 textarea {
-    width: 100%; height: 400px; /* Daha uzun çalışma alanı */
-    background: #000; border: 1px solid #1a1a1a;
-    color: var(--cyber-green); padding: 20px;
-    font-size: 14px; font-family: inherit; resize: none; outline: none;
+    width: 100%; height: 400px; background: #000; border: 1px solid #222;
+    color: var(--cyber-neon); padding: 20px; font-family: inherit; resize: none; outline: none;
+    transition: 0.3s; border-radius: 4px;
 }
 
-textarea:focus { border-color: var(--cyber-green); }
+textarea:focus { border-color: var(--cyber-neon); box-shadow: 0 0 15px rgba(0,255,204,0.1); }
 
-/* KONTROLLER */
-.controls { display: flex; gap: 15px; margin: 30px 0; align-items: center; }
-.select-wrapper { flex: 1; }
+/* ÖZEL SELECT (DROPDOWN) TASARIMI */
+.control-panel {
+    margin-top: 30px; padding-top: 30px; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: flex-end;
+}
+
+.select-container { display: flex; flex-direction: column; gap: 10px; flex: 1; max-width: 300px; }
+.select-container label { font-size: 0.7rem; color: var(--cyber-neon); }
 
 select {
-    width: 100%; background: #000; color: #fff; border: 1px solid var(--border-color);
-    padding: 12px; font-family: inherit; cursor: pointer;
+    background: #000; color: #fff; border: 1px solid var(--cyber-neon);
+    padding: 12px; font-family: inherit; appearance: none; cursor: pointer;
+    border-radius: 0; outline: none;
 }
 
-button { cursor: pointer; font-family: inherit; font-weight: bold; transition: 0.3s; }
-
-.primary-btn {
-    background: transparent; color: var(--cyber-green); border: 1px solid var(--cyber-green);
-    padding: 12px 40px; text-transform: uppercase;
+/* BUTONLAR VE EFEKTLER */
+.btn-group { display: flex; gap: 15px; }
+.cyber-btn {
+    padding: 15px 40px; background: transparent; font-weight: bold;
+    cursor: pointer; transition: 0.4s; letter-spacing: 2px;
 }
 
-.primary-btn:hover { background: var(--cyber-green); color: #000; box-shadow: 0 0 20px var(--cyber-green); }
+.encode { border: 1px solid var(--cyber-neon); color: var(--cyber-neon); }
+.encode:hover { background: var(--cyber-neon); color: #000; box-shadow: 0 0 30px var(--cyber-neon); }
 
-.copy-btn { width: 100%; background: #111; color: #fff; border: 1px solid #222; padding: 15px; }
-.copy-btn:hover { border-color: var(--cyber-green); color: var(--cyber-green); }
+.decode { border: 1px solid var(--cyber-blue); color: var(--cyber-blue); }
+.decode:hover { background: var(--cyber-blue); color: #000; box-shadow: 0 0 30px var(--cyber-blue); }
 
-/* FOOTER */
-.main-footer {
-    padding: 40px 5%; background: #000; border-top: 1px solid var(--border-color);
+.copy-btn {
+    margin-top: 15px; width: 100%; background: #111; border: 1px solid #333;
+    color: #888; padding: 12px; cursor: pointer; transition: 0.3s;
 }
 
-.footer-content { display: flex; justify-content: space-between; align-items: center; }
-.footer-title { color: #fff; font-size: 0.8rem; font-weight: bold; display: block; margin-bottom: 5px; }
-.footer-left p { font-size: 0.75rem; color: #444; }
-.copyright { font-size: 0.7rem; color: #444; }
+.copy-btn:hover { border-color: var(--cyber-neon); color: var(--cyber-neon); }
+
+/* STATUS & TAGS */
+.status-dot { width: 10px; height: 10px; background: var(--cyber-neon); border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(0,255,204,0.7); } 70% { box-shadow: 0 0 0 10px rgba(0,255,204,0); } 100% { box-shadow: 0 0 0 0 rgba(0,255,204,0); } }
+
+.detect-tag { position: absolute; bottom: 15px; right: 15px; font-size: 0.6rem; color: var(--cyber-neon); border: 1px solid var(--cyber-neon); padding: 2px 8px; }
+
+footer { padding: 30px; text-align: center; font-size: 0.7rem; color: #333; border-top: 1px solid var(--border); }
