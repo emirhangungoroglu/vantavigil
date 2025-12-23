@@ -17,6 +17,9 @@
             </div>
             <span class="brand-name">VANTAVIGIL</span>
         </div>
+        <div class="nav-links">
+            <a href="https://emirhangungoroglu.github.io/about">ABOUT</a>
+        </div>
     </nav>
 
     <div class="main-wrapper">
@@ -27,27 +30,41 @@
                     <span class="status-msg">COMMAND_CENTER_ACTIVE // SELECT_MODULE</span>
                 </div>
                 <h1 class="main-title">VANTAVIGIL SECURITY SUITE</h1>
-                <p style="color: #444; margin-top: 10px;">Professional cybersecurity tools for modern threats.</p>
+                <p class="subtitle">Advanced reconnaissance and encoding platform for professionals.</p>
             </header>
 
             <div class="hub-grid">
                 <a href="./encoder/" class="tool-card">
-                    <span class="tool-status status-online">ACTIVE</span>
-                    <h3>01_ENCODER</h3>
-                    <p>Advanced encoding suite supporting Base64, Hex, ROT13, SHA-256 and more.</p>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <span class="card-id">MOD_01</span>
+                        <h3>ENCODER_ENGINE</h3>
+                        <p>Multi-format encoding suite (Base64, Hex, ROT13, SHA-256) with auto-detection capability.</p>
+                        <span class="card-status active">STATUS: ONLINE</span>
+                    </div>
                 </a>
 
-                <a href="#" class="tool-card" style="opacity: 0.5; cursor: not-allowed;">
-                    <span class="tool-status">DEVELOPMENT</span>
-                    <h3>02_DOMAIN_SEARCH</h3>
-                    <p>Deep reconnaissance tool for domain intelligence. (Coming Soon)</p>
-                </a>
+                <div class="tool-card disabled">
+                    <div class="card-content">
+                        <span class="card-id">MOD_02</span>
+                        <h3>DOMAIN_RECON</h3>
+                        <p>Deep reconnaissance engine for DNS analysis and intelligence gathering. Restricted access.</p>
+                        <span class="card-status dev">STATUS: UNDER_DEVELOPMENT</span>
+                    </div>
+                </div>
+
+                <div class="tool-card empty">
+                    <div class="card-content">
+                        <h3>NEW_MODULE_PENDING</h3>
+                        <p>Awaiting deployment of specialized cybersecurity modules.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <footer class="cyber-footer">
-        <p>VANTAVIGIL HUB v1.0.0 // &copy; 2025 // DEVELOPED BY EMIRHAN GUNGOROGLU</p>
+        <p>VANTAVIGIL CORE v1.0.5 // &copy; 2025 // DEVELOPED BY EMIRHAN GUNGOROGLU</p>
     </footer>
 
 </body>
