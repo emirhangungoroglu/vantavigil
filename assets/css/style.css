@@ -6,13 +6,13 @@
     --cyber-blue: #00aaff;
     --border: #1a1a1e;
     --text: #e0e0e0;
-    --nav-height: 120px;
+    --nav-height: 140px; /* İsmin sığması için navbar biraz daha genişletildi */
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background-color: var(--vanta-black); color: var(--text); font-family: 'JetBrains Mono', monospace; min-height: 100vh; display: flex; flex-direction: column; }
 
-/* NAVBAR: Logo-İsim-Link Dağılımı */
+/* NAVBAR */
 .navbar {
     height: var(--nav-height);
     background: #000;
@@ -32,7 +32,14 @@ body { background-color: var(--vanta-black); color: var(--text); font-family: 'J
 .nav-main { flex: 2; display: flex; justify-content: center; }
 .nav-right { justify-content: flex-end; }
 
-/* LOGO: Navbarı dolduran yapı */
+/* LOGO VE İMZA GRUBU */
+.logo-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
 .logo-box {
     background: #080808;
     padding: 8px;
@@ -40,7 +47,16 @@ body { background-color: var(--vanta-black); color: var(--text); font-family: 'J
     border-radius: 4px;
     box-shadow: 0 0 15px rgba(0,255,204,0.1);
 }
-.nav-logo { height: 90px; width: auto; filter: drop-shadow(0 0 5px var(--cyber-neon)); }
+
+.nav-logo { height: 85px; width: auto; filter: drop-shadow(0 0 5px var(--cyber-neon)); }
+
+.logo-credit {
+    font-size: 0.55rem;
+    color: #444;
+    letter-spacing: 1px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
 
 /* ORTALANMIŞ İSİM: Neon Efekti */
 .brand-name {
@@ -57,11 +73,11 @@ body { background-color: var(--vanta-black); color: var(--text); font-family: 'J
     cursor: crosshair;
 }
 
-.nav-links a { color: #444; text-decoration: none; font-size: 0.8rem; letter-spacing: 2px; transition: 0.3s; }
+.nav-links a { color: #333; text-decoration: none; font-size: 0.8rem; letter-spacing: 2px; transition: 0.3s; }
 .nav-links a:hover { color: var(--cyber-neon); }
 
 /* HUB & WORKSPACE */
-.main-wrapper { padding-top: 180px; flex: 1; display: flex; justify-content: center; }
+.main-wrapper { padding-top: 190px; flex: 1; display: flex; justify-content: center; }
 .cyber-container { width: 95%; max-width: 1400px; padding: 20px; }
 
 .hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; margin-top: 50px; }
