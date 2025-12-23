@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VANTAVIGIL | Professional Encoding Suite</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -15,27 +15,39 @@
             <span class="brand-name">VANTAVIGIL</span>
         </div>
         <div class="nav-links">
-            <a href="#" class="active">Encoder Tool</a>
-            <a href="#">Services</a>
-            <a href="#">Documentation</a>
-            <a href="#">Contact</a>
+            <a href="index.html" class="active">Encoder</a>
+            <a href="https://emirhangungoroglu.github.io/about">About</a>
+            <a href="https://emirhangungoroglu.github.io/projects">Services</a>
+            <a href="https://emirhangungoroglu.github.io/contact">Contact</a>
         </div>
     </nav>
 
     <div class="main-content">
         <div class="container">
             <header class="tool-header">
+                <div class="status-bar">
+                    <span class="status-dot"></span>
+                    <span class="status-text">SYSTEM SECURE // ENCRYPTION ACTIVE</span>
+                </div>
                 <h1>CYBER ENCODER SUITE</h1>
-                <p>Secure, Client-Side Data Processing Operations</p>
             </header>
 
             <main>
-                <div class="input-section">
-                    <div class="label-row">
-                        <label for="userInput">Input Data</label>
-                        <span id="detectedFormat" class="detect-tag">Waiting for input...</span>
+                <div class="workspace-grid">
+                    <div class="editor-box">
+                        <div class="label-row">
+                            <label>INPUT SOURCE</label>
+                            <span id="detectedFormat" class="detect-tag">Waiting for input...</span>
+                        </div>
+                        <textarea id="userInput" placeholder="Paste raw data for instant analysis..."></textarea>
                     </div>
-                    <textarea id="userInput" placeholder="Paste your raw data, hash, or encoded string here for instant analysis..."></textarea>
+
+                    <div class="editor-box">
+                        <div class="label-row">
+                            <label>OUTPUT RESULT</label>
+                        </div>
+                        <textarea id="outputData" readonly placeholder="Result will appear here..."></textarea>
+                    </div>
                 </div>
 
                 <div class="controls">
@@ -50,12 +62,8 @@
                     <button id="encodeBtn" class="primary-btn">ENCODE</button>
                     <button id="decodeBtn" class="primary-btn">DECODE</button>
                 </div>
-
-                <div class="output-section">
-                    <label for="outputData">Output Result</label>
-                    <textarea id="outputData" readonly placeholder="Result will appear here..."></textarea>
-                    <button id="copyBtn" class="copy-btn">Copy Result to Clipboard</button>
-                </div>
+                
+                <button id="copyBtn" class="copy-btn">COPY TO CLIPBOARD</button>
             </main>
         </div>
     </div>
@@ -63,13 +71,11 @@
     <footer class="main-footer">
         <div class="footer-content">
             <div class="footer-left">
-                <span class="brand-name-footer">VANTAVIGIL SECURITY</span>
-                <p>All operations performed entirely within your browser. No data is transmitted to external servers.</p>
+                <span class="footer-title">VANTAVIGIL SECURITY OPERATIONS</span>
+                <p>Client-side processing only. Security is not an option, it's a standard.</p>
             </div>
             <div class="footer-right">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <span class="copyright">&copy; 2025 Vantavigil Corp. All rights reserved.</span>
+                <span class="copyright">&copy; 2025 Vantavigil Corp. // Developed by Emirhan Gungoroglu</span>
             </div>
         </div>
     </footer>
