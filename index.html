@@ -1,52 +1,78 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vantavigil Encoder | Professional Security Tool</title>
+    <title>VANTAVIGIL | Professional Encoding Suite</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>VANTAVIGIL <span class="highlight">ENCODER</span></h1>
-            <p>Advanced Encryption & Encoding Suite for Cyber Professionals</p>
-        </header>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <img src="assets/img/logo.png" alt="Vantavigil Logo" class="nav-logo">
+            <span class="brand-name">VANTAVIGIL</span>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="active">Encoder Tool</a>
+            <a href="#">Services</a>
+            <a href="#">Documentation</a>
+            <a href="#">Contact</a>
+        </div>
+    </nav>
 
-        <main>
-            <div class="input-section">
-                <div class="label-row">
-                    <label for="userInput">Input Data</label>
-                    <button id="detectBtn" class="secondary-btn">Detect Format</button>
-                    <span id="detectedFormat">Type: Unknown</span>
+    <div class="main-content">
+        <div class="container">
+            <header class="tool-header">
+                <h1>CYBER ENCODER SUITE</h1>
+                <p>Secure, Client-Side Data Processing Operations</p>
+            </header>
+
+            <main>
+                <div class="input-section">
+                    <div class="label-row">
+                        <label for="userInput">Input Data</label>
+                        <span id="detectedFormat" class="detect-tag">Waiting for input...</span>
+                    </div>
+                    <textarea id="userInput" placeholder="Paste your raw data, hash, or encoded string here for instant analysis..."></textarea>
                 </div>
-                <textarea id="userInput" placeholder="Paste your code, hash or encoded text here..."></textarea>
-            </div>
 
-            <div class="controls">
-                <select id="operationType">
-                    <option value="base64">Base64</option>
-                    <option value="hex">Hexadecimal</option>
-                    <option value="binary">Binary</option>
-                    <option value="url">URL Encode</option>
-                </select>
-                <button id="encodeBtn" class="primary-btn">ENCODE</button>
-                <button id="decodeBtn" class="primary-btn">DECODE</button>
-            </div>
+                <div class="controls">
+                    <div class="select-wrapper">
+                        <select id="operationType">
+                            <option value="base64">Base64 (UTF-8)</option>
+                            <option value="hex">Hexadecimal</option>
+                            <option value="binary">Binary</option>
+                            <option value="url">URL Encode</option>
+                        </select>
+                    </div>
+                    <button id="encodeBtn" class="primary-btn">ENCODE</button>
+                    <button id="decodeBtn" class="primary-btn">DECODE</button>
+                </div>
 
-            <div class="output-section">
-                <label for="outputData">Output</label>
-                <textarea id="outputData" readonly></textarea>
-                <button id="copyBtn" class="copy-btn">Copy to Clipboard</button>
-            </div>
-        </main>
-
-        <footer>
-            <p>&copy; 2025 Vantavigil Security - All processes are client-side. Data never leaves your browser.</p>
-        </footer>
+                <div class="output-section">
+                    <label for="outputData">Output Result</label>
+                    <textarea id="outputData" readonly placeholder="Result will appear here..."></textarea>
+                    <button id="copyBtn" class="copy-btn">Copy Result to Clipboard</button>
+                </div>
+            </main>
+        </div>
     </div>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <span class="brand-name-footer">VANTAVIGIL SECURITY</span>
+                <p>All operations performed entirely within your browser. No data is transmitted to external servers.</p>
+            </div>
+            <div class="footer-right">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <span class="copyright">&copy; 2025 Vantavigil Corp. All rights reserved.</span>
+            </div>
+        </div>
+    </footer>
 
     <script src="assets/js/modules.js"></script>
     <script src="assets/js/main.js"></script>
