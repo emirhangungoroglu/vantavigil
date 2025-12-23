@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VANTAVIGIL | Professional Encoding Suite</title>
+    <title>VANTAVIGIL | Advanced Security Suite</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
 </head>
@@ -11,61 +11,61 @@
 
     <nav class="navbar">
         <div class="nav-brand">
-            <img src="assets/img/logo.png" alt="Vantavigil Logo" class="nav-logo">
+            <div class="logo-box">
+                <img src="assets/img/logo.png" alt="Vantavigil Logo" class="nav-logo">
+            </div>
             <span class="brand-name">VANTAVIGIL</span>
         </div>
         <div class="nav-links">
-            <a href="index.html" class="active">Encoder</a>
-            <a href="https://emirhangungoroglu.github.io/about">About</a>
+            <a href="index.html" class="active">ENCODER</a>
+            <a href="https://emirhangungoroglu.github.io/about">ABOUT</a>
         </div>
     </nav>
 
-    <div class="main-content">
-        <div class="container">
-            <header class="tool-header">
-                <div class="status-bar">
-                    <span class="status-dot"></span>
-                    <span class="status-text">ENCRYPTION ENGINE // READY</span>
+    <div class="main-wrapper">
+        <div class="cyber-container">
+            <header class="terminal-header">
+                <div class="status-indicator">
+                    <span class="dot pulse"></span>
+                    <span class="status-msg">CORE_ENGINE_STABLE // SECURITY_ACTIVE</span>
                 </div>
-                <h1>CYBER ENCODER SUITE</h1>
+                <h1 class="main-title">CYBER ENCODER SUITE</h1>
             </header>
 
-            <main>
-                <div class="workspace-grid">
-                    <div class="editor-box">
-                        <div class="box-header">INPUT_SOURCE</div>
-                        <textarea id="userInput" placeholder="Waiting for raw data..."></textarea>
-                        <span id="detectedFormat" class="detect-tag">Type: Unknown</span>
-                    </div>
-
-                    <div class="editor-box">
-                        <div class="box-header">OUTPUT_RESULT</div>
-                        <textarea id="outputData" readonly placeholder="Calculated output..."></textarea>
-                        <button id="copyBtn" class="action-btn copy-btn">COPY TO CLIPBOARD</button>
-                    </div>
+            <div class="workspace-grid">
+                <div class="editor-module">
+                    <div class="module-bar">INPUT_DATA_STREAM</div>
+                    <textarea id="userInput" spellcheck="false" placeholder="Waiting for raw input..."></textarea>
+                    <div id="detectedFormat" class="detect-overlay">DETECTED: UNKNOWN</div>
                 </div>
 
-                <div class="control-panel">
-                    <div class="select-container">
-                        <label>ALGORITHM_SELECT</label>
-                        <select id="operationType">
-                            <option value="base64">Base64 (UTF-8)</option>
-                            <option value="hex">Hexadecimal</option>
-                            <option value="binary">Binary</option>
-                            <option value="url">URL Encode</option>
-                        </select>
-                    </div>
-                    <div class="btn-group">
-                        <button id="encodeBtn" class="cyber-btn encode">RUN ENCODE</button>
-                        <button id="decodeBtn" class="cyber-btn decode">RUN DECODE</button>
-                    </div>
+                <div class="editor-module">
+                    <div class="module-bar">OUTPUT_RESULT</div>
+                    <textarea id="outputData" readonly spellcheck="false" placeholder="Processed output..."></textarea>
+                    <button id="copyBtn" class="utility-btn">COPY_TO_CLIPBOARD</button>
                 </div>
-            </main>
+            </div>
+
+            <div class="control-center">
+                <div class="select-box">
+                    <label>SELECT_ALGORITHM</label>
+                    <select id="operationType">
+                        <option value="base64">BASE64_STANDARD</option>
+                        <option value="hex">HEXADECIMAL_HEX</option>
+                        <option value="binary">BINARY_0101</option>
+                        <option value="url">URL_ENCODING</option>
+                    </select>
+                </div>
+                <div class="action-group">
+                    <button id="encodeBtn" class="glow-btn btn-green">RUN_ENCODE</button>
+                    <button id="decodeBtn" class="glow-btn btn-blue">RUN_DECODE</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <footer class="main-footer">
-        <p>&copy; 2025 Vantavigil Corp. // Secure Client-Side Environment // Emirhan Gungoroglu</p>
+    <footer class="cyber-footer">
+        <p>TERMINAL v1.0.4 // &copy; 2025 VANTAVIGIL CORP // DEVELOPED BY EMIRHAN GUNGOROGLU</p>
     </footer>
 
     <script src="assets/js/modules.js"></script>
