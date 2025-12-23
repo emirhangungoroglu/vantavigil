@@ -17,8 +17,6 @@
         <div class="nav-links">
             <a href="index.html" class="active">Encoder</a>
             <a href="https://emirhangungoroglu.github.io/about">About</a>
-            <a href="https://emirhangungoroglu.github.io/projects">Services</a>
-            <a href="https://emirhangungoroglu.github.io/contact">Contact</a>
         </div>
     </nav>
 
@@ -27,7 +25,7 @@
             <header class="tool-header">
                 <div class="status-bar">
                     <span class="status-dot"></span>
-                    <span class="status-text">SYSTEM SECURE // ENCRYPTION ACTIVE</span>
+                    <span class="status-text">ENCRYPTION ENGINE // READY</span>
                 </div>
                 <h1>CYBER ENCODER SUITE</h1>
             </header>
@@ -35,23 +33,21 @@
             <main>
                 <div class="workspace-grid">
                     <div class="editor-box">
-                        <div class="label-row">
-                            <label>INPUT SOURCE</label>
-                            <span id="detectedFormat" class="detect-tag">Waiting for input...</span>
-                        </div>
-                        <textarea id="userInput" placeholder="Paste raw data for instant analysis..."></textarea>
+                        <div class="box-header">INPUT_SOURCE</div>
+                        <textarea id="userInput" placeholder="Waiting for raw data..."></textarea>
+                        <span id="detectedFormat" class="detect-tag">Type: Unknown</span>
                     </div>
 
                     <div class="editor-box">
-                        <div class="label-row">
-                            <label>OUTPUT RESULT</label>
-                        </div>
-                        <textarea id="outputData" readonly placeholder="Result will appear here..."></textarea>
+                        <div class="box-header">OUTPUT_RESULT</div>
+                        <textarea id="outputData" readonly placeholder="Calculated output..."></textarea>
+                        <button id="copyBtn" class="action-btn copy-btn">COPY TO CLIPBOARD</button>
                     </div>
                 </div>
 
-                <div class="controls">
-                    <div class="select-wrapper">
+                <div class="control-panel">
+                    <div class="select-container">
+                        <label>ALGORITHM_SELECT</label>
                         <select id="operationType">
                             <option value="base64">Base64 (UTF-8)</option>
                             <option value="hex">Hexadecimal</option>
@@ -59,25 +55,17 @@
                             <option value="url">URL Encode</option>
                         </select>
                     </div>
-                    <button id="encodeBtn" class="primary-btn">ENCODE</button>
-                    <button id="decodeBtn" class="primary-btn">DECODE</button>
+                    <div class="btn-group">
+                        <button id="encodeBtn" class="cyber-btn encode">RUN ENCODE</button>
+                        <button id="decodeBtn" class="cyber-btn decode">RUN DECODE</button>
+                    </div>
                 </div>
-                
-                <button id="copyBtn" class="copy-btn">COPY TO CLIPBOARD</button>
             </main>
         </div>
     </div>
 
     <footer class="main-footer">
-        <div class="footer-content">
-            <div class="footer-left">
-                <span class="footer-title">VANTAVIGIL SECURITY OPERATIONS</span>
-                <p>Client-side processing only. Security is not an option, it's a standard.</p>
-            </div>
-            <div class="footer-right">
-                <span class="copyright">&copy; 2025 Vantavigil Corp. // Developed by Emirhan Gungoroglu</span>
-            </div>
-        </div>
+        <p>&copy; 2025 Vantavigil Corp. // Secure Client-Side Environment // Emirhan Gungoroglu</p>
     </footer>
 
     <script src="assets/js/modules.js"></script>
