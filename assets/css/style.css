@@ -6,7 +6,7 @@
     --cyber-blue: #00aaff;
     --border: #1a1a1e;
     --text: #e0e0e0;
-    --nav-height: 140px; /* İsmin sığması için navbar biraz daha genişletildi */
+    --nav-height: 140px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -32,33 +32,18 @@ body { background-color: var(--vanta-black); color: var(--text); font-family: 'J
 .nav-main { flex: 2; display: flex; justify-content: center; }
 .nav-right { justify-content: flex-end; }
 
-/* LOGO VE İMZA GRUBU */
-.logo-group {
+/* LOGO */
+.logo-box { background: #080808; padding: 8px; border: 1px solid #222; border-radius: 4px; }
+.nav-logo { height: 90px; width: auto; filter: drop-shadow(0 0 5px var(--cyber-neon)); }
+
+/* ORTA GRUP: Marka ve İmza */
+.brand-group {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
 }
 
-.logo-box {
-    background: #080808;
-    padding: 8px;
-    border: 1px solid #222;
-    border-radius: 4px;
-    box-shadow: 0 0 15px rgba(0,255,204,0.1);
-}
-
-.nav-logo { height: 85px; width: auto; filter: drop-shadow(0 0 5px var(--cyber-neon)); }
-
-.logo-credit {
-    font-size: 0.55rem;
-    color: #444;
-    letter-spacing: 1px;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-/* ORTALANMIŞ İSİM: Neon Efekti */
 .brand-name {
     font-size: 2.2rem;
     letter-spacing: 12px;
@@ -68,26 +53,27 @@ body { background-color: var(--vanta-black); color: var(--text); font-family: 'J
     text-transform: uppercase;
 }
 
-.neon-flicker:hover {
-    text-shadow: 0 0 30px var(--cyber-neon);
-    cursor: crosshair;
+/* YENİ: Markanın altındaki küçük imza */
+.brand-credit {
+    font-size: 0.5rem; /* İyice küçültüldü */
+    color: #444; /* Sönük gri renk sırıtmaması için */
+    letter-spacing: 3px;
+    margin-top: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
+
+.neon-flicker:hover { text-shadow: 0 0 30px var(--cyber-neon); cursor: crosshair; }
 
 .nav-links a { color: #333; text-decoration: none; font-size: 0.8rem; letter-spacing: 2px; transition: 0.3s; }
 .nav-links a:hover { color: var(--cyber-neon); }
 
-/* HUB & WORKSPACE */
+/* HUB & CONTENT */
 .main-wrapper { padding-top: 190px; flex: 1; display: flex; justify-content: center; }
 .cyber-container { width: 95%; max-width: 1400px; padding: 20px; }
-
 .hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; margin-top: 50px; }
 .tool-card { background: var(--vanta-surface); border: 1px solid var(--border); padding: 40px; text-decoration: none; transition: 0.4s; }
 .tool-card:hover { border-color: var(--cyber-neon); transform: translateY(-5px); box-shadow: 0 0 40px rgba(0,0,0,0.8); }
-.tool-card.disabled { opacity: 0.3; cursor: not-allowed; }
-
-.card-header { font-size: 0.7rem; color: var(--cyber-blue); margin-bottom: 15px; }
-.tool-card h3 { color: #fff; font-size: 1.4rem; letter-spacing: 3px; margin-bottom: 15px; }
-.tool-card p { color: #666; font-size: 0.9rem; line-height: 1.8; }
 .active { color: var(--cyber-neon); margin-top: 20px; display: block; font-size: 0.75rem; font-weight: bold; }
 
 .status-indicator { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
