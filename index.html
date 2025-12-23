@@ -3,11 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VANTAVIGIL | Encoder</title>
+    <title>VANTAVIGIL | Security Suite</title>
     <link rel="icon" type="image/png" href="assets/img/icon.png">
-    
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Portal Sayfasına Özel Ek Stiller */
+        .hub-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .tool-card {
+            background: var(--vanta-surface);
+            border: 1px solid var(--border);
+            padding: 30px;
+            text-decoration: none;
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        .tool-card:hover {
+            border-color: var(--cyber-neon);
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.1);
+            transform: translateY(-5px);
+        }
+        .tool-card h3 { color: var(--cyber-neon); margin-bottom: 15px; letter-spacing: 2px; }
+        .tool-card p { color: #666; font-size: 0.85rem; line-height: 1.6; }
+        .tool-status {
+            font-size: 0.6rem;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 2px 8px;
+            border: 1px solid #333;
+        }
+        .status-online { color: var(--cyber-neon); border-color: var(--cyber-neon); }
+    </style>
 </head>
 <body>
 
@@ -18,10 +51,6 @@
             </div>
             <span class="brand-name">VANTAVIGIL</span>
         </div>
-        <div class="nav-links">
-            <a href="index.html" class="active">ENCODER</a>
-            <a href="https://emirhangungoroglu.github.io/about">ABOUT</a>
-        </div>
     </nav>
 
     <div class="main-wrapper">
@@ -29,53 +58,32 @@
             <header class="terminal-header">
                 <div class="status-indicator">
                     <span class="dot pulse"></span>
-                    <span class="status-msg">CORE_ENGINE_STABLE // SECURITY_ACTIVE</span>
+                    <span class="status-msg">COMMAND_CENTER_ACTIVE // SELECT_MODULE</span>
                 </div>
-                <h1 class="main-title">CYBER ENCODER SUITE</h1>
+                <h1 class="main-title">VANTAVIGIL SECURITY SUITE</h1>
+                <p style="color: #444; margin-top: 10px;">Professional cybersecurity tools for modern threats.</p>
             </header>
 
-            <div class="workspace-grid">
-                <div class="editor-module">
-                    <div class="module-bar">INPUT_DATA_STREAM</div>
-                    <textarea id="userInput" spellcheck="false" placeholder="Waiting for raw input..."></textarea>
-                    <div id="detectedFormat" class="detect-overlay">DETECTED: UNKNOWN</div>
-                </div>
+            <div class="hub-grid">
+                <a href="./encoder/" class="tool-card">
+                    <span class="tool-status status-online">ACTIVE</span>
+                    <h3>01_ENCODER</h3>
+                    <p>Advanced encoding and decoding suite supporting Base64, Hex, ROT13, SHA-256 and more.</p>
+                </a>
 
-                <div class="editor-module">
-                    <div class="module-bar">OUTPUT_RESULT</div>
-                    <textarea id="outputData" readonly spellcheck="false" placeholder="Processed output..."></textarea>
-                    <button id="copyBtn" class="utility-btn">COPY_TO_CLIPBOARD</button>
-                </div>
-            </div>
+                <a href="#" class="tool-card" style="opacity: 0.5; cursor: not-allowed;">
+                    <span class="tool-status">DEVELOPMENT</span>
+                    <h3>02_DOMAIN_SEARCH</h3>
+                    <p>Deep reconnaissance tool for domain intelligence and DNS analysis. (Currently under construction)</p>
+                </a>
 
-            <div class="control-center">
-                <div class="select-box">
-                    <label>SELECT_ALGORITHM</label>
-                    <select id="operationType">
-                        <option value="base64">BASE64_STANDARD</option>
-                        <option value="hex">HEXADECIMAL_HEX</option>
-                        <option value="binary">BINARY_0101</option>
-                        <option value="url">URL_ENCODING</option>
-                        <option value="rot13">ROT13_CIPHER</option>
-                        <option value="html">HTML_ENTITY_ENC</option>
-                        <option value="defang">URL_DEFANGING</option>
-                        <option value="charcode">JS_CHARCODE</option>
-                        <option value="sha256">SHA-256_HASH</option>
-                    </select>
                 </div>
-                <div class="action-group">
-                    <button id="encodeBtn" class="glow-btn btn-green">RUN_ENCODE</button>
-                    <button id="decodeBtn" class="glow-btn btn-blue">RUN_DECODE</button>
-                </div>
-            </div>
         </div>
     </div>
 
     <footer class="cyber-footer">
-        <p>TERMINAL v1.2.0 // &copy; 2025 VANTAVIGIL CORP // DEVELOPED BY EMIRHAN GUNGOROGLU</p>
+        <p>VANTAVIGIL HUB v1.0.0 // &copy; 2025 // DEVELOPED BY EMIRHAN GUNGOROGLU</p>
     </footer>
 
-    <script src="assets/js/modules.js"></script>
-    <script src="assets/js/main.js"></script>
 </body>
 </html>
