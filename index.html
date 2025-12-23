@@ -7,40 +7,6 @@
     <link rel="icon" type="image/png" href="assets/img/icon.png">
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
-    <style>
-        /* Portal Sayfasına Özel Ek Stiller */
-        .hub-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-        .tool-card {
-            background: var(--vanta-surface);
-            border: 1px solid var(--border);
-            padding: 30px;
-            text-decoration: none;
-            transition: 0.4s;
-            position: relative;
-            overflow: hidden;
-        }
-        .tool-card:hover {
-            border-color: var(--cyber-neon);
-            box-shadow: 0 0 30px rgba(0, 255, 204, 0.1);
-            transform: translateY(-5px);
-        }
-        .tool-card h3 { color: var(--cyber-neon); margin-bottom: 15px; letter-spacing: 2px; }
-        .tool-card p { color: #666; font-size: 0.85rem; line-height: 1.6; }
-        .tool-status {
-            font-size: 0.6rem;
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            padding: 2px 8px;
-            border: 1px solid #333;
-        }
-        .status-online { color: var(--cyber-neon); border-color: var(--cyber-neon); }
-    </style>
 </head>
 <body>
 
@@ -68,16 +34,15 @@
                 <a href="./encoder/" class="tool-card">
                     <span class="tool-status status-online">ACTIVE</span>
                     <h3>01_ENCODER</h3>
-                    <p>Advanced encoding and decoding suite supporting Base64, Hex, ROT13, SHA-256 and more.</p>
+                    <p>Advanced encoding suite supporting Base64, Hex, ROT13, SHA-256 and more.</p>
                 </a>
 
                 <a href="#" class="tool-card" style="opacity: 0.5; cursor: not-allowed;">
                     <span class="tool-status">DEVELOPMENT</span>
                     <h3>02_DOMAIN_SEARCH</h3>
-                    <p>Deep reconnaissance tool for domain intelligence and DNS analysis. (Currently under construction)</p>
+                    <p>Deep reconnaissance tool for domain intelligence. (Coming Soon)</p>
                 </a>
-
-                </div>
+            </div>
         </div>
     </div>
 
