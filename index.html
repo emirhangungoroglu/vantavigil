@@ -1,1 +1,54 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vantavigil Encoder | Professional Security Tool</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
 
+    <div class="container">
+        <header>
+            <h1>VANTAVIGIL <span class="highlight">ENCODER</span></h1>
+            <p>Advanced Encryption & Encoding Suite for Cyber Professionals</p>
+        </header>
+
+        <main>
+            <div class="input-section">
+                <div class="label-row">
+                    <label for="userInput">Input Data</label>
+                    <button id="detectBtn" class="secondary-btn">Detect Format</button>
+                    <span id="detectedFormat">Type: Unknown</span>
+                </div>
+                <textarea id="userInput" placeholder="Paste your code, hash or encoded text here..."></textarea>
+            </div>
+
+            <div class="controls">
+                <select id="operationType">
+                    <option value="base64">Base64</option>
+                    <option value="hex">Hexadecimal</option>
+                    <option value="binary">Binary</option>
+                    <option value="url">URL Encode</option>
+                </select>
+                <button id="encodeBtn" class="primary-btn">ENCODE</button>
+                <button id="decodeBtn" class="primary-btn">DECODE</button>
+            </div>
+
+            <div class="output-section">
+                <label for="outputData">Output</label>
+                <textarea id="outputData" readonly></textarea>
+                <button id="copyBtn" class="copy-btn">Copy to Clipboard</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Vantavigil Security - All processes are client-side. Data never leaves your browser.</p>
+        </footer>
+    </div>
+
+    <script src="assets/js/modules.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
