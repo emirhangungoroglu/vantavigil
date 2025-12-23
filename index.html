@@ -1,113 +1,65 @@
-/* assets/css/style.css */
-:root {
-    --vanta-black: #020202;
-    --vanta-surface: #0a0a0c;
-    --cyber-neon: #00ffcc;
-    --cyber-blue: #00aaff;
-    --border: #1a1a1e;
-    --text: #e0e0e0;
-    --nav-height: 120px; /* Navbar biraz daha genişletildi */
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VANTAVIGIL | Security Suite</title>
+    <link rel="icon" type="image/png" href="assets/img/icon.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { background-color: var(--vanta-black); color: var(--text); font-family: 'JetBrains Mono', monospace; min-height: 100vh; display: flex; flex-direction: column; }
+    <nav class="navbar">
+        <div class="nav-side nav-left">
+            <div class="logo-box">
+                <img src="assets/img/logo.png" alt="Vantavigil Logo" class="nav-logo">
+            </div>
+        </div>
 
-/* NAVBAR: 3 Bölümlü Esnek Yapı */
-.navbar {
-    height: var(--nav-height);
-    background: #000;
-    border-bottom: 2px solid var(--border);
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr; /* Sol, Orta, Sağ oranları */
-    align-items: center;
-    padding: 0 4%;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-}
+        <div class="nav-main">
+            <span class="brand-name neon-flicker">VANTAVIGIL</span>
+        </div>
 
-.nav-left { display: flex; justify-content: flex-start; }
-.nav-center { display: flex; justify-content: center; }
-.nav-right { display: flex; justify-content: flex-end; }
+        <div class="nav-side nav-right">
+            <div class="nav-links">
+                <a href="https://emirhangungoroglu.github.io/about">ABOUT</a>
+            </div>
+        </div>
+    </nav>
 
-/* Logo Alanı: Navbar'ı Dolduran Büyük Tasarım */
-.logo-box {
-    background: #080808;
-    padding: 5px;
-    border: 1px solid #222;
-    border-radius: 4px;
-    height: 100px; /* Navbar yüksekliğine yakın */
-    display: flex;
-    align-items: center;
-}
-.nav-logo {
-    height: 90px; /* Logo iyice büyütüldü */
-    width: auto;
-    filter: drop-shadow(0 0 10px rgba(0,255,204,0.3));
-}
+    <div class="main-wrapper">
+        <div class="cyber-container">
+            <header class="terminal-header">
+                <div class="status-indicator">
+                    <span class="dot pulse"></span>
+                    <span class="status-msg">COMMAND_CENTER_ACTIVE // SELECT_MODULE</span>
+                </div>
+                <h1 class="portal-title">VANTAVIGIL SECURITY SUITE</h1>
+                <p class="subtitle">Advanced reconnaissance and encoding platform for professionals.</p>
+            </header>
 
-/* Ortalanmış Marka İsmi ve Efekt */
-.brand-name {
-    font-size: 2.2rem;
-    letter-spacing: 10px;
-    font-weight: 900;
-    color: var(--cyber-neon);
-    text-transform: uppercase;
-    text-shadow: 0 0 15px var(--cyber-neon);
-    position: relative;
-}
+            <div class="hub-grid">
+                <a href="./encoder/" class="tool-card">
+                    <div class="card-header">MOD_01</div>
+                    <h3>ENCODER_ENGINE</h3>
+                    <p>Multi-format encoding suite supporting Base64, Hex, ROT13 and SHA-256 hashing.</p>
+                    <span class="card-status active">STATUS: ONLINE</span>
+                </a>
 
-/* Neon Glitch Efekti */
-.glitch-effect:hover {
-    animation: neon-flicker 1.5s infinite alternate;
-    cursor: crosshair;
-}
+                <div class="tool-card disabled">
+                    <div class="card-header">MOD_02</div>
+                    <h3>DOMAIN_RECON</h3>
+                    <p>DNS intelligence and domain analysis engine. Under development for Blue Team ops.</p>
+                    <span class="card-status status-dev">STATUS: UNDER_DEVELOPMENT</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-@keyframes neon-flicker {
-    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-        text-shadow: 0 0 15px var(--cyber-neon), 0 0 30px var(--cyber-neon);
-    }
-    20%, 22%, 24%, 55% { text-shadow: none; color: #111; }
-}
+    <footer class="cyber-footer">
+        <p>VANTAVIGIL HUB v1.1.0 // &copy; 2025 // DEVELOPED BY EMIRHAN GUNGOROGLU</p>
+    </footer>
 
-.nav-links a {
-    color: #444;
-    text-decoration: none;
-    font-size: 0.8rem;
-    letter-spacing: 2px;
-    transition: 0.3s;
-    border: 1px solid transparent;
-    padding: 8px 15px;
-}
-.nav-links a:hover { color: var(--cyber-neon); border-color: var(--cyber-neon); }
-
-/* --- HUB KARTLARI --- */
-.main-wrapper { padding-top: 180px; flex: 1; display: flex; justify-content: center; }
-.cyber-container { width: 95%; max-width: 1400px; padding: 20px; }
-
-.hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; margin-top: 50px; }
-
-.tool-card {
-    background: var(--vanta-surface);
-    border: 1px solid var(--border);
-    padding: 40px;
-    text-decoration: none;
-    transition: 0.5s;
-}
-.tool-card:hover { border-color: var(--cyber-neon); box-shadow: 0 0 50px rgba(0,255,204,0.15); transform: scale(1.02); }
-
-.card-id { font-size: 0.7rem; color: var(--cyber-blue); margin-bottom: 15px; display: block; }
-.tool-card h3 { color: #fff; font-size: 1.4rem; letter-spacing: 3px; margin-bottom: 15px; }
-.tool-card p { color: #666; font-size: 0.9rem; line-height: 1.8; }
-
-.card-status { margin-top: 25px; display: block; font-size: 0.75rem; font-weight: bold; }
-.active { color: var(--cyber-neon); }
-.dev { color: #333; }
-
-.status-indicator { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
-.dot { width: 10px; height: 10px; background: var(--cyber-neon); border-radius: 50%; box-shadow: 0 0 15px var(--cyber-neon); }
-.pulse { animation: pulse-anim 2s infinite; }
-@keyframes pulse-anim { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
-
-.cyber-footer { padding: 60px; text-align: center; color: #111; font-size: 0.7rem; letter-spacing: 3px; }
+</body>
+</html>
