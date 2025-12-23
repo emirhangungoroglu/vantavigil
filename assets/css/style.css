@@ -2,11 +2,13 @@
 
 :root {
     --vanta-black: #050505;
+    --vanta-dark: #0a0a0a;
     --vanta-gray: #121212;
     --highlight: #00ffcc; /* Siber Yeşil/Mavi */
     --text-main: #e0e0e0;
     --text-dim: #888;
     --border: #333;
+    --nav-height: 70px;
 }
 
 * {
@@ -20,15 +22,69 @@ body {
     color: var(--text-main);
     font-family: 'JetBrains Mono', monospace;
     display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Sayfanın tamamını kaplamasını sağlar */
+}
+
+/* === NAVBAR STİLLERİ === */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--vanta-dark);
+    padding: 0 5%;
+    height: var(--nav-height);
+    border-bottom: 1px solid var(--border);
+    position: fixed; /* Üste sabitler */
+    width: 100%;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0, 255, 204, 0.05);
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-logo {
+    height: 35px; /* Logo boyutu */
+    width: auto;
+}
+
+.brand-name {
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    color: white;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-dim);
+    margin-left: 30px;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--highlight);
+}
+
+/* === ANA İÇERİK STİLLERİ === */
+.main-content {
+    flex: 1; /* Footer'ı aşağı itmek için alanı doldurur */
+    display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    overflow-x: hidden;
+    padding-top: calc(var(--nav-height) + 40px); /* Navbar'ın altında kalmasın diye boşluk */
+    padding-bottom: 40px;
 }
 
 .container {
     width: 90%;
-    max-width: 900px;
+    max-width: 800px;
     background: var(--vanta-gray);
     padding: 40px;
     border-radius: 12px;
@@ -36,23 +92,19 @@ body {
     box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
 
-header {
+.tool-header {
     text-align: center;
     margin-bottom: 30px;
 }
 
-h1 {
-    font-size: 2.5rem;
-    letter-spacing: 4px;
+.tool-header h1 {
+    font-size: 2rem;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
 }
 
-.highlight {
+.tool-header p {
     color: var(--highlight);
-    text-shadow: 0 0 10px var(--highlight);
-}
-
-header p {
-    color: var(--text-dim);
     font-size: 0.9rem;
 }
 
@@ -64,17 +116,26 @@ header p {
     margin-bottom: 10px;
 }
 
+.detect-tag {
+    font-size: 0.8rem;
+    color: var(--highlight);
+    background: rgba(0, 255, 204, 0.1);
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--highlight);
+}
+
 textarea {
     width: 100%;
-    height: 150px;
-    background: #0a0a0a;
+    height: 120px;
+    background: var(--vanta-dark);
     border: 1px solid var(--border);
     border-radius: 6px;
     color: var(--highlight);
     padding: 15px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 1rem;
-    resize: none;
+    font-size: 0.95rem;
+    resize: vertical;
     outline: none;
     transition: border 0.3s;
 }
@@ -83,20 +144,44 @@ textarea:focus {
     border-color: var(--highlight);
 }
 
-/* Butonlar */
+#outputData {
+    background: #080808;
+    color: #fff;
+}
+
+/* Butonlar ve Kontroller */
 .controls {
     display: flex;
     gap: 15px;
-    margin: 20px 0;
+    margin: 25px 0;
+}
+
+.select-wrapper {
+    flex-grow: 1;
+    position: relative;
 }
 
 select {
-    background: #1a1a1a;
+    width: 100%;
+    background: var(--vanta-dark);
     color: white;
     border: 1px solid var(--border);
-    padding: 10px;
+    padding: 12px;
     border-radius: 4px;
-    flex-grow: 1;
+    appearance: none; /* Varsayılan oku gizle */
+    font-family: 'JetBrains Mono', monospace;
+    cursor: pointer;
+}
+
+.select-wrapper::after {
+    content: '▼';
+    font-size: 0.8rem;
+    color: var(--highlight);
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
 }
 
 button {
@@ -106,12 +191,13 @@ button {
     transition: 0.3s;
     border: none;
     border-radius: 4px;
-    padding: 10px 20px;
+    padding: 12px 25px;
 }
 
 .primary-btn {
     background: var(--highlight);
     color: black;
+    min-width: 100px;
 }
 
 .primary-btn:hover {
@@ -119,28 +205,67 @@ button {
     box-shadow: 0 0 15px var(--highlight);
 }
 
-.secondary-btn {
-    background: transparent;
-    border: 1px solid var(--highlight);
-    color: var(--highlight);
-    font-size: 0.8rem;
-}
-
 .copy-btn {
     margin-top: 10px;
-    background: #333;
+    background: var(--border);
     color: white;
     width: 100%;
+    border: 1px solid var(--border);
 }
 
-footer {
-    margin-top: 30px;
-    text-align: center;
-    font-size: 0.7rem;
-    color: var(--text-dim);
-}
-
-#detectedFormat {
-    font-size: 0.8rem;
+.copy-btn:hover {
+    border-color: var(--highlight);
     color: var(--highlight);
+}
+
+/* === FOOTER STİLLERİ === */
+.main-footer {
+    background: var(--vanta-dark);
+    border-top: 1px solid var(--border);
+    padding: 30px 5%;
+    margin-top: auto; /* Sayfanın en altına iter */
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.brand-name-footer {
+    color: white;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.footer-left p {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    max-width: 400px;
+}
+
+.footer-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    font-size: 0.8rem;
+}
+
+.footer-right a {
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-right a:hover {
+    color: var(--highlight);
+}
+
+.copyright {
+    color: var(--text-dim);
+    margin-top: 10px;
 }
