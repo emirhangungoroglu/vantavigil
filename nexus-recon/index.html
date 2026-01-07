@@ -32,8 +32,8 @@
         .map-container {
             position: fixed; inset: 0;
             background: url('../assets/img/world-map.png') no-repeat center center;
-            background-size: 100% 100%; /* Koordinat hassasiyeti için tam yayılma */
-            opacity: 0.18; z-index: 1;
+            background-size: 100% 100%; 
+            opacity: 0.22; z-index: 1;
             filter: brightness(1.1) contrast(1.2);
             pointer-events: none;
         }
@@ -47,90 +47,85 @@
 
         /* --- NAVBAR --- */
         .navbar {
-            width: 100%; height: 80px; 
+            width: 100%; height: 60px; /* Boyut küçültüldü */
             background: rgba(8, 8, 8, 0.98);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex; align-items: center; padding: 0 40px;
+            display: flex; align-items: center; padding: 0 30px;
             z-index: 2000; flex-shrink: 0;
             backdrop-filter: blur(15px);
         }
-        .main-logo { height: 45px; cursor: pointer; filter: drop-shadow(0 0 10px var(--neon-blue)); }
-        .nav-center { position: absolute; left: 50%; transform: translateX(-50%); letter-spacing: 12px; color: #1a1a1a; font-weight: 900; }
+        .main-logo { height: 35px; cursor: pointer; filter: drop-shadow(0 0 10px var(--neon-blue)); }
+        .nav-center { position: absolute; left: 50%; transform: translateX(-50%); letter-spacing: 8px; color: #1a1a1a; font-weight: 900; font-size: 0.8rem; }
 
-        /* --- ANA İÇERİK --- */
+        /* --- ANA İÇERİK (KÜÇÜLTÜLMÜŞ PANEL) --- */
         main { 
             flex: 1 0 auto; 
             display: flex; flex-direction: column; align-items: center; 
-            padding: 40px 20px; z-index: 10; position: relative;
+            padding: 30px 20px; z-index: 10; position: relative;
         }
 
-        .recon-container { width: 100%; max-width: 1100px; }
+        /* Konteyner genişliği 1100px'den 650px'e düşürüldü (%50 küçülme) */
+        .recon-container { width: 100%; max-width: 650px; }
 
         .search-bay {
-            background: var(--panel-bg); border: 1px solid #1a1a1a; padding: 35px;
-            border-radius: 15px; backdrop-filter: blur(30px); display: flex; gap: 20px;
-            position: relative; overflow: hidden; box-shadow: 0 0 60px rgba(0,0,0,0.9);
-            margin-bottom: 30px;
+            background: var(--panel-bg); border: 1px solid #1a1a1a; padding: 15px; /* Padding düşürüldü */
+            border-radius: 10px; backdrop-filter: blur(30px); display: flex; gap: 12px;
+            position: relative; overflow: hidden; box-shadow: 0 0 40px rgba(0,0,0,0.9);
+            margin-bottom: 20px;
         }
 
         input {
-            flex: 1; background: #000; border: 1px solid #222; padding: 18px;
+            flex: 1; background: #000; border: 1px solid #222; padding: 10px;
             color: var(--neon-blue); font-family: 'JetBrains Mono', monospace;
-            font-size: 15px; border-radius: 5px; outline: none; letter-spacing: 2px;
+            font-size: 12px; border-radius: 4px; outline: none; letter-spacing: 1px;
         }
 
         .scan-btn {
-            padding: 0 45px; background: none; border: 1px solid var(--neon-blue);
+            padding: 0 25px; background: none; border: 1px solid var(--neon-blue);
             color: var(--neon-blue); font-family: 'Orbitron'; cursor: pointer;
-            letter-spacing: 4px; font-weight: 900; transition: 0.4s;
+            letter-spacing: 2px; font-weight: 900; transition: 0.4s; font-size: 0.7rem;
         }
-        .scan-btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 40px var(--neon-blue); }
+        .scan-btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 20px var(--neon-blue); }
 
+        /* SONUÇLAR IZGARASI */
         .intelligence-grid {
-            display: grid; grid-template-columns: 1fr 2fr; gap: 20px; display: none;
-            animation: slideUp 0.6s ease-out; margin-bottom: 50px;
+            display: grid; grid-template-columns: 1fr 1.5fr; gap: 15px; display: none;
+            animation: slideUp 0.6s ease-out; margin-bottom: 30px;
         }
 
-        .info-card { background: var(--panel-bg); border: 1px solid #1a1a1a; padding: 30px; border-radius: 12px; }
-        .data-label { color: var(--neon-blue); font-size: 8px; letter-spacing: 2px; margin-bottom: 5px; font-weight: bold; }
-        .data-value { color: #fff; font-family: 'JetBrains Mono'; font-size: 14px; margin-bottom: 20px; border-bottom: 1px solid #111; padding-bottom: 5px; }
+        .info-card { background: var(--panel-bg); border: 1px solid #1a1a1a; padding: 15px; border-radius: 8px; }
+        .data-label { color: var(--neon-blue); font-size: 7px; letter-spacing: 1px; margin-bottom: 3px; font-weight: bold; }
+        .data-value { color: #fff; font-family: 'JetBrains Mono'; font-size: 11px; margin-bottom: 12px; border-bottom: 1px solid #111; padding-bottom: 3px; }
 
-        .pivot-matrix { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .pivot-matrix { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         .pivot-link {
-            text-decoration: none; border: 1px solid #111; padding: 15px; text-align: center;
-            color: #444; font-size: 9px; font-weight: 700; transition: 0.3s; background: rgba(0,0,0,0.5);
+            text-decoration: none; border: 1px solid #111; padding: 8px; text-align: center;
+            color: #444; font-size: 8px; font-weight: 700; transition: 0.3s; background: rgba(0,0,0,0.5);
         }
-        .pivot-link:hover { border-color: var(--neon-green); color: var(--neon-green); box-shadow: 0 0 15px rgba(0, 255, 65, 0.1); }
+        .pivot-link:hover { border-color: var(--neon-green); color: var(--neon-green); box-shadow: 0 0 10px rgba(0, 255, 65, 0.1); }
 
         footer { 
-            width: 100%; height: 50px; 
+            width: 100%; height: 40px; 
             background: rgba(0,0,0,0.95); 
             border-top: 1px solid #111; 
             display: flex; align-items: center; justify-content: center; 
-            font-size: 9px; color: #444; letter-spacing: 4px; 
+            font-size: 8px; color: #444; letter-spacing: 3px; 
             z-index: 2000; flex-shrink: 0; 
             margin-top: auto;
         }
 
-        /* YAN PANEL */
-        .side-panel { position: fixed; top: 110px; right: 40px; display: flex; flex-direction: column; gap: 15px; z-index: 2005; }
+        .side-panel { position: fixed; top: 80px; right: 25px; display: flex; flex-direction: column; gap: 10px; z-index: 2005; }
         .side-btn { 
-            width: 50px; height: 50px; background: rgba(5, 5, 5, 0.9); border: 1px solid var(--neon-blue); 
+            width: 40px; height: 40px; background: rgba(5, 5, 5, 0.9); border: 1px solid var(--neon-blue); 
             color: var(--neon-blue); display: flex; align-items: center; justify-content: center; 
-            cursor: pointer; font-size: 20px; transition: 0.3s;
+            cursor: pointer; font-size: 15px; transition: 0.3s;
         }
 
-        /* HEDEF SİNYALİ (RADAR DOT) */
         #target-pulse {
-            position: fixed; width: 20px; height: 20px; background: var(--neon-red);
+            position: fixed; width: 15px; height: 15px; background: var(--neon-red);
             border-radius: 50%; display: none; z-index: 5; transform: translate(-50%, -50%);
-            box-shadow: 0 0 25px var(--neon-red); pointer-events: none;
+            box-shadow: 0 0 20px var(--neon-red); pointer-events: none;
         }
-        #target-pulse::after {
-            content: ""; position: absolute; inset: -15px; border: 2px solid var(--neon-red);
-            border-radius: 50%; animation: pulseAni 1.5s infinite;
-        }
-        @keyframes pulseAni { 0% { transform: scale(0.5); opacity: 1; } 100% { transform: scale(3); opacity: 0; } }
     </style>
 </head>
 <body>
@@ -154,7 +149,7 @@
 
     <main>
         <div class="recon-container">
-            <h1 style="font-size: 11px; letter-spacing: 6px; color: var(--neon-blue); margin-bottom: 12px; text-align: center;">> ENTER_TARGET_COORDINATES</h1>
+            <h1 style="font-size: 9px; letter-spacing: 4px; color: var(--neon-blue); margin-bottom: 10px; text-align: center;">> ENTER_TARGET_COORDINATES</h1>
             
             <div class="search-bay">
                 <input type="text" id="targetInput" placeholder="IP ADDRESS OR DOMAIN (e.g. 8.8.8.8)" spellcheck="false">
@@ -163,7 +158,7 @@
 
             <div id="resultsArea" class="intelligence-grid">
                 <div class="info-card">
-                    <h1 style="font-size: 9px; color: var(--neon-green); margin-bottom: 25px;">LOCAL_INTEL_REPORT</h1>
+                    <h1 style="font-size: 8px; color: var(--neon-green); margin-bottom: 15px; letter-spacing: 1px;">LOCAL_INTEL_REPORT</h1>
                     <div class="data-label">GEOGRAPHIC_LOCATION</div>
                     <div class="data-value" id="res-country">-</div>
                     <div class="data-label">CITY_COORDINATES</div>
@@ -172,7 +167,7 @@
                     <div class="data-value" id="res-isp">-</div>
                 </div>
                 <div class="info-card">
-                    <h1 style="font-size: 9px; color: var(--neon-blue); margin-bottom: 25px;">GLOBAL_RECON_MATRIX</h1>
+                    <h1 style="font-size: 8px; color: var(--neon-blue); margin-bottom: 15px; letter-spacing: 1px;">GLOBAL_RECON_MATRIX</h1>
                     <div class="pivot-matrix" id="pivotContainer"></div>
                 </div>
             </div>
@@ -211,15 +206,10 @@
                     document.getElementById('res-city').innerText = `${data.city} [LAT: ${data.latitude}, LON: ${data.longitude}]`;
                     document.getElementById('res-isp').innerText = data.org || data.asn || "UNKNOWN";
 
-                    // --- KOORDİNAT HESAPLAMA (GÖRSEL ÇERÇEVE OFSETLERİ EKLENDİ) ---
                     const lat = parseFloat(data.latitude);
                     const lon = parseFloat(data.longitude);
-
-                    // Harita görselindeki HUD çerçevesini telafi eden yüzdeler
-                    // Harita alanı yaklaşık %8 ile %92 genişlik, %15 ile %85 yükseklik arasındadır.
-                    const mapWidthFactor = 84; // %92 - %8
-                    const mapHeightFactor = 70; // %85 - %15
-                    
+                    const mapWidthFactor = 84; 
+                    const mapHeightFactor = 70; 
                     const posX = 8 + (lon + 180) * (mapWidthFactor / 360);
                     const posY = 15 + (90 - lat) * (mapHeightFactor / 180);
                     
