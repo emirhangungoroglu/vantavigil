@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VANTAVIGIL | FILE ANALYSIS</title>
+    <title>VANTAVIGIL | ANALYSIS PRO</title>
     
     <link rel="icon" href="../assets/img/icon.png" type="image/png">
     
@@ -18,7 +18,7 @@
             --neon-red: #ff3131;
             --text-gray: #888888;
             --bg-dark: #020202;
-            --panel-bg: rgba(10, 10, 10, 0.96);
+            --panel-bg: rgba(10, 10, 10, 0.98);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,7 +34,7 @@
             flex-direction: column;
         }
 
-        /* Scanline Efekti */
+        /* Scanline Parazit Efekti */
         body::after {
             content: "";
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -53,97 +53,81 @@
             backdrop-filter: blur(10px);
         }
 
-        .main-logo {
-            height: 55px; width: auto; 
-            filter: grayscale(0.5); cursor: pointer; transition: 0.3s;
-        }
+        .main-logo { height: 55px; cursor: pointer; filter: grayscale(0.5); transition: 0.3s; }
         .main-logo:hover { filter: grayscale(0) drop-shadow(0 0 10px var(--neon-blue)); }
 
         .nav-center {
             position: absolute; left: 50%; transform: translateX(-50%);
-            letter-spacing: 8px; color: #444; font-size: 0.9rem; font-weight: 700;
+            letter-spacing: 8px; color: #444; font-size: 0.85rem; font-weight: 700;
         }
 
         /* --- ANA PANEL --- */
         .container {
-            max-width: 900px;
-            width: 95%;
-            margin: 40px auto;
-            background: var(--panel-bg);
-            border: 1px solid #111;
-            border-radius: 20px;
-            padding: 30px;
-            backdrop-filter: blur(20px);
-            z-index: 10;
-            position: relative;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            max-width: 950px; width: 95%; margin: 30px auto;
+            background: var(--panel-bg); border: 1px solid #111;
+            border-radius: 20px; padding: 35px; backdrop-filter: blur(20px);
+            z-index: 10; position: relative; box-shadow: 0 0 60px rgba(0,0,0,0.9);
         }
 
         h1 {
-            font-size: 1.1rem; letter-spacing: 4px; color: var(--neon-blue);
+            font-size: 1rem; letter-spacing: 4px; color: var(--neon-blue);
             margin-bottom: 25px; border-left: 3px solid var(--neon-blue);
             padding-left: 15px; text-transform: uppercase;
         }
 
         /* DOSYA YÜKLEME ALANI */
         .drop-zone {
-            width: 100%; height: 140px; border: 2px dashed #222;
+            width: 100%; height: 130px; border: 2px dashed #222;
             border-radius: 15px; display: flex; flex-direction: column;
             align-items: center; justify-content: center;
-            cursor: pointer; transition: 0.3s; background: rgba(0,0,0,0.4);
+            cursor: pointer; transition: 0.3s; background: rgba(0,0,0,0.5);
             margin-bottom: 30px;
         }
         .drop-zone:hover { border-color: var(--neon-blue); background: rgba(0, 210, 255, 0.05); }
-        .drop-zone p { color: #555; font-size: 11px; letter-spacing: 2px; }
+        .drop-zone p { color: #555; font-size: 11px; letter-spacing: 2px; text-align: center; line-height: 2; }
 
-        /* HASH SONUÇLARI */
-        .results-grid { display: grid; gap: 12px; margin-bottom: 30px; }
+        /* ANALİZ IZGARASI */
+        .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
         .result-item {
-            background: rgba(0,0,0,0.6); border: 1px solid #111; padding: 15px;
-            border-radius: 10px; display: flex; flex-direction: column; gap: 5px;
+            background: rgba(0,0,0,0.7); border: 1px solid #111; padding: 15px;
+            border-radius: 12px; display: flex; flex-direction: column; gap: 6px;
         }
-        .label { font-size: 9px; color: var(--neon-blue); letter-spacing: 2px; font-weight: 700; }
+        .full-width { grid-column: span 2; }
+        .label { font-size: 9px; color: var(--neon-blue); letter-spacing: 2px; font-weight: 900; }
         .value { font-family: monospace; font-size: 13px; color: #aaa; word-break: break-all; }
 
-        /* VERIFIER SECTION */
-        .verifier-section { border-top: 1px solid #1a1a1a; padding-top: 25px; }
+        /* VERIFIER & INTEL SECTION */
+        .pro-section { border-top: 1px solid #1a1a1a; padding-top: 30px; margin-top: 10px; }
         
         input {
             width: 100%; background: #000; border: 1px solid #222;
-            padding: 15px; color: var(--neon-green); font-family: monospace;
-            border-radius: 8px; margin-bottom: 15px; outline: none; transition: 0.3s;
+            padding: 18px; color: var(--neon-green); font-family: monospace;
+            border-radius: 10px; margin-bottom: 20px; outline: none; transition: 0.3s;
         }
-        input:focus { border-color: var(--neon-green); box-shadow: 0 0 10px rgba(0, 255, 65, 0.1); }
+        input:focus { border-color: var(--neon-green); box-shadow: 0 0 15px rgba(0, 255, 65, 0.1); }
 
         .status-msg {
-            padding: 15px; border-radius: 8px; font-size: 11px;
-            text-align: center; letter-spacing: 2px; display: none; margin-bottom: 20px;
+            padding: 18px; border-radius: 10px; font-size: 11px;
+            text-align: center; letter-spacing: 2px; display: none; margin-bottom: 25px;
         }
         .match { background: rgba(0, 255, 65, 0.1); color: var(--neon-green); border: 1px solid var(--neon-green); }
         .mismatch { background: rgba(255, 49, 49, 0.1); color: var(--neon-red); border: 1px solid var(--neon-red); }
 
-        /* INTEL PIVOT BUTTONS */
-        .intel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; display: none; }
+        /* INTEL BUTONLARI */
+        .intel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; display: none; }
         .intel-btn {
-            text-decoration: none; padding: 12px; text-align: center;
-            font-size: 10px; font-weight: 700; letter-spacing: 2px;
-            transition: 0.3s; cursor: pointer;
+            text-decoration: none; padding: 15px; text-align: center;
+            font-size: 11px; font-weight: 900; letter-spacing: 3px;
+            transition: 0.4s; cursor: pointer; border-radius: 5px;
         }
         .btn-vt { border: 1px solid var(--neon-blue); color: var(--neon-blue); }
-        .btn-vt:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 20px var(--neon-blue); }
-        
         .btn-ha { border: 1px solid var(--neon-green); color: var(--neon-green); }
-        .btn-ha:hover { background: var(--neon-green); color: #000; box-shadow: 0 0 20px var(--neon-green); }
-
-        .intel-notice {
-            font-size: 9px; color: #444; margin-top: 10px; text-align: center;
-            letter-spacing: 1px; display: none;
-        }
+        .intel-btn:hover { background: white; color: black; transform: translateY(-3px); }
 
         footer {
-            width: 100%; height: 40px; background: rgba(0,0,0,0.8);
+            width: 100%; height: 45px; background: rgba(0,0,0,0.9);
             border-top: 1px solid #111; display: flex; align-items: center; 
-            justify-content: center; font-size: 9px; color: #333; letter-spacing: 2px;
+            justify-content: center; font-size: 9px; color: #444; letter-spacing: 3px;
             margin-top: auto;
         }
     </style>
@@ -152,77 +136,94 @@
 
     <nav class="navbar">
         <img src="../assets/img/logo.png" alt="Vantavigil" class="main-logo" onclick="window.location.href='index.html'">
-        <div class="nav-center">ANALYSIS_CENTER // v2.5</div>
+        <div class="nav-center">FORENSIC_ANALYSIS // UNIT_02</div>
     </nav>
 
     <div class="container">
-        <h1>> SOURCE_INTEGRITY</h1>
+        <h1>> SYSTEM_SCAN_INPUT</h1>
         
         <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
-            <p id="infoText">DRAG & DROP FILE OR CLICK TO BROWSE</p>
+            <p id="infoText">AWAITING SOURCE FILE...<br><span style="color:#222; font-size:9px;">DRAG & DROP OR CLICK</span></p>
             <input type="file" id="fileInput" hidden onchange="handleFile(this.files[0])">
         </div>
 
         <div class="results-grid">
-            <div class="result-item">
-                <span class="label">MD5_SIGNATURE</span>
-                <span class="value" id="md5-val">NOT_COMPUTED</span>
-            </div>
-            <div class="result-item">
-                <span class="label">SHA-256_SIGNATURE</span>
-                <span class="value" id="sha256-val">NOT_COMPUTED</span>
-            </div>
+            <div class="result-item"><span class="label">IDENTITY</span><span class="value" id="fname">UNKNOWN</span></div>
+            <div class="result-item"><span class="label">MAGNITUDE</span><span class="value" id="fsize">0 BYTES</span></div>
+            <div class="result-item"><span class="label">MIME_ENCODING</span><span class="value" id="ftype">UNDEFINED</span></div>
+            <div class="result-item"><span class="label">MAGIC_BYTES</span><span class="value" id="fmagic">NO_DATA</span></div>
+            
+            <div class="result-item full-width"><span class="label">MD5_SUM</span><span class="value" id="md5-val">NOT_COMPUTED</span></div>
+            <div class="result-item full-width"><span class="label">SHA-1_SUM</span><span class="value" id="sha1-val">NOT_COMPUTED</span></div>
+            <div class="result-item full-width"><span class="label">SHA-256_SUM</span><span class="value" id="sha256-val">NOT_COMPUTED</span></div>
         </div>
 
-        <div class="verifier-section">
-            <h1>> HASH_VERIFICATION</h1>
-            <input type="text" id="hashInput" placeholder="PASTE HASH TO COMPARE (AUTO-DETECT)..." oninput="verifyHash()">
+        <div class="pro-section">
+            <h1>> SIGNATURE_VERIFICATION</h1>
+            <input type="text" id="hashInput" placeholder="INJECT HASH FOR CROSS-REFERENCE..." oninput="verifyHash()">
             
             <div id="statusBox" class="status-msg"></div>
 
             <div id="intelBox" class="intel-grid">
-                <a id="vt-link" target="_blank" class="intel-btn btn-vt">VIRUSTOTAL REPORT</a>
-                <a id="ha-link" target="_blank" class="intel-btn btn-ha">HYBRID ANALYSIS</a>
-            </div>
-            <div id="intelNotice" class="intel-notice">
-                NOT: EĞER SONUÇ BULUNAMAZSA, BU DOSYA DAHA ÖNCE VERİTABANLARINDA TARANMAMIŞTIR.
+                <a id="vt-link" target="_blank" class="intel-btn btn-vt">VIRUSTOTAL_REPORT</a>
+                <a id="ha-link" target="_blank" class="intel-btn btn-ha">HYBRID_ANALYSIS</a>
             </div>
         </div>
     </div>
 
-    <footer>VANTAVIGIL SECURITY OPERATIONS CENTER // THREAT INTELLIGENCE UNIT</footer>
+    <footer>VANTAVIGIL SECURITY // DIGITAL FORENSICS & THREAT INTEL</footer>
 
     <script>
-        let currentHashes = { md5: '', sha256: '' };
+        let currentHashes = { md5: '', sha1: '', sha256: '' };
 
-        // --- DOSYA ANALİZ MANTIĞI ---
+        // --- ASIL ANALİZ FONKSİYONU ---
         async function handleFile(file) {
             if (!file) return;
+
+            // UI Hazırla
             document.getElementById('infoText').innerText = `ANALYZING: ${file.name.toUpperCase()}`;
             document.getElementById('infoText').style.color = 'var(--neon-blue)';
+            
+            // 1. Metadata Doldur
+            document.getElementById('fname').innerText = file.name;
+            document.getElementById('fsize').innerText = `${file.size.toLocaleString()} BYTES (${(file.size/1024).toFixed(2)} KB)`;
+            document.getElementById('ftype').innerText = file.type || "application/octet-stream";
 
+            // 2. Magic Bytes Oku
+            const magicReader = new FileReader();
+            magicReader.onload = (e) => {
+                const buffer = new Uint8Array(e.target.result);
+                let header = "";
+                for(let i=0; i<buffer.length; i++) header += buffer[i].toString(16).toUpperCase().padStart(2, '0') + " ";
+                document.getElementById('fmagic').innerText = header.trim();
+            };
+            magicReader.readAsArrayBuffer(file.slice(0, 8));
+
+            // 3. Hash Hesaplamaları (Tüm Standartlar)
             const reader = new FileReader();
             reader.onload = function(e) {
                 const rawData = CryptoJS.lib.WordArray.create(e.target.result);
                 
-                // İmzaları Hesapla
                 currentHashes.md5 = CryptoJS.MD5(rawData).toString();
+                currentHashes.sha1 = CryptoJS.SHA1(rawData).toString();
                 currentHashes.sha256 = CryptoJS.SHA256(rawData).toString();
 
-                // Ekrana Yaz
                 document.getElementById('md5-val').innerText = currentHashes.md5;
+                document.getElementById('sha1-val').innerText = currentHashes.sha1;
                 document.getElementById('sha256-val').innerText = currentHashes.sha256;
-                
-                // Intel Linklerini Hazırla
-                showIntelLinks(currentHashes.sha256);
-                
-                // Karşılaştırmayı tazele
-                verifyHash();
+
+                // Intel Panelini Aktif Et
+                const intelBox = document.getElementById('intelBox');
+                intelBox.style.display = 'grid';
+                document.getElementById('vt-link').href = `https://www.virustotal.com/gui/file/${currentHashes.sha256}`;
+                document.getElementById('ha-link').href = `https://www.hybrid-analysis.com/search?query=${currentHashes.sha256}`;
+
+                verifyHash(); // Otomatik karşılaştır
             };
             reader.readAsArrayBuffer(file);
         }
 
-        // --- OTOMATİK ALGILAMA VE DOĞRULAMA MANTIĞI ---
+        // --- DOĞRULAMA MANTIĞI ---
         function verifyHash() {
             const input = document.getElementById('hashInput').value.trim().toLowerCase();
             const statusBox = document.getElementById('statusBox');
@@ -233,52 +234,38 @@
             }
 
             statusBox.style.display = 'block';
-            let detectedType = "";
-            let isMatch = false;
+            let match = false;
+            let type = "UNKNOWN";
 
             if (input.length === 32) {
-                detectedType = "MD5";
-                if (input === currentHashes.md5) isMatch = true;
+                type = "MD5";
+                if (input === currentHashes.md5) match = true;
+            } else if (input.length === 40) {
+                type = "SHA-1";
+                if (input === currentHashes.sha1) match = true;
             } else if (input.length === 64) {
-                detectedType = "SHA-256";
-                if (input === currentHashes.sha256) isMatch = true;
-            } else {
-                detectedType = "UNKNOWN_FORMAT";
+                type = "SHA-256";
+                if (input === currentHashes.sha256) match = true;
             }
 
-            if (isMatch) {
+            if (match) {
                 statusBox.className = 'status-msg match';
-                statusBox.innerText = `[SUCCESS] ${detectedType} SIGNATURE MATCHED`;
+                statusBox.innerText = `[OK] ${type} INTEGRITY VERIFIED`;
             } else {
                 statusBox.className = 'status-msg mismatch';
-                statusBox.innerText = (detectedType === "UNKNOWN_FORMAT") 
-                    ? `[ERROR] INVALID HASH FORMAT` 
-                    : `[WARNING] ${detectedType} MISMATCH DETECTED`;
+                statusBox.innerText = type === "UNKNOWN" ? `[!] INVALID DATA LENGTH` : `[X] ${type} SIGNATURE MISMATCH`;
             }
         }
 
-        // --- DIŞ KAYNAK LİNKLERİ VE BİLGİ NOTU ---
-        function showIntelLinks(sha256) {
-            const intelBox = document.getElementById('intelBox');
-            const intelNotice = document.getElementById('intelNotice');
-            const vtLink = document.getElementById('vt-link');
-            const haLink = document.getElementById('ha-link');
-
-            intelBox.style.display = 'grid';
-            intelNotice.style.display = 'block';
-            
-            vtLink.href = `https://www.virustotal.com/gui/file/${sha256}`;
-            haLink.href = `https://www.hybrid-analysis.com/search?query=${sha256}`;
-        }
-
-        // Sürükle-Bırak Olayları
+        // --- DRAG & DROP & RESET ---
         const dropZone = document.getElementById('dropZone');
-        dropZone.ondragover = (e) => { e.preventDefault(); dropZone.style.borderColor = 'var(--neon-blue)'; };
-        dropZone.ondragleave = () => { dropZone.style.borderColor = '#222'; };
-        dropZone.ondrop = (e) => {
-            e.preventDefault();
-            const file = e.dataTransfer.files[0];
-            handleFile(file);
+        dropZone.ondragover = (e) => { e.preventDefault(); dropZone.style.background = 'rgba(0, 210, 255, 0.1)'; };
+        dropZone.ondragleave = () => { dropZone.style.background = 'rgba(0,0,0,0.5)'; };
+        dropZone.ondrop = (e) => { e.preventDefault(); handleFile(e.dataTransfer.files[0]); };
+
+        window.onpageshow = function() {
+            document.getElementById('hashInput').value = "";
+            document.getElementById('statusBox').style.display = 'none';
         };
     </script>
 </body>
