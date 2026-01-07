@@ -21,7 +21,7 @@
         
         body, html { 
             height: 100%; width: 100%; 
-            background: var(--bg-dark); 
+            background: var(--bg-dark) !important; 
             color: white; 
             font-family: 'Orbitron', sans-serif;
             display: flex; flex-direction: column;
@@ -47,7 +47,7 @@
 
         /* --- NAVBAR --- */
         .navbar {
-            width: 100%; height: 60px; /* Boyut küçültüldü */
+            width: 100%; height: 60px;
             background: rgba(8, 8, 8, 0.98);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex; align-items: center; padding: 0 30px;
@@ -57,18 +57,17 @@
         .main-logo { height: 35px; cursor: pointer; filter: drop-shadow(0 0 10px var(--neon-blue)); }
         .nav-center { position: absolute; left: 50%; transform: translateX(-50%); letter-spacing: 8px; color: #1a1a1a; font-weight: 900; font-size: 0.8rem; }
 
-        /* --- ANA İÇERİK (KÜÇÜLTÜLMÜŞ PANEL) --- */
+        /* --- ANA İÇERİK --- */
         main { 
             flex: 1 0 auto; 
             display: flex; flex-direction: column; align-items: center; 
             padding: 30px 20px; z-index: 10; position: relative;
         }
 
-        /* Konteyner genişliği 1100px'den 650px'e düşürüldü (%50 küçülme) */
         .recon-container { width: 100%; max-width: 650px; }
 
         .search-bay {
-            background: var(--panel-bg); border: 1px solid #1a1a1a; padding: 15px; /* Padding düşürüldü */
+            background: var(--panel-bg); border: 1px solid #1a1a1a; padding: 15px;
             border-radius: 10px; backdrop-filter: blur(30px); display: flex; gap: 12px;
             position: relative; overflow: hidden; box-shadow: 0 0 40px rgba(0,0,0,0.9);
             margin-bottom: 20px;
@@ -87,7 +86,6 @@
         }
         .scan-btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 20px var(--neon-blue); }
 
-        /* SONUÇLAR IZGARASI */
         .intelligence-grid {
             display: grid; grid-template-columns: 1fr 1.5fr; gap: 15px; display: none;
             animation: slideUp 0.6s ease-out; margin-bottom: 30px;
@@ -103,6 +101,23 @@
             color: #444; font-size: 8px; font-weight: 700; transition: 0.3s; background: rgba(0,0,0,0.5);
         }
         .pivot-link:hover { border-color: var(--neon-green); color: var(--neon-green); box-shadow: 0 0 10px rgba(0, 255, 65, 0.1); }
+
+        /* --- SİBER BİLGİ MODALI --- */
+        #vanta-modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none;
+            align-items: center; justify-content: center; z-index: 10000; backdrop-filter: blur(15px);
+        }
+        .modal-content {
+            width: 450px; background: #080808; border: 1px solid #222; padding: 30px;
+            position: relative; box-shadow: 0 0 50px rgba(0,242,255,0.1);
+        }
+        .modal-lang-switch { display: flex; gap: 15px; margin-bottom: 20px; border-bottom: 1px solid #111; padding-bottom: 10px; }
+        .modal-btn { background: none; border: none; color: #444; cursor: pointer; font-family: 'Orbitron'; font-size: 10px; letter-spacing: 1px; }
+        .modal-btn.active { color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
+        .modal-body { font-size: 11px; line-height: 1.8; color: #888; font-family: 'JetBrains Mono'; }
+        .modal-body b { color: var(--neon-blue); }
+        .close-modal { margin-top: 25px; width: 100%; padding: 10px; background: none; border: 1px solid var(--neon-blue); color: var(--neon-blue); cursor: pointer; font-family: 'Orbitron'; font-size: 10px; transition: 0.3s; }
+        .close-modal:hover { background: var(--neon-blue); color: #000; }
 
         footer { 
             width: 100%; height: 40px; 
@@ -139,8 +154,32 @@
     </nav>
 
     <div class="side-panel">
-        <div class="side-btn">?</div>
+        <div class="side-btn" onclick="openInfo()">?</div>
         <div class="side-btn" id="music-btn" onclick="toggleMusic()">🔇</div>
+    </div>
+
+    <div id="vanta-modal">
+        <div class="modal-content">
+            <div class="modal-lang-switch">
+                <button class="modal-btn active" id="m-tr" onclick="setModalLang('tr')">TURKISH</button>
+                <button class="modal-btn" id="m-en" onclick="setModalLang('en')">ENGLISH</button>
+            </div>
+            <div id="info-tr" class="modal-body">
+                <b>NEXUS RECON v1.2</b><br><br>
+                Bu modül, IP ve Alan Adı (Domain) üzerinden gerçek zamanlı istihbarat toplamak için tasarlanmış bir <b>OSINT</b> istasyonudur.<br><br>
+                <b>GİZLİLİK:</b> Sorguladığınız hiçbir veri sunucularımıza kaydedilmez (Zero-Log Policy).<br>
+                <b>VERİ:</b> ipapi.co üzerinden canlı coğrafi konum ve ISP bilgileri çekilir.<br>
+                <b>PİVOT:</b> Küresel siber güvenlik veritabanlarına (Shodan, VirusTotal vb.) anlık erişim sağlanır.
+            </div>
+            <div id="info-en" class="modal-body" style="display: none;">
+                <b>NEXUS RECON v1.2</b><br><br>
+                This module is an <b>OSINT</b> station designed for gathering real-time intelligence on IPs and Domains.<br><br>
+                <b>PRIVACY:</b> No queried data is ever stored on our servers (Zero-Log Policy).<br>
+                <b>DATA:</b> Live geo-location and ISP data are fetched via ipapi.co.<br>
+                <b>PIVOT:</b> Instant access to global cybersecurity databases (Shodan, VirusTotal, etc.) for advanced forensics.
+            </div>
+            <button class="close-modal" onclick="closeInfo()">TERMINATE_LOG</button>
+        </div>
     </div>
 
     <audio id="bg-music" loop><source src="../assets/audio/theme.mp3" type="audio/mpeg"></audio>
@@ -152,7 +191,7 @@
             <h1 style="font-size: 9px; letter-spacing: 4px; color: var(--neon-blue); margin-bottom: 10px; text-align: center;">> ENTER_TARGET_COORDINATES</h1>
             
             <div class="search-bay">
-                <input type="text" id="targetInput" placeholder="IP ADDRESS OR DOMAIN (e.g. 8.8.8.8)" spellcheck="false">
+                <input type="text" id="targetInput" placeholder="IP ADDRESS OR DOMAIN..." spellcheck="false">
                 <button class="scan-btn" onclick="startRecon()">EXECUTE SCAN</button>
             </div>
 
@@ -183,6 +222,16 @@
         const pulse = document.getElementById('target-pulse');
         music.volume = 0.1;
 
+        // --- BİLGİ EKRANI KONTROLLERİ ---
+        function openInfo() { document.getElementById('vanta-modal').style.display = 'flex'; }
+        function closeInfo() { document.getElementById('vanta-modal').style.display = 'none'; }
+        function setModalLang(l) {
+            document.getElementById('info-tr').style.display = l === 'tr' ? 'block' : 'none';
+            document.getElementById('info-en').style.display = l === 'en' ? 'block' : 'none';
+            document.getElementById('m-tr').classList.toggle('active', l === 'tr');
+            document.getElementById('m-en').classList.toggle('active', l === 'en');
+        }
+
         function toggleMusic() {
             if (music.paused) { music.play(); document.getElementById('music-btn').innerText = '🔊'; }
             else { music.pause(); document.getElementById('music-btn').innerText = '🔇'; }
@@ -208,10 +257,8 @@
 
                     const lat = parseFloat(data.latitude);
                     const lon = parseFloat(data.longitude);
-                    const mapWidthFactor = 84; 
-                    const mapHeightFactor = 70; 
-                    const posX = 8 + (lon + 180) * (mapWidthFactor / 360);
-                    const posY = 15 + (90 - lat) * (mapHeightFactor / 180);
+                    const posX = 8 + (lon + 180) * (84 / 360);
+                    const posY = 15 + (90 - lat) * (70 / 180);
                     
                     pulse.style.display = 'block';
                     pulse.style.left = posX + '%';
