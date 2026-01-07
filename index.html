@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VANTAVIGIL | MENU</title>
+    <title>VANTAVIGIL | SECURE_ACCESS</title>
     
     <link rel="icon" href="assets/img/icon.png" type="image/png">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
         :root {
             --neon-blue: #00d2ff;
@@ -28,18 +28,31 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
 
-        /* --- DINAMIK ARKA PLAN CANVAS --- */
+        /* --- ARKA PLAN KATMANLARI --- */
         #canvas-bg {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: -1;
-            background: radial-gradient(circle, #0a0a0a 0%, #020202 100%);
+            z-index: -2;
+            background: radial-gradient(circle, #0f0f0f 0%, #000 100%);
         }
 
-        /* --- PROFESYONEL GRIMSI NAVBAR --- */
+        /* Scanline (Ekran Çizgileri) Efekti */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+            background-size: 100% 3px, 3px 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* --- NAVBAR --- */
         .navbar {
             width: 100%;
             height: 80px;
@@ -54,7 +67,7 @@
 
         .nav-left { flex: 1; display: flex; align-items: center; }
         .main-logo {
-            height: 60px; /* Navbar ile uyumlu ama baskın */
+            height: 60px;
             width: auto;
             filter: grayscale(0.5);
             transition: 0.3s;
@@ -70,7 +83,7 @@
             font-size: 1.8rem;
             letter-spacing: 12px;
             font-weight: 700;
-            color: var(--text-gray); /* İstediğin Gri Yazı */
+            color: var(--text-gray);
             text-transform: uppercase;
         }
 
@@ -83,7 +96,7 @@
             font-family: monospace;
         }
 
-        /* --- PANEL / MODÜL TASARIMI --- */
+        /* --- MODÜLLER --- */
         main {
             flex: 1;
             display: flex;
@@ -102,17 +115,16 @@
 
         .card {
             position: absolute; inset: 0;
-            background: rgba(8, 8, 8, 0.9); /* Arka planın hafif görünmesi için */
+            background: rgba(5, 5, 5, 0.85); /* Arka plan ağı görünür olsun diye şeffaflık verildi */
             border-radius: 20px;
             border: 1px solid #111;
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
             z-index: 1;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px); /* Modern cam efekti */
         }
-        .card-img { width: 150px; filter: grayscale(0.2) drop-shadow(0 0 20px rgba(0, 210, 255, 0.2)); }
+        .card-img { width: 150px; filter: grayscale(0.2) drop-shadow(0 0 20px rgba(0, 210, 255, 0.3)); }
 
-        /* YIRTILMA KAPLAMASI (FOIL) */
         .foil {
             position: absolute; inset: -1px; z-index: 10;
             background: linear-gradient(135deg, #1a1a1a, #050505);
@@ -185,45 +197,59 @@
     </div>
 
     <script>
-        // --- 1. PLEXUS ARKA PLAN SCRIPT ---
+        // --- PLEXUS ARKA PLAN SCRIPTİ (Düzeltilmiş Bağlantı Mantığı) ---
         const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
         let particles = [];
+        const maxDistance = 180; // Çizgilerin çekileceği mesafe (image_cdece9'daki gibi geniş)
 
         function initCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             particles = [];
-            for (let i = 0; i < 80; i++) {
+            for (let i = 0; i < 100; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.4,
-                    vy: (Math.random() - 0.5) * 0.4
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.3
                 });
             }
         }
 
         function drawCanvas() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach((p, i) => {
+            
+            for (let i = 0; i < particles.length; i++) {
+                let p = particles[i];
                 p.x += p.vx; p.y += p.vy;
+
                 if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
                 if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-                
-                ctx.fillStyle = 'rgba(0, 210, 255, 0.2)';
-                ctx.beginPath(); ctx.arc(p.x, p.y, 1.2, 0, Math.PI*2); ctx.fill();
 
+                // Noktayı çiz
+                ctx.fillStyle = 'rgba(0, 210, 255, 0.4)';
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Çizgileri çiz (Bağlantı Mantığı)
                 for (let j = i + 1; j < particles.length; j++) {
-                    const p2 = particles[j];
-                    const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    if (dist < 150) {
-                        ctx.strokeStyle = `rgba(0, 210, 255, ${1 - dist/150 - 0.8})`;
+                    let p2 = particles[j];
+                    let dx = p.x - p2.x;
+                    let dy = p.y - p2.y;
+                    let dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < maxDistance) {
+                        ctx.strokeStyle = `rgba(0, 210, 255, ${1 - dist / maxDistance - 0.7})`; // Şeffaflık mesafeye göre değişir
                         ctx.lineWidth = 0.5;
-                        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
                     }
                 }
-            });
+            }
             requestAnimationFrame(drawCanvas);
         }
 
@@ -231,35 +257,18 @@
         initCanvas();
         drawCanvas();
 
-        // --- 2. GERI TUSU VE UI RESET SCRIPT ---
+        // --- UI SCRIPT ---
         window.onpageshow = function(event) {
             document.getElementById('loading-screen').style.display = 'none';
             document.querySelectorAll('.pack').forEach(p => p.classList.remove('ripped'));
         };
 
-        // --- 3. MODUL ACILIS SCRIPT ---
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        function playRipSound() {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(100, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.start(); osc.stop(audioCtx.currentTime + 0.3);
-        }
-
         function launchModule(element, url) {
             if (element.classList.contains('ripped')) return;
-            
-            playRipSound();
             element.classList.add('ripped');
-
             setTimeout(() => {
                 document.getElementById('loading-screen').style.display = 'flex';
-                setTimeout(() => {
-                    window.location.href = url;
-                }, 2000);
+                setTimeout(() => { window.location.href = url; }, 2000);
             }, 1000);
         }
     </script>
