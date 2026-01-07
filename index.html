@@ -73,10 +73,10 @@
 
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
-        /* --- SAĞ YAN KONTROLLER --- */
+        /* --- SAĞ YAN KONTROLLER (SIDEBAR CONTROLS) --- */
         .side-controls {
             position: fixed; top: 100px; right: 40px;
-            display: flex; flex-direction: column; gap: 15px;
+            display: flex; flex-direction: column; align-items: flex-end; gap: 15px;
             z-index: 1005;
         }
 
@@ -88,20 +88,26 @@
             padding: 12px 20px; font-size: 12px;
             cursor: pointer; letter-spacing: 3px;
             transition: 0.3s; backdrop-filter: blur(5px);
-            text-align: center;
+            text-align: center; width: 100%;
         }
         #info-trigger:hover { background: var(--neon-blue); color: black; box-shadow: 0 0 20px var(--neon-blue); }
 
-        /* Müzik Butonu (Büyütülmüş) */
+        /* YENİ KARE SES BUTONU (Geliştirilmiş Görsellik) */
         #music-toggle {
             background: rgba(0,0,0,0.8);
             border: 1px solid var(--neon-blue);
             color: var(--neon-blue);
-            padding: 15px; font-size: 20px; /* Buton ve ikon büyütüldü */
+            width: 50px; height: 50px; /* Tam kare yapıldı */
+            display: flex; align-items: center; justify-content: center;
             cursor: pointer; transition: 0.3s; backdrop-filter: blur(5px);
-            text-align: center; display: flex; align-items: center; justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 0 5px rgba(0, 210, 255, 0.2);
         }
-        #music-toggle:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--neon-blue); }
+        #music-toggle:hover { 
+            background: rgba(0, 210, 255, 0.1); 
+            box-shadow: 0 0 20px var(--neon-blue); 
+            transform: scale(1.05);
+        }
 
         /* --- INFO MODAL --- */
         #info-modal {
@@ -120,7 +126,7 @@
         .made-by { margin-top: 30px; padding-top: 20px; border-top: 1px solid #111; font-size: 11px; color: var(--neon-green); font-family: monospace; }
         .close-modal { position: absolute; top: 20px; right: 20px; color: #444; cursor: pointer; font-size: 24px; }
 
-        /* --- MODÜL IZGARASI --- */
+        /* --- MODÜL IZGARASI (GRID) --- */
         main {
             flex: 1; display: flex; align-items: center; justify-content: center; gap: 25px;
             z-index: 10; padding: 0 20px;
@@ -142,7 +148,6 @@
 
         .pack.locked { opacity: 0.6; cursor: not-allowed; }
         .pack.locked .card { background: rgba(5, 5, 5, 0.98); border-style: dashed; }
-        .lock-text { color: #1a1a1a; font-size: 0.65rem; letter-spacing: 2px; margin-top: 8px; }
 
         .foil {
             position: absolute; inset: -1px; z-index: 10;
@@ -200,7 +205,7 @@
             <div class="card">
                 <img src="assets/img/logo.png" class="card-img" alt="Encoder">
                 <h2 class="card-title">ENCODER</h2>
-                <span style="font-size: 8px; color: #333; margin-top: 5px;">CLICK TO ACCESS</span>
+                <span style="font-size: 8px; color: #222; margin-top: 5px;">CLICK TO ACCESS</span>
             </div>
             <div class="foil"></div>
         </div>
@@ -209,7 +214,7 @@
             <div class="card">
                 <img src="assets/img/logo.png" class="card-img" alt="Hash Gen">
                 <h2 class="card-title">HASH GEN</h2>
-                <span style="font-size: 8px; color: #333; margin-top: 5px;">CLICK TO ACCESS</span>
+                <span style="font-size: 8px; color: #222; margin-top: 5px;">CLICK TO ACCESS</span>
             </div>
             <div class="foil"></div>
         </div>
@@ -225,9 +230,8 @@
         const music = document.getElementById('bg-theme');
         music.volume = 0.1;
 
-        // --- MODAL VE DİL KONTROLÜ ---
+        // Modal ve Dil Fonksiyonları
         function toggleModal(show) { document.getElementById('info-modal').style.display = show ? 'flex' : 'none'; }
-        
         function setLang(lang) {
             document.getElementById('content-tr').style.display = lang === 'tr' ? 'block' : 'none';
             document.getElementById('content-en').style.display = lang === 'en' ? 'block' : 'none';
@@ -235,7 +239,7 @@
             document.getElementById('btn-en').classList.toggle('active', lang === 'en');
         }
 
-        // --- MÜZİK KONTROLÜ ---
+        // Müzik Toggle
         function toggleMusic() {
             if (music.paused) {
                 music.play();
@@ -246,19 +250,15 @@
             }
         }
 
-        window.onpageshow = function(event) { 
-            document.querySelectorAll('.pack').forEach(p => p.classList.remove('ripped')); 
-        };
-
-        // --- İKİ AŞAMALI KART MANTIĞI ---
+        // İki Aşamalı Kart Mantığı
         function launchModule(element, url) {
             if (element.classList.contains('locked')) return;
 
-            // İlk etkileşimde müziği otomatik başlat
+            // İlk tıklamada müziği otomatik başlat
             if (music.paused) {
                 music.play().then(() => {
                     document.getElementById('music-icon').innerText = '🔊';
-                }).catch(e => console.log("Otomatik ses engellendi."));
+                });
             }
 
             if (!element.classList.contains('ripped')) {
@@ -267,6 +267,10 @@
                 window.location.href = url;
             }
         }
+
+        window.onpageshow = function(event) { 
+            document.querySelectorAll('.pack').forEach(p => p.classList.remove('ripped')); 
+        };
     </script>
 </body>
 </html>
