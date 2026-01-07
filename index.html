@@ -74,67 +74,33 @@
 
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
-        /* --- TANITIM BUTONU (VANTAVIGIL ?) --- */
+        /* --- TANITIM BUTONU --- */
         #info-trigger {
             position: fixed; top: 100px; right: 40px;
             background: rgba(0,0,0,0.8);
             border: 1px solid var(--neon-blue);
             color: var(--neon-blue);
-            padding: 10px 20px;
-            font-size: 12px;
-            cursor: pointer;
-            z-index: 1005;
-            letter-spacing: 3px;
-            transition: 0.3s;
-            backdrop-filter: blur(5px);
+            padding: 10px 20px; font-size: 12px;
+            cursor: pointer; z-index: 1005; letter-spacing: 3px;
+            transition: 0.3s; backdrop-filter: blur(5px);
         }
+        #info-trigger:hover { background: var(--neon-blue); color: black; box-shadow: 0 0 20px var(--neon-blue); }
 
-        #info-trigger:hover {
-            background: var(--neon-blue);
-            color: black;
-            box-shadow: 0 0 20px var(--neon-blue);
-        }
-
-        /* --- TANITIM MODALI (AÇILIR PENCERE) --- */
+        /* --- INFO MODAL --- */
         #info-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
-            display: none; justify-content: center; align-items: center;
-            z-index: 10000;
-            backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center;
+            z-index: 10000; backdrop-filter: blur(10px);
         }
-
         .modal-content {
-            width: 600px;
-            background: #080808;
-            border: 1px solid #222;
-            padding: 40px;
-            position: relative;
-            box-shadow: 0 0 50px rgba(0,0,0,1);
+            width: 600px; background: #080808; border: 1px solid #222; padding: 40px;
+            position: relative; box-shadow: 0 0 50px rgba(0,0,0,1);
         }
-
-        .lang-switch {
-            display: flex; gap: 20px; margin-bottom: 30px; border-bottom: 1px solid #222; padding-bottom: 10px;
-        }
-
-        .lang-btn {
-            background: none; border: none; color: #444; cursor: pointer;
-            font-family: 'Orbitron'; font-size: 14px; letter-spacing: 2px; transition: 0.3s;
-        }
-
+        .lang-switch { display: flex; gap: 20px; margin-bottom: 30px; border-bottom: 1px solid #222; padding-bottom: 10px; }
+        .lang-btn { background: none; border: none; color: #444; cursor: pointer; font-family: 'Orbitron'; font-size: 14px; letter-spacing: 2px; transition: 0.3s; }
         .lang-btn.active { color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
-
-        .info-text-area { font-family: 'Inter', sans-serif; line-height: 1.8; font-size: 14px; color: #ccc; }
-
-        .made-by {
-            margin-top: 30px; padding-top: 20px; border-top: 1px solid #111;
-            font-size: 11px; color: var(--neon-green); font-family: monospace; letter-spacing: 1px;
-        }
-
-        .close-modal {
-            position: absolute; top: 20px; right: 20px; color: #444; cursor: pointer; font-size: 20px;
-        }
-        .close-modal:hover { color: white; }
+        .made-by { margin-top: 30px; padding-top: 20px; border-top: 1px solid #111; font-size: 11px; color: var(--neon-green); font-family: monospace; }
+        .close-modal { position: absolute; top: 20px; right: 20px; color: #444; cursor: pointer; font-size: 24px; }
 
         /* --- MODÜL IZGARASI --- */
         main {
@@ -143,7 +109,7 @@
         }
 
         .pack { width: 210px; height: 320px; position: relative; cursor: pointer; transition: 0.4s; }
-        .pack:not(.locked):hover { transform: translateY(-10px); filter: drop-shadow(0 0 15px var(--neon-blue)); }
+        .pack:not(.locked):hover { transform: translateY(-15px); filter: drop-shadow(0 0 15px var(--neon-blue)); }
 
         .card {
             position: absolute; inset: 0; background: rgba(8, 8, 8, 0.95);
@@ -169,26 +135,16 @@
 
         .ripped .foil { clip-path: polygon(100% 100%, 100% 100%, 100% 100%, 100% 100%); opacity: 0; }
 
-        footer {
-            width: 100%; height: 40px; background: rgba(0,0,0,0.8);
-            border-top: 1px solid #111; display: flex; align-items: center; 
-            justify-content: center; font-size: 10px; color: #333; letter-spacing: 2px;
-        }
+        footer { width: 100%; height: 40px; background: rgba(0,0,0,0.8); border-top: 1px solid #111; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #333; letter-spacing: 2px; }
 
     </style>
 </head>
 <body>
 
     <nav class="navbar">
-        <div class="nav-left">
-            <img src="assets/img/logo.png" alt="Vantavigil" class="main-logo">
-        </div>
-        <div class="nav-center">
-            <h1 class="brand-text">VANTAVIGIL</h1>
-        </div>
-        <div class="nav-right">
-            <span class="status-dot"></span> STATUS: <span style="color:var(--neon-green)">ONLINE</span>
-        </div>
+        <div class="nav-left"><img src="assets/img/logo.png" alt="Logo" class="main-logo"></div>
+        <div class="nav-center"><h1 class="brand-text">VANTAVIGIL</h1></div>
+        <div class="nav-right"><span class="status-dot"></span> STATUS: <span style="color:var(--neon-green)">ONLINE</span></div>
     </nav>
 
     <div id="info-trigger" onclick="toggleModal(true)">VANTAVIGIL ?</div>
@@ -200,18 +156,12 @@
                 <button class="lang-btn active" id="btn-tr" onclick="setLang('tr')">TURKISH</button>
                 <button class="lang-btn" id="btn-en" onclick="setLang('en')">ENGLISH</button>
             </div>
-            
             <div class="info-text-area" id="content-tr">
-                Vantavigil üzerinde çalıştığım, %100 güvenlik odaklı sistemler bütünüdür. 
-                Sistemimizde herhangi bir kayıt (log) tutulmaz; önceliğimiz kullanıcı kolaylığı ve maksimum erişilebilirliktir. 
-                Her bir modül, kararlılığı sağlamak amacıyla defalarca test edildikten sonra yayına alınır.
+                Vantavigil üzerinde çalıştığım, %100 güvenlik odaklı sistemler bütünüdür. Herhangi bir kayıt (log) tutulmaz. Önceliğimiz kullanıcı kolaylığı ve maksimum erişilebilirliktir. Modüller kararlılık testlerinden sonra yayına alınır.
                 <div class="made-by">Emirhan Güngöroğlu tarafından yapılmıştır.</div>
             </div>
-
             <div class="info-text-area" id="content-en" style="display: none;">
-                Vantavigil is a suite of 100% security-focused systems I am currently developing. 
-                No logs are kept within our infrastructure; our priority is user convenience and maximum accessibility. 
-                Every module is rigorously tested multiple times to ensure stability before being released.
+                Vantavigil is a suite of 100% security-focused systems. No logs are kept. Our priority is user convenience and accessibility. Modules are released after rigorous stability testing.
                 <div class="made-by">Made by Emirhan Güngöroğlu.</div>
             </div>
         </div>
@@ -220,39 +170,36 @@
     <main>
         <div class="pack" onclick="launchModule(this, '/vantavigil/encoder')">
             <div class="card">
-                <img src="assets/img/logo.png" class="card-img" alt="Logo">
+                <img src="assets/img/logo.png" class="card-img" alt="Encoder">
                 <h2 class="card-title">ENCODER</h2>
             </div>
             <div class="foil"></div>
         </div>
         
-        <div class="pack locked"><div class="card"><div class="lock-text">COMING SOON</div></div><div class="foil"></div></div>
-        <div class="pack locked"><div class="card"><div class="lock-text">COMING SOON</div></div><div class="foil"></div></div>
-        <div class="pack locked"><div class="card"><div class="lock-text">COMING SOON</div></div><div class="foil"></div></div>
-        <div class="pack locked"><div class="card"><div class="lock-text">COMING SOON</div></div><div class="foil"></div></div>
+        <div class="pack" onclick="launchModule(this, '/vantavigil/hash-gen')">
+            <div class="card">
+                <img src="assets/img/logo.png" class="card-img" alt="Hash Gen">
+                <h2 class="card-title">HASH GEN</h2>
+            </div>
+            <div class="foil"></div>
+        </div>
+
+        <div class="pack locked"><div class="card"><h2 class="card-title" style="color:#111">COMING SOON</h2></div><div class="foil"></div></div>
+        <div class="pack locked"><div class="card"><h2 class="card-title" style="color:#111">COMING SOON</h2></div><div class="foil"></div></div>
+        <div class="pack locked"><div class="card"><h2 class="card-title" style="color:#111">COMING SOON</h2></div><div class="foil"></div></div>
     </main>
 
     <footer>VANTAVIGIL SECURITY OPERATIONS CENTER // INTERNAL ACCESS ONLY</footer>
 
     <script>
-        // Modal Kontrolü
-        function toggleModal(show) {
-            document.getElementById('info-modal').style.display = show ? 'flex' : 'none';
-        }
-
-        // Dil Değiştirme
+        function toggleModal(show) { document.getElementById('info-modal').style.display = show ? 'flex' : 'none'; }
         function setLang(lang) {
             document.getElementById('content-tr').style.display = lang === 'tr' ? 'block' : 'none';
             document.getElementById('content-en').style.display = lang === 'en' ? 'block' : 'none';
             document.getElementById('btn-tr').classList.toggle('active', lang === 'tr');
             document.getElementById('btn-en').classList.toggle('active', lang === 'en');
         }
-
-        // UI Reset (Geri Tuşu)
-        window.onpageshow = function(event) {
-            document.querySelectorAll('.pack').forEach(p => p.classList.remove('ripped'));
-        };
-
+        window.onpageshow = function(event) { document.querySelectorAll('.pack').forEach(p => p.classList.remove('ripped')); };
         function launchModule(element, url) {
             if (element.classList.contains('locked')) return;
             element.classList.add('ripped');
