@@ -3,227 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VANTAVIGIL | DATA_PACK_DECRYPTOR</title>
+    <title>VANTAVIGIL | MODULE SELECTOR</title>
     <style>
         :root {
             --neon-blue: #00d2ff;
             --neon-green: #00ff41;
-            --bg-dark: #050505;
-            --pack-gold: linear-gradient(135deg, #1a1a1a 0%, #333 50%, #1a1a1a 100%);
+            --bg: #050505;
+            --card-bg: #111;
         }
 
-        body, html {
-            margin: 0; padding: 0;
-            background: var(--bg-dark);
-            color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            perspective: 1000px;
+        body {
+            margin: 0; background: var(--bg); color: white;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 100vh; overflow: hidden;
         }
 
-        /* Arka Plan Grid */
-        body::after {
-            content: "";
-            position: absolute;
-            width: 200%; height: 200%;
-            background-image: linear-gradient(#0a0a0a 1px, transparent 1px), linear-gradient(90deg, #0a0a0a 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -1;
-            transform: rotateX(60deg);
-            animation: moveGrid 20s linear infinite;
+        .header { margin-bottom: 50px; text-align: center; }
+        .header h1 { letter-spacing: 10px; color: var(--neon-blue); text-shadow: 0 0 15px var(--neon-blue); }
+
+        /* PANEL GRID */
+        .module-grid {
+            display: flex; gap: 30px; perspective: 1000px;
         }
 
-        @keyframes moveGrid { from { transform: rotateX(60deg) translateY(0); } to { transform: rotateX(60deg) translateY(50px); } }
-
-        /* PAKET (PACK) TASARIMI */
-        .pack-container {
-            width: 260px;
-            height: 380px;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform-style: preserve-3d;
-            z-index: 100;
+        /* PAKET TASARIMI */
+        .pack {
+            width: 220px; height: 320px;
+            position: relative; cursor: pointer;
+            transition: transform 0.3s;
         }
 
-        .pack-container:hover {
-            transform: scale(1.05) rotateY(10deg);
+        .pack:hover { transform: translateY(-10px); }
+
+        /* YIRTILACAK ÜST KISIM */
+        .pack-top {
+            position: absolute; top: 0; left: 0; width: 100%; height: 50%;
+            background: linear-gradient(135deg, #222, #333);
+            border: 1px solid #444; border-bottom: none;
+            z-index: 5;
+            display: flex; align-items: center; justify-content: center;
+            /* Yırtılma efekti için jagged edge (tırtıklı alt kenar) */
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 85% 90%, 70% 100%, 50% 90%, 30% 100%, 15% 90%, 0% 100%);
+            transition: transform 0.8s cubic-bezier(0.5, 0, 0.5, 1);
         }
 
-        .pack-visual {
-            width: 100%;
-            height: 100%;
-            background: var(--pack-gold);
-            border: 2px solid #444;
-            border-radius: 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 0 30px rgba(0,0,0,0.8), inset 0 0 50px rgba(0,0,0,0.5);
-            position: relative;
-            overflow: hidden;
+        /* ALT KISIM (SABİT) */
+        .pack-bottom {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 50%;
+            background: linear-gradient(135deg, #222, #333);
+            border: 1px solid #444; border-top: none;
+            z-index: 4;
+            clip-path: polygon(0% 0%, 15% 10%, 30% 0%, 50% 10%, 70% 0%, 85% 10%, 100% 0%, 100% 100%, 0% 100%);
         }
 
-        /* Paket Üstündeki Parlama Efekti */
-        .pack-visual::before {
-            content: "";
-            position: absolute;
-            top: -150%; left: -150%;
-            width: 300%; height: 300%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: rotate(45deg);
-            animation: shine 4s infinite;
+        /* İÇERİK (KART) */
+        .content-card {
+            position: absolute; top: 10%; left: 5%; width: 90%; height: 80%;
+            background: #000; border: 1px solid var(--neon-blue);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 2; transition: 0.5s;
         }
 
-        @keyframes shine { 0% { left: -150%; } 100% { left: 150%; } }
-
-        .v-logo-central {
-            font-size: 80px;
-            font-weight: 900;
-            color: var(--neon-blue);
-            text-shadow: 0 0 20px var(--neon-blue);
-            margin-bottom: 10px;
-        }
-
-        .pack-label {
-            letter-spacing: 5px;
-            font-size: 12px;
-            color: #888;
-            text-transform: uppercase;
-        }
-
-        /* SARSILMA VE PATLAMA EFEKTLERİ */
-        .shake { animation: shakeAnim 0.1s infinite; }
-        @keyframes shakeAnim {
-            0% { transform: translate(2px, 1px) rotate(0deg); }
-            50% { transform: translate(-1px, -2px) rotate(-1deg); }
-            100% { transform: translate(1px, 2px) rotate(1deg); }
-        }
-
-        .burst {
-            position: absolute;
-            width: 10px; height: 10px;
-            background: white;
-            border-radius: 50%;
-            box-shadow: 0 0 100px 50px white;
+        /* YIRTILMA ANİMASYONU AKTİF */
+        .pack.ripped .pack-top {
+            transform: translateY(-150%) rotate(-10deg);
             opacity: 0;
-            z-index: 200;
-            pointer-events: none;
         }
 
-        /* REVEAL (AÇILAN KART) */
-        #access-card {
-            position: absolute;
-            width: 240px;
-            height: 360px;
-            background: #111;
-            border: 2px solid var(--neon-green);
-            border-radius: 15px;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 150;
-            box-shadow: 0 0 50px var(--neon-green);
+        .pack.ripped .content-card {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 20px var(--neon-green);
         }
 
-        /* ALT BİLGİ */
-        .instruction {
-            position: absolute;
-            bottom: 50px;
-            color: var(--neon-blue);
-            letter-spacing: 2px;
-            font-size: 14px;
-            animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        /* MODÜL BİLGİLERİ */
+        .mod-title { font-weight: bold; letter-spacing: 2px; margin-top: 10px; }
+        .mod-status { font-size: 10px; color: #666; }
+        .lock-icon { font-size: 30px; opacity: 0.3; }
+
+        /* KİLİTLİ PANEL */
+        .locked { cursor: not-allowed; filter: grayscale(1); }
 
     </style>
 </head>
 <body>
 
-    <div class="instruction" id="hint">CLICK TO DECRYPT DATA PACK</div>
+    <div class="header">
+        <h1>VANTAVIGIL</h1>
+        <p style="color: #444;">SELECT SECURE MODULE</p>
+    </div>
 
-    <div class="pack-container" id="mainPack" onclick="openPack()">
-        <div class="pack-visual">
-            <div class="v-logo-central">V</div>
-            <div class="pack-label">VANTAVIGIL</div>
-            <div style="font-size: 10px; margin-top: 20px; color: #555;">[SECURE_INTEL_PACKAGE]</div>
+    <div class="module-grid">
+        
+        <div class="pack" onclick="tearPack(this, '/encoder')">
+            <div class="pack-top"><span style="color:#555">SECURE</span></div>
+            <div class="content-card">
+                <div style="font-size: 40px;">⚡</div>
+                <div class="mod-title">ENCODER</div>
+                <div class="mod-status">ACTIVE_v1.0</div>
+            </div>
+            <div class="pack-bottom"></div>
         </div>
-    </div>
 
-    <div id="access-card">
-        <h2 style="color: var(--neon-green);">ACCESS GRANTED</h2>
-        <div style="width: 80px; height: 2px; background: var(--neon-green); margin: 10px 0;"></div>
-        <p style="font-size: 12px; color: #aaa;">IDENTITY: EMIRHAN_GUNGOROGLU</p>
-        <p style="font-size: 10px; color: #555;">REDIRECTING TO MODULES...</p>
-    </div>
+        <div class="pack locked" onclick="alert('Module encrypted. Stay tuned.')">
+            <div class="pack-top"><span style="color:#555">LOCKED</span></div>
+            <div class="content-card">
+                <div class="lock-icon">🔒</div>
+                <div class="mod-title">LOG_ANALYSIS</div>
+                <div class="mod-status">COMING_SOON</div>
+            </div>
+            <div class="pack-bottom"></div>
+        </div>
 
-    <div class="burst" id="burstEffect"></div>
+        <div class="pack locked">
+            <div class="pack-top"><span style="color:#555">LOCKED</span></div>
+            <div class="content-card">
+                <div class="lock-icon">🔒</div>
+                <div class="mod-title">INTEL_FEED</div>
+                <div class="mod-status">COMING_SOON</div>
+            </div>
+            <div class="pack-bottom"></div>
+        </div>
+
+    </div>
 
     <script>
-        const pack = document.getElementById('mainPack');
-        const card = document.getElementById('access-card');
-        const burst = document.getElementById('burstEffect');
-        const hint = document.getElementById('hint');
-
-        // Ses Motoru
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        function playSfx(freq, type, dur, vol) {
+
+        function playRipSound() {
             const osc = audioCtx.createOscillator();
+            const noise = audioCtx.createBufferSource();
+            const bufferSize = audioCtx.sampleRate * 0.5;
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = Math.random() * 2 - 1;
+            }
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.value = 1000;
+
             const gain = audioCtx.createGain();
-            osc.type = type;
-            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            gain.gain.setValueAtTime(vol, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + dur);
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.start(); osc.stop(audioCtx.currentTime + dur);
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+
+            noise.buffer = buffer;
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+            noise.start();
         }
 
-        function openPack() {
-            hint.style.display = 'none';
-            // 1. Aşama: Sarsılma (Decryption)
-            pack.classList.add('shake');
-            playSfx(100, 'sawtooth', 1, 0.2); // Low hum
-            
-            setTimeout(() => {
-                // 2. Aşama: Patlama (The Burst)
-                pack.classList.remove('shake');
-                pack.style.display = 'none';
-                burst.style.opacity = '1';
-                burst.style.transform = 'scale(50)';
-                burst.style.transition = 'transform 0.5s ease-out, opacity 0.5s ease-out';
-                
-                playSfx(800, 'square', 0.2, 0.3); // Pop sound
-                playSfx(400, 'sine', 1.5, 0.1); // Afterglow sound
+        function tearPack(element, targetUrl) {
+            if (element.classList.contains('ripped')) return;
 
-                setTimeout(() => {
-                    burst.style.opacity = '0';
-                    // 3. Aşama: Kartın Görünmesi
-                    card.style.display = 'flex';
-                    card.style.animation = 'scaleUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
-                    
-                    // 4. Aşama: Yönlendirme (Burayı istediğin linkle değiştir)
-                    setTimeout(() => {
-                        // Sitenin asıl encoder kısmına buradan gider
-                        window.location.href = "#encoder"; 
-                        alert("Erişim Onaylandı! Encoder modülüne aktarılıyorsunuz.");
-                    }, 2000);
-                }, 400);
-            }, 1500); // 1.5 saniye sarsılır sonra patlar
+            playRipSound();
+            element.classList.add('ripped');
+
+            // 1.5 saniye sonra yönlendir
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 1500);
         }
     </script>
-
-    <style>
-        @keyframes scaleUp {
-            from { transform: scale(0) rotate(-10deg); opacity: 0; }
-            to { transform: scale(1) rotate(0deg); opacity: 1; }
-        }
-    </style>
 </body>
 </html>
