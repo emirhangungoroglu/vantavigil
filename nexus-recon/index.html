@@ -4,47 +4,191 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VANTAVIGIL | NEXUS RECON</title>
+    
     <link rel="icon" href="../assets/img/icon.png" type="image/png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
-        :root { --neon-blue: #00f2ff; --neon-green: #00ff41; --neon-red: #ff3131; --bg-dark: #020202; --panel-bg: rgba(5, 5, 5, 0.95); }
+
+        :root {
+            --neon-blue: #00f2ff;
+            --neon-green: #00ff41;
+            --neon-red: #ff3131;
+            --bg-dark: #020202;
+            --panel-bg: rgba(5, 5, 5, 0.95);
+        }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body, html { height: 100%; width: 100%; background: var(--bg-dark) !important; color: white; font-family: 'Orbitron', sans-serif; display: flex; flex-direction: column; overflow-x: hidden; }
-        .map-container { position: fixed; inset: 0; background: url('../assets/img/world-map.png') no-repeat center center; background-size: 100% 100%; opacity: 0.22; z-index: 1; filter: brightness(1.1) contrast(1.2); pointer-events: none; }
-        body::after { content: ""; position: fixed; inset: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%); background-size: 100% 4px; z-index: 2; pointer-events: none; }
-        .navbar { width: 100%; height: 60px; background: rgba(8, 8, 8, 0.98); border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; padding: 0 30px; z-index: 2000; flex-shrink: 0; backdrop-filter: blur(15px); }
+        
+        body, html { 
+            height: 100%; width: 100%; 
+            background: var(--bg-dark) !important; 
+            color: white; 
+            font-family: 'Orbitron', sans-serif;
+            display: flex; flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* --- BACKGROUND --- */
+        .map-container {
+            position: fixed; inset: 0;
+            background: url('../assets/img/world-map.png') no-repeat center center;
+            background-size: 100% 100%; 
+            opacity: 0.22; z-index: 1;
+            filter: brightness(1.1) contrast(1.2);
+            pointer-events: none;
+        }
+
+        body::after {
+            content: ""; position: fixed; inset: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 4px; z-index: 2; 
+            pointer-events: none;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            width: 100%; height: 60px;
+            background: rgba(8, 8, 8, 0.98);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex; align-items: center; padding: 0 30px;
+            z-index: 2000; flex-shrink: 0;
+            backdrop-filter: blur(15px);
+        }
         .main-logo { height: 35px; cursor: pointer; filter: drop-shadow(0 0 10px var(--neon-blue)); }
         .nav-center { position: absolute; left: 50%; transform: translateX(-50%); letter-spacing: 8px; color: #1a1a1a; font-weight: 900; font-size: 0.8rem; }
+
+        /* --- MAIN CONTENT --- */
         main { flex: 1 0 auto; display: flex; flex-direction: column; align-items: center; padding: 30px 20px; z-index: 10; position: relative; }
         .recon-container { width: 100%; max-width: 650px; }
-        .search-bay { background: var(--panel-bg); border: 1px solid #1a1a1a; padding: 15px; border-radius: 10px; backdrop-filter: blur(30px); display: flex; gap: 12px; position: relative; overflow: hidden; box-shadow: 0 0 40px rgba(0,0,0,0.9); margin-bottom: 20px; }
-        input { flex: 1; background: #000; border: 1px solid #222; padding: 10px; color: var(--neon-blue); font-family: 'JetBrains Mono', monospace; font-size: 12px; border-radius: 4px; outline: none; letter-spacing: 1px; }
-        .scan-btn { padding: 0 25px; background: none; border: 1px solid var(--neon-blue); color: var(--neon-blue); font-family: 'Orbitron'; cursor: pointer; letter-spacing: 2px; font-weight: 900; transition: 0.4s; font-size: 0.7rem; }
+
+        .search-bay {
+            background: var(--panel-bg); border: 1px solid #1a1a1a; padding: 15px;
+            border-radius: 10px; backdrop-filter: blur(30px); display: flex; gap: 12px;
+            position: relative; overflow: hidden; box-shadow: 0 0 40px rgba(0,0,0,0.9);
+            margin-bottom: 20px;
+        }
+
+        input {
+            flex: 1; background: #000; border: 1px solid #222; padding: 10px;
+            color: var(--neon-blue); font-family: 'JetBrains Mono', monospace;
+            font-size: 12px; border-radius: 4px; outline: none; letter-spacing: 1px;
+        }
+
+        .scan-btn {
+            padding: 0 25px; background: none; border: 1px solid var(--neon-blue);
+            color: var(--neon-blue); font-family: 'Orbitron'; cursor: pointer;
+            letter-spacing: 2px; font-weight: 900; transition: 0.4s; font-size: 0.7rem;
+        }
         .scan-btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 20px var(--neon-blue); }
-        .intelligence-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 15px; display: none; animation: slideUp 0.6s ease-out; margin-bottom: 30px; }
+
+        .intelligence-grid {
+            display: grid; grid-template-columns: 1fr 1.5fr; gap: 15px; display: none;
+            animation: slideUp 0.6s ease-out; margin-bottom: 30px;
+        }
+
         .info-card { background: var(--panel-bg); border: 1px solid #1a1a1a; padding: 15px; border-radius: 8px; }
         .data-label { color: var(--neon-blue); font-size: 7px; letter-spacing: 1px; margin-bottom: 3px; font-weight: bold; }
         .data-value { color: #fff; font-family: 'JetBrains Mono'; font-size: 11px; margin-bottom: 12px; border-bottom: 1px solid #111; padding-bottom: 3px; }
+
         .pivot-matrix { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .pivot-link { text-decoration: none; border: 1px solid #111; padding: 8px; text-align: center; color: #444; font-size: 8px; font-weight: 700; transition: 0.3s; background: rgba(0,0,0,0.5); }
+        .pivot-link {
+            text-decoration: none; border: 1px solid #111; padding: 8px; text-align: center;
+            color: #444; font-size: 8px; font-weight: 700; transition: 0.3s; background: rgba(0,0,0,0.5);
+        }
         .pivot-link:hover { border-color: var(--neon-green); color: var(--neon-green); box-shadow: 0 0 10px rgba(0, 255, 65, 0.1); }
-        footer { width: 100%; height: 40px; background: rgba(0,0,0,0.95); border-top: 1px solid #111; display: flex; align-items: center; justify-content: center; font-size: 8px; color: #444; letter-spacing: 3px; z-index: 2000; flex-shrink: 0; margin-top: auto; }
+
+        /* --- UPDATED INFO MODAL --- */
+        #vanta-modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.92); display: none;
+            align-items: center; justify-content: center; z-index: 10000; backdrop-filter: blur(20px);
+        }
+        .modal-content {
+            width: 500px; background: #080808; border: 1px solid #222; padding: 35px;
+            position: relative; box-shadow: 0 0 60px rgba(0,242,255,0.1);
+        }
+        .modal-lang-switch { display: flex; gap: 15px; margin-bottom: 20px; border-bottom: 1px solid #111; padding-bottom: 10px; }
+        .modal-btn { background: none; border: none; color: #444; cursor: pointer; font-family: 'Orbitron'; font-size: 10px; }
+        .modal-btn.active { color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
+        .modal-body { font-size: 10.5px; line-height: 1.7; color: #999; font-family: 'JetBrains Mono'; }
+        .modal-body b { color: var(--neon-blue); }
+        .modal-body h4 { color: var(--neon-green); margin: 15px 0 5px; font-size: 11px; letter-spacing: 1px; }
+        .close-modal { margin-top: 25px; width: 100%; padding: 12px; background: none; border: 1px solid var(--neon-blue); color: var(--neon-blue); cursor: pointer; font-family: 'Orbitron'; font-size: 10px; }
+
+        footer { 
+            width: 100%; height: 40px; background: rgba(0,0,0,0.95); border-top: 1px solid #111; 
+            display: flex; align-items: center; justify-content: center; font-size: 8px; color: #444; letter-spacing: 3px; 
+            z-index: 2000; flex-shrink: 0; margin-top: auto;
+        }
+
         .side-panel { position: fixed; top: 80px; right: 25px; display: flex; flex-direction: column; gap: 10px; z-index: 2005; }
-        .side-btn { width: 40px; height: 40px; background: rgba(5, 5, 5, 0.9); border: 1px solid var(--neon-blue); color: var(--neon-blue); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 15px; transition: 0.3s; }
-        #target-pulse { position: fixed; width: 15px; height: 15px; background: var(--neon-red); border-radius: 50%; display: none; z-index: 5; transform: translate(-50%, -50%); box-shadow: 0 0 20px var(--neon-red); pointer-events: none; }
+        .side-btn { 
+            width: 40px; height: 40px; background: rgba(5, 5, 5, 0.9); border: 1px solid var(--neon-blue); 
+            color: var(--neon-blue); display: flex; align-items: center; justify-content: center; 
+            cursor: pointer; font-size: 15px; transition: 0.3s;
+        }
+
+        #target-pulse {
+            position: fixed; width: 15px; height: 15px; background: var(--neon-red);
+            border-radius: 50%; display: none; z-index: 5; transform: translate(-50%, -50%);
+            box-shadow: 0 0 20px var(--neon-red); pointer-events: none;
+        }
     </style>
 </head>
 <body>
+
     <div class="map-container"></div>
     <div id="target-pulse"></div>
+
     <nav class="navbar">
         <img src="../assets/img/logo.png" class="main-logo" onclick="window.location.href='../'">
         <div class="nav-center">NEXUS_RECON // GLOBAL_INTEL_STATION</div>
     </nav>
-    <div class="side-panel"><div class="side-btn">?</div><div class="side-btn" id="music-btn" onclick="toggleMusic()">🔇</div></div>
+
+    <div class="side-panel">
+        <div class="side-btn" onclick="openInfo()">?</div>
+        <div class="side-btn" id="music-btn" onclick="toggleMusic()">🔇</div>
+    </div>
+
+    <div id="vanta-modal">
+        <div class="modal-content">
+            <div class="modal-lang-switch">
+                <button class="modal-btn active" id="m-tr" onclick="setModalLang('tr')">TURKISH</button>
+                <button class="modal-btn" id="m-en" onclick="setModalLang('en')">ENGLISH</button>
+            </div>
+            <div id="info-tr" class="modal-body">
+                <b>VANTAVIGIL NEXUS RECON v1.3</b><br>
+                Sistem, hibrit bir ağ istihbarat motoru kullanmaktadır.
+                
+                <h4>VERİ İLETİŞİMİ & DNS</h4>
+                Alan adları, <b>Cloudflare DNS-over-HTTPS (DoH)</b> protokolü üzerinden güvenli bir şekilde çözümlenir. Bu yöntem, ISS'nizin hangi siteleri sorguladığınızı görmesini engeller.
+                
+                <h4>GEOIP & ANALİZ</h4>
+                IP tabanlı coğrafi veriler ve ISS bilgileri <b>ipapi.co</b> API servisinden JSON formatında anlık olarak çekilir.
+                
+                <h4>GÜVENLİK (ZERO-LOG)</h4>
+                Sistem %100 <b>Client-Side</b> (istemci tabanlı) çalışır. Sorguladığınız IP/Domain verileri asla bir sunucuya gönderilmez veya kaydedilmez. Tüm analiz tarayıcınızda başlar ve biter.
+            </div>
+            <div id="info-en" class="modal-body" style="display: none;">
+                <b>VANTAVIGIL NEXUS RECON v1.3</b><br>
+                The system utilizes a hybrid network intelligence engine.
+                
+                <h4>DATA COMMUNICATION & DNS</h4>
+                Domains are securely resolved using <b>Cloudflare DNS-over-HTTPS (DoH)</b> protocol. This prevents your ISP from monitoring your queries.
+                
+                <h4>GEOIP & ANALYSIS</h4>
+                IP-based geographic data and ISP information are fetched in real-time from <b>ipapi.co</b> via JSON requests.
+                
+                <h4>SECURITY (ZERO-LOG)</h4>
+                The system is 100% <b>Client-Side</b> based. Your queries are never sent to or stored on any server. All intelligence gathering starts and ends within your own browser.
+            </div>
+            <button class="close-modal" onclick="closeInfo()">TERMINATE_LOG</button>
+        </div>
+    </div>
+
     <audio id="bg-music" loop><source src="../assets/audio/theme.mp3" type="audio/mpeg"></audio>
     <audio id="sfx-scan"><source src="../assets/audio/scan.mp3" type="audio/mpeg"></audio>
     <audio id="sfx-success"><source src="../assets/audio/success.mp3" type="audio/mpeg"></audio>
+
     <main>
         <div class="recon-container">
             <h1 style="font-size: 9px; letter-spacing: 4px; color: var(--neon-blue); margin-bottom: 10px; text-align: center;">> ENTER_TARGET_COORDINATES</h1>
@@ -52,9 +196,10 @@
                 <input type="text" id="targetInput" placeholder="IP OR DOMAIN (e.g. google.com)" spellcheck="false">
                 <button class="scan-btn" onclick="startRecon()">EXECUTE SCAN</button>
             </div>
+
             <div id="resultsArea" class="intelligence-grid">
                 <div class="info-card">
-                    <h1 style="font-size: 8px; color: var(--neon-green); margin-bottom: 15px; letter-spacing: 1px;">LOCAL_INTEL_REPORT</h1>
+                    <h1 style="font-size: 8px; color: var(--neon-green); margin-bottom: 15px;">LOCAL_INTEL_REPORT</h1>
                     <div class="data-label">GEOGRAPHIC_LOCATION</div>
                     <div class="data-value" id="res-country">RESOLVING...</div>
                     <div class="data-label">CITY_COORDINATES</div>
@@ -63,13 +208,15 @@
                     <div class="data-value" id="res-isp">RESOLVING...</div>
                 </div>
                 <div class="info-card">
-                    <h1 style="font-size: 8px; color: var(--neon-blue); margin-bottom: 15px; letter-spacing: 1px;">GLOBAL_RECON_MATRIX</h1>
+                    <h1 style="font-size: 8px; color: var(--neon-blue); margin-bottom: 15px;">GLOBAL_RECON_MATRIX</h1>
                     <div class="pivot-matrix" id="pivotContainer"></div>
                 </div>
             </div>
         </div>
     </main>
+
     <footer>VANTAVIGIL SECURITY OPERATIONS CENTER // INTERNAL USE ONLY</footer>
+
     <script>
         const music = document.getElementById('bg-music');
         const sfxScan = document.getElementById('sfx-scan');
@@ -77,52 +224,50 @@
         const pulse = document.getElementById('target-pulse');
         music.volume = 0.1;
 
+        function openInfo() { document.getElementById('vanta-modal').style.display = 'flex'; }
+        function closeInfo() { document.getElementById('vanta-modal').style.display = 'none'; }
+        function setModalLang(l) {
+            document.getElementById('info-tr').style.display = l === 'tr' ? 'block' : 'none';
+            document.getElementById('info-en').style.display = l === 'en' ? 'block' : 'none';
+            document.getElementById('m-tr').classList.toggle('active', l === 'tr');
+            document.getElementById('m-en').classList.toggle('active', l === 'en');
+        }
+
         function toggleMusic() {
             if (music.paused) { music.play(); document.getElementById('music-btn').innerText = '🔊'; }
             else { music.pause(); document.getElementById('music-btn').innerText = '🔇'; }
         }
 
-        // --- ASIL ÇÖZÜCÜ (DNS RESOLVER) ---
+        // DNS-over-HTTPS (DoH) Resolver
         async function resolveDomain(domain) {
             try {
                 const response = await fetch(`https://cloudflare-dns.com/dns-query?name=${domain}&type=A`, {
                     headers: { 'Accept': 'application/dns-json' }
                 });
                 const data = await response.json();
-                if (data.Answer && data.Answer.length > 0) {
-                    return data.Answer[0].data; // İlk IP adresini döndürür
-                }
-            } catch (e) { console.error("DNS Error:", e); }
-            return null;
+                return data.Answer ? data.Answer[0].data : null;
+            } catch (e) { return null; }
         }
 
         async function startRecon() {
             let input = document.getElementById('targetInput').value.trim();
             if (!input) return;
 
-            // Temizlik
             input = input.replace(/(^\w+:|^)\/\//, '').split('/')[0];
             sfxScan.play();
             if (music.paused) toggleMusic();
             document.getElementById('resultsArea').style.display = 'grid';
             pulse.style.display = 'none';
 
-            // IP mi Domain mi kontrolü
             const isIP = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/.test(input);
             let targetIP = input;
 
-            // Eğer domain ise önce IP'sini bul
             if (!isIP) {
-                document.getElementById('res-country').innerText = "RESOLVING DNS...";
-                const resolved = await resolveDomain(input);
-                if (resolved) { targetIP = resolved; } 
-                else {
-                    document.getElementById('res-country').innerText = "DNS FAILED";
-                    return;
-                }
+                document.getElementById('res-country').innerText = "DNS_RESOLVING...";
+                const res = await resolveDomain(input);
+                if (res) targetIP = res;
             }
 
-            // GeoIP Sorgusu
             try {
                 const response = await fetch(`https://ipapi.co/${targetIP}/json/`);
                 const data = await response.json();
@@ -139,11 +284,10 @@
                     pulse.style.left = posX + '%';
                     pulse.style.top = posY + '%';
                 } else {
-                    document.getElementById('res-country').innerText = "GEOIP FAILED";
+                    document.getElementById('res-country').innerText = "GEOIP_FAILED";
                 }
-            } catch (e) { document.getElementById('res-country').innerText = "API ERROR"; }
+            } catch (e) { document.getElementById('res-country').innerText = "API_ERROR"; }
 
-            // Matris Linkleri
             const pivots = [
                 { name: "SHODAN", url: `https://www.shodan.io/search?query=${input}` },
                 { name: "ABUSE_DB", url: `https://www.abuseipdb.com/check/${input}` },
