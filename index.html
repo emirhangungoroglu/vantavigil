@@ -15,13 +15,15 @@
             --neon-green: #00ff41;
             --text-gray: #888888;
             --bg-dark: #020202;
-            --nav-bg: #0a0a0a;
+            --nav-bg: rgba(10, 10, 10, 0.96);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            background: var(--bg-dark);
+            /* Arka plan görselin burada tanımlı */
+            background: var(--bg-dark) url('assets/img/background.jpeg') no-repeat center center fixed;
+            background-size: cover;
             color: white;
             font-family: 'Orbitron', sans-serif;
             height: 100vh;
@@ -30,26 +32,18 @@
             flex-direction: column;
         }
 
-        /* --- YAVAŞLATILMIŞ WARP ARKA PLAN --- */
-        #canvas-warp {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -1;
-            background: #000;
-        }
-
-        /* --- GRİMSİ PROFESYONEL NAVBAR --- */
+        /* --- PROFESYONEL NAVBAR (GRİ TEMA) --- */
         .navbar {
             width: 100%; height: 80px;
             background: var(--nav-bg);
-            border-bottom: 1px solid #1a1a1a;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             display: flex; align-items: center; padding: 0 40px;
             position: relative; z-index: 1000;
+            backdrop-filter: blur(10px);
         }
 
         .nav-left { flex: 1; display: flex; align-items: center; }
-        .main-logo { height: 60px; width: auto; filter: grayscale(0.5); transition: 0.3s; }
+        .main-logo { height: 65px; width: auto; filter: grayscale(0.4); transition: 0.3s; }
 
         .nav-center {
             position: absolute; left: 50%; transform: translateX(-50%); text-align: center;
@@ -60,11 +54,11 @@
         }
 
         .nav-right {
-            flex: 1; text-align: right; font-size: 11px; color: #444;
+            flex: 1; text-align: right; font-size: 11px; color: #555;
             letter-spacing: 2px; font-family: monospace;
         }
 
-        /* --- MODÜLLER --- */
+        /* --- MODÜL PANELLERİ --- */
         main {
             flex: 1; display: flex; align-items: center; justify-content: center; gap: 50px; z-index: 10;
         }
@@ -78,23 +72,26 @@
         .card {
             position: absolute; inset: 0;
             background: rgba(8, 8, 8, 0.9);
-            border-radius: 20px; border: 1px solid #111;
+            border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 1; backdrop-filter: blur(5px);
+            z-index: 1; backdrop-filter: blur(12px);
+            box-shadow: 0 0 40px rgba(0,0,0,0.5);
         }
-        .card-img { width: 150px; filter: grayscale(0.2) drop-shadow(0 0 20px rgba(0, 210, 255, 0.2)); }
+        .card-img { width: 160px; filter: drop-shadow(0 0 20px rgba(0, 210, 255, 0.3)); }
 
+        /* YIRTILMA KAPLAMASI (FOIL) */
         .foil {
             position: absolute; inset: -1px; z-index: 10;
-            background: linear-gradient(145deg, #1a1a1a, #050505);
+            background: linear-gradient(135deg, #1a1a1a, #050505);
             border-radius: 20px; border: 1px solid #222;
             transition: 1.2s cubic-bezier(0.9, 0, 0.1, 1);
             clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
         }
 
+        /* Yırtılma anında sol üstten sağ alta fırlama */
         .ripped .foil {
             clip-path: polygon(100% 100%, 100% 100%, 100% 100%, 100% 100%);
-            opacity: 0; transform: scale(1.1);
+            opacity: 0; transform: scale(1.1) rotate(5deg);
         }
 
         /* --- LOADING OVERLAY --- */
@@ -104,7 +101,7 @@
         }
         .spinner {
             width: 60px; height: 60px; border: 3px solid rgba(255, 255, 255, 0.05);
-            border-top: 3px solid var(--text-gray); border-radius: 50%;
+            border-top: 3px solid var(--neon-blue); border-radius: 50%;
             animation: spin 1s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -112,8 +109,6 @@
     </style>
 </head>
 <body>
-
-    <canvas id="canvas-warp"></canvas>
 
     <nav class="navbar">
         <div class="nav-left">
@@ -123,7 +118,7 @@
             <h1 class="brand-text">VANTAVIGIL</h1>
         </div>
         <div class="nav-right">
-            STATUS: <span style="color:var(--neon-green)">ONLINE</span>
+            UPLINK: <span style="color:var(--neon-green)">STABLE</span>
         </div>
     </nav>
 
@@ -131,10 +126,11 @@
         <div class="pack" onclick="launchModule(this, '/vantavigil/encoder')">
             <div class="card">
                 <img src="assets/img/logo.png" class="card-img" alt="Logo">
-                <h2 style="margin-top:20px; letter-spacing:5px; color:var(--text-gray); font-size:1.2rem;">ENCODER</h2>
+                <h2 style="margin-top:20px; letter-spacing:5px; color:var(--text-gray); font-size:1.3rem;">ENCODER</h2>
             </div>
             <div class="foil"></div>
         </div>
+        
         <div class="pack" style="opacity: 0.1; cursor: not-allowed;">
             <div class="card"><h2 style="color:#222;">LOCKED</h2></div>
             <div class="foil"></div>
@@ -143,88 +139,33 @@
 
     <div id="loading-screen">
         <div class="spinner"></div>
-        <p style="margin-top:20px; letter-spacing:5px; color:var(--text-gray); font-size:12px;">AUTHORIZING ACCESS...</p>
+        <p style="margin-top:20px; letter-spacing:5px; color:var(--neon-blue); font-size:12px;">AUTHORIZING ACCESS...</p>
     </div>
 
     <script>
-        // --- SMOOTH WARP DRIVE SCRIPT ---
-        const canvas = document.getElementById('canvas-warp');
-        const ctx = canvas.getContext('2d');
-        
-        let width, height, cx, cy;
-        let stars = [];
-        const numStars = 350; 
-        const speed = 2.5; // Hız ciddi oranda düşürüldü (Takip edilebilir olması için)
-
-        class Star {
-            constructor() { this.reset(); }
-            reset() {
-                this.x = (Math.random() - 0.5) * width * 2;
-                this.y = (Math.random() - 0.5) * height * 2;
-                this.z = Math.random() * width;
-                this.pz = this.z;
-            }
-            update() {
-                this.pz = this.z;
-                this.z -= speed;
-                if (this.z < 1) {
-                    this.reset();
-                    this.z = width;
-                    this.pz = this.z;
-                }
-            }
-            draw() {
-                const sx = (this.x / this.z) * cx + cx;
-                const sy = (this.y / this.z) * cy + cy;
-                const psx = (this.x / this.pz) * cx + cx;
-                const psy = (this.y / this.pz) * cy + cy;
-
-                const size = (1 - this.z / width) * 3;
-                const opacity = (1 - this.z / width);
-
-                ctx.beginPath();
-                ctx.moveTo(psx, psy);
-                ctx.lineTo(sx, sy);
-                ctx.strokeStyle = `rgba(200, 230, 255, ${opacity})`;
-                ctx.lineWidth = size;
-                ctx.lineCap = 'round';
-                ctx.stroke();
-            }
-        }
-
-        function init() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            cx = width / 2; cy = height / 2;
-            stars = [];
-            for (let i = 0; i < numStars; i++) stars.push(new Star());
-        }
-
-        function animate() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.85)'; 
-            ctx.fillRect(0, 0, width, height);
-            for (const star of stars) {
-                star.update();
-                star.draw();
-            }
-            requestAnimationFrame(animate);
-        }
-
-        window.addEventListener('resize', init);
-        init(); animate();
-
-        // UI Reset
-        window.onpageshow = function(event) {
+        // Geri tuşu ve sayfa yükleme kontrolü (Takılmayı engeller)
+        function resetUI() {
             document.getElementById('loading-screen').style.display = 'none';
             document.querySelectorAll('.pack').forEach(p => p.classList.remove('ripped'));
-        };
+        }
+
+        window.onpageshow = function(event) { resetUI(); };
+        window.onload = function() { resetUI(); };
 
         function launchModule(element, url) {
             if (element.classList.contains('ripped')) return;
+
+            // Yırtılma Animasyonu
             element.classList.add('ripped');
+
+            // 0.8 saniye sonra loading gelir
             setTimeout(() => {
                 document.getElementById('loading-screen').style.display = 'flex';
-                setTimeout(() => { window.location.href = url; }, 1800);
+                
+                // 1.8 saniye sonra yönlendirir
+                setTimeout(() => {
+                    window.location.href = url;
+                }, 1800);
             }, 800);
         }
     </script>
