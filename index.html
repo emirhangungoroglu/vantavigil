@@ -109,7 +109,14 @@
         }
 
         .pack { width: 210px; height: 320px; position: relative; cursor: pointer; transition: 0.4s; }
-        .pack:not(.locked):hover { transform: translateY(-15px); filter: drop-shadow(0 0 15px var(--neon-blue)); }
+        
+        /* Hover efektleri sadece açılmamış kartlarda veya açılmış kartlarda farklı çalışsın */
+        .pack:not(.locked):hover { transform: translateY(-15px); }
+        
+        /* Kart açıldığında parlasın */
+        .pack.ripped {
+            filter: drop-shadow(0 0 20px var(--neon-blue));
+        }
 
         .card {
             position: absolute; inset: 0; background: rgba(8, 8, 8, 0.95);
@@ -133,7 +140,12 @@
             clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
         }
 
-        .ripped .foil { clip-path: polygon(100% 100%, 100% 100%, 100% 100%, 100% 100%); opacity: 0; }
+        /* Yırtılma Efekti */
+        .ripped .foil { 
+            clip-path: polygon(100% 100%, 100% 100%, 100% 100%, 100% 100%); 
+            opacity: 0; 
+            pointer-events: none; /* Yırtıldıktan sonra tıklamayı karta geçirir */
+        }
 
         footer { width: 100%; height: 40px; background: rgba(0,0,0,0.8); border-top: 1px solid #111; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #333; letter-spacing: 2px; }
 
@@ -172,6 +184,7 @@
             <div class="card">
                 <img src="assets/img/logo.png" class="card-img" alt="Encoder">
                 <h2 class="card-title">ENCODER</h2>
+                <span style="font-size: 8px; color: #333; margin-top: 5px;">CLICK TO ACCESS</span>
             </div>
             <div class="foil"></div>
         </div>
@@ -180,6 +193,7 @@
             <div class="card">
                 <img src="assets/img/logo.png" class="card-img" alt="Hash Gen">
                 <h2 class="card-title">HASH GEN</h2>
+                <span style="font-size: 8px; color: #333; margin-top: 5px;">CLICK TO ACCESS</span>
             </div>
             <div class="foil"></div>
         </div>
@@ -193,17 +207,33 @@
 
     <script>
         function toggleModal(show) { document.getElementById('info-modal').style.display = show ? 'flex' : 'none'; }
+        
         function setLang(lang) {
             document.getElementById('content-tr').style.display = lang === 'tr' ? 'block' : 'none';
             document.getElementById('content-en').style.display = lang === 'en' ? 'block' : 'none';
             document.getElementById('btn-tr').classList.toggle('active', lang === 'tr');
             document.getElementById('btn-en').classList.toggle('active', lang === 'en');
         }
-        window.onpageshow = function(event) { document.querySelectorAll('.pack').forEach(p => p.classList.remove('ripped')); };
+
+        // Sayfa geri gelindiğinde kartları kapatmak için
+        window.onpageshow = function(event) { 
+            document.querySelectorAll('.pack').forEach(p => p.classList.remove('ripped')); 
+        };
+
         function launchModule(element, url) {
+            // Eğer kart kilitliyse bir şey yapma
             if (element.classList.contains('locked')) return;
-            element.classList.add('ripped');
-            setTimeout(() => { window.location.href = url; }, 1800);
+
+            // --- İKİ AŞAMALI MANTIK ---
+            
+            if (!element.classList.contains('ripped')) {
+                // 1. AŞAMA: Eğer kart henüz yırtılmadıysa, sadece yırt
+                element.classList.add('ripped');
+            } else {
+                // 2. AŞAMA: Eğer kart zaten yırtılmışsa, sayfaya git
+                // Buraya istersen küçük bir loading efekti de ekleyebilirsin
+                window.location.href = url;
+            }
         }
     </script>
 </body>
