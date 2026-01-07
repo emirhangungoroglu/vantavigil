@@ -8,15 +8,13 @@
     <link rel="icon" href="assets/img/icon.png" type="image/png">
 
     <style>
-        /* PROFESYONEL FONT VE RENK TANIMLARI */
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Inter:wght@300;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap');
 
         :root {
             --neon-blue: #00d2ff;
             --neon-green: #00ff41;
             --bg-dark: #020202;
-            --nav-bg: rgba(5, 5, 5, 0.98);
-            --panel-border: #1a1a1a;
+            --nav-bg: rgba(0, 0, 0, 0.95);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,157 +22,118 @@
         body {
             background: var(--bg-dark);
             color: white;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Orbitron', sans-serif;
             height: 100vh;
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
 
-        /* --- PROFESYONEL NAVBAR (DÜZELTİLDİ) --- */
+        /* --- PROFESYONEL NAVBAR --- */
         .navbar {
             width: 100%;
-            height: 100px; /* Navbar biraz genişletildi */
+            height: 120px; /* Navbar biraz daha genişletildi */
             background: var(--nav-bg);
-            border-bottom: 2px solid var(--panel-border);
+            border-bottom: 2px solid #111;
             display: flex;
             align-items: center;
-            padding: 0 50px;
+            padding: 0 40px;
             position: relative;
-            z-index: 1000;
         }
 
-        /* Sol Logo Alanı */
+        /* Sol Logo: Devasa Boyut */
         .nav-left {
             flex: 1;
-            display: flex;
-            align-items: center;
         }
-
-        .main-logo-big {
-            height: 75px; /* Logo ciddi oranda büyütüldü */
+        .main-logo {
+            height: 90px; /* İstediğin gibi büyütüldü */
             width: auto;
-            filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.4));
+            filter: drop-shadow(0 0 15px var(--neon-blue));
         }
 
-        /* Orta Başlık Alanı (Tam Merkezlendi) */
+        /* Orta Yazı: Tam Merkez ve Profesyonel */
         .nav-center {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            text-align: center;
+            white-space: nowrap;
         }
-
-        .brand-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.2rem; /* Büyük ve etkileyici yazı */
+        .brand-text {
+            font-size: 2.8rem; /* Büyük ve etkileyici */
+            letter-spacing: 18px;
             font-weight: 900;
-            letter-spacing: 15px; /* Profesyonel boşluklandırma */
-            color: #fff;
-            text-transform: uppercase;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            background: linear-gradient(to bottom, #fff, #666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 210, 255, 0.2);
         }
 
-        /* Sağ Durum Alanı */
         .nav-right {
             flex: 1;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 12px;
-            font-family: monospace;
+            text-align: right;
+            font-size: 12px;
             color: var(--neon-green);
-            font-size: 13px;
+            letter-spacing: 2px;
         }
 
-        .pulse-dot {
-            width: 10px; height: 10px;
-            background: var(--neon-green);
-            border-radius: 50%;
-            box-shadow: 0 0 15px var(--neon-green);
-            animation: pulse 2s infinite;
-        }
-
-        /* --- ANA MODÜL SEÇİCİ --- */
+        /* --- MODÜLLER --- */
         main {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 60px;
-            perspective: 2000px;
+            gap: 50px;
         }
 
-        .pack-container {
+        .pack {
             width: 320px; height: 460px;
             position: relative; cursor: pointer;
-            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transition: 0.4s;
         }
+        .pack:hover { transform: translateY(-10px) scale(1.02); }
 
-        .pack-container:hover { transform: scale(1.03) translateY(-15px); }
-
-        /* Kart İçeriği */
-        .module-card {
+        .card {
             position: absolute; inset: 0;
-            background: #080808;
+            background: #080808; border-radius: 25px;
             border: 1px solid #222;
-            border-radius: 24px;
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
             z-index: 1;
-            box-shadow: 0 0 40px rgba(0,0,0,0.8);
         }
 
-        .module-logo {
-            width: 160px; /* Paket içi logo büyütüldü */
-            margin-bottom: 35px;
-            filter: drop-shadow(0 0 20px var(--neon-blue));
-        }
+        .card-img { width: 180px; filter: drop-shadow(0 0 20px var(--neon-blue)); }
 
-        .module-name {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.4rem;
-            letter-spacing: 5px;
-            color: var(--neon-blue);
-        }
-
-        /* Foil (Yırtılma Katmanı) */
+        /* Yırtılma Kaplaması */
         .foil {
-            position: absolute; inset: -2px; z-index: 10;
-            background: linear-gradient(135deg, #1f1f1f 0%, #050505 100%);
-            border: 2px solid #333; border-radius: 24px;
-            display: flex; align-items: center; justify-content: center;
+            position: absolute; inset: -1px; z-index: 10;
+            background: linear-gradient(135deg, #1a1a1a, #000);
+            border-radius: 25px; border: 2px solid #333;
+            transition: 1s cubic-bezier(0.9, 0, 0.1, 1);
             clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-            transition: all 1.2s cubic-bezier(0.9, 0, 0.1, 1);
         }
 
-        /* Yırtılma Efekti (Sol Üstten Sağa) */
-        .pack-container.ripping .foil {
+        .ripped .foil {
             clip-path: polygon(100% 100%, 100% 100%, 100% 100%, 100% 100%);
-            opacity: 0;
-            transform: scale(1.15) rotate(5deg);
+            opacity: 0; transform: scale(1.1);
         }
 
         /* --- LOADING OVERLAY --- */
         #loading-screen {
             position: fixed; inset: 0;
-            background: var(--bg-dark);
-            z-index: 9999; display: none;
-            flex-direction: column; align-items: center; justify-content: center;
+            background: #000; z-index: 9999;
+            display: none; flex-direction: column;
+            align-items: center; justify-content: center;
         }
 
-        .loader-ring {
+        .spinner {
             width: 100px; height: 100px;
-            border: 4px solid rgba(0, 210, 255, 0.05);
+            border: 4px solid rgba(0, 210, 255, 0.1);
             border-top: 4px solid var(--neon-blue);
             border-radius: 50%;
-            animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            animation: spin 1s linear infinite;
         }
 
         @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
-
-        .locked { opacity: 0.3; filter: grayscale(1); cursor: not-allowed; }
 
     </style>
 </head>
@@ -182,91 +141,62 @@
 
     <nav class="navbar">
         <div class="nav-left">
-            <img src="assets/img/logo.png" alt="Vantavigil Logo" class="main-logo-big">
+            <img src="assets/img/logo.png" alt="Vantavigil" class="main-logo">
         </div>
         
         <div class="nav-center">
-            <h1 class="brand-title">VANTAVIGIL</h1>
+            <h1 class="brand-text">VANTAVIGIL</h1>
         </div>
 
         <div class="nav-right">
-            <div class="pulse-dot"></div>
-            <span>UPLINK_SECURE: 256-BIT</span>
+            SYSTEM_STATUS: <span style="color:white">ONLINE</span>
         </div>
     </nav>
 
     <main>
-        <div class="pack-container" onclick="unlockModule(this, '/vantavigil/encoder')">
-            <div class="module-card">
-                <img src="assets/img/logo.png" class="module-logo" alt="Logo">
-                <div class="module-name">ENCODER</div>
-                <div style="font-size: 11px; color: #444; margin-top: 15px; font-family: monospace;">CORE_STATION_ALPHA</div>
+        <div class="pack" id="encoder-module" onclick="launchModule(this, '/vantavigil/encoder')">
+            <div class="card">
+                <img src="assets/img/logo.png" class="card-img" alt="Logo">
+                <h2 style="margin-top:20px; letter-spacing:5px; color:var(--neon-blue);">ENCODER</h2>
             </div>
-            
-            <div class="foil">
-                <img src="assets/img/logo.png" style="width: 70px; opacity: 0.05; filter: brightness(0);" alt="Pack Mark">
-            </div>
+            <div class="foil"></div>
         </div>
-
-        <div class="pack-container locked">
-            <div class="module-card">
-                <img src="assets/img/logo.png" class="module-logo">
-                <div class="module-name">LOG_ANALYZER</div>
-            </div>
+        
+        <div class="pack" style="opacity: 0.3; cursor: not-allowed;">
+            <div class="card"><h2 style="color:#333;">LOCKED</h2></div>
             <div class="foil"></div>
         </div>
     </main>
 
     <div id="loading-screen">
-        <div class="loader-ring"></div>
-        <p style="margin-top: 40px; font-family: 'Orbitron', sans-serif; letter-spacing: 5px; color: var(--neon-blue);">INITIALIZING SECURE SESSION...</p>
-        <p id="status-log" style="margin-top: 15px; font-size: 12px; color: #333; font-family: monospace;"></p>
+        <div class="spinner"></div>
+        <p style="margin-top:30px; letter-spacing:5px; color:var(--neon-blue);">ESTABLISHING SECURE UPLINK...</p>
     </div>
 
     <script>
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-        function playRipSfx() {
-            const bufferSize = audioCtx.sampleRate * 0.45;
-            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-            const data = buffer.getChannelData(0);
-            for (let i = 0; i < bufferSize; i++) {
-                data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, 2.5);
+        // Geri tuşu kontrolü: Eğer kullanıcı geri gelirse yükleme ekranını göstermeden içeriği aç
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                window.location.reload(); // Sayfayı temizle
             }
-            const source = audioCtx.createBufferSource();
-            source.buffer = buffer;
-            const filter = audioCtx.createBiquadFilter();
-            filter.type = 'highpass'; filter.frequency.value = 1200;
-            source.connect(filter); filter.connect(audioCtx.destination);
-            source.start();
-        }
+        });
 
-        function unlockModule(element, target) {
-            if (element.classList.contains('ripping') || element.classList.contains('locked')) return;
+        function launchModule(element, url) {
+            if (element.classList.contains('ripped')) return;
 
-            playRipSfx();
-            element.classList.add('ripping');
+            // Yırtılma Animasyonu
+            element.classList.add('ripped');
 
-            // 1.2 saniye sonra loading devreye girer
             setTimeout(() => {
-                const loader = document.getElementById('loading-screen');
-                loader.style.display = 'flex';
-                
-                const logField = document.getElementById('status-log');
-                const stages = ["Handshake_Sent...", "Decrypting_Layer_2...", "Access_Granted"];
-                let s = 0;
-                
-                const logInt = setInterval(() => {
-                    logField.innerText = `> ${stages[s]}`;
-                    s++;
-                    if(s >= stages.length) clearInterval(logInt);
-                }, 700);
+                // Loading Overlay'i göster
+                document.getElementById('loading-screen').style.display = 'flex';
 
-                // Yönlendirme
                 setTimeout(() => {
-                    window.location.href = target;
-                }, 2800);
-            }, 1100);
+                    // KRİTİK NOKTA: window.location.replace kullanıyoruz!
+                    // Bu sayede tarayıcı geçmişine bu loading sayfası eklenmez.
+                    window.location.replace(url);
+                }, 2000);
+            }, 800);
         }
     </script>
 </body>
