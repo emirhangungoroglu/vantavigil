@@ -28,7 +28,7 @@
             overflow-x: hidden;
         }
 
-        /* --- ARKA PLAN (SABİT) --- */
+        /* --- ARKA PLAN HARİTASI --- */
         .map-container {
             position: fixed; inset: 0;
             background: url('../assets/img/world-map.png') no-repeat center center;
@@ -86,6 +86,7 @@
         }
         .scan-btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 20px var(--neon-blue); }
 
+        /* SONUÇLAR */
         .intelligence-grid {
             display: grid; grid-template-columns: 1fr 1.5fr; gap: 15px; display: none;
             animation: slideUp 0.6s ease-out; margin-bottom: 30px;
@@ -102,7 +103,7 @@
         }
         .pivot-link:hover { border-color: var(--neon-green); color: var(--neon-green); box-shadow: 0 0 10px rgba(0, 255, 65, 0.1); }
 
-        /* --- SİBER BİLGİ MODALI --- */
+        /* SİBER BİLGİ MODALI */
         #vanta-modal {
             position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none;
             align-items: center; justify-content: center; z-index: 10000; backdrop-filter: blur(15px);
@@ -115,18 +116,12 @@
         .modal-btn { background: none; border: none; color: #444; cursor: pointer; font-family: 'Orbitron'; font-size: 10px; letter-spacing: 1px; }
         .modal-btn.active { color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
         .modal-body { font-size: 11px; line-height: 1.8; color: #888; font-family: 'JetBrains Mono'; }
-        .modal-body b { color: var(--neon-blue); }
-        .close-modal { margin-top: 25px; width: 100%; padding: 10px; background: none; border: 1px solid var(--neon-blue); color: var(--neon-blue); cursor: pointer; font-family: 'Orbitron'; font-size: 10px; transition: 0.3s; }
-        .close-modal:hover { background: var(--neon-blue); color: #000; }
+        .close-modal { margin-top: 25px; width: 100%; padding: 10px; background: none; border: 1px solid var(--neon-blue); color: var(--neon-blue); cursor: pointer; font-family: 'Orbitron'; font-size: 10px; }
 
         footer { 
-            width: 100%; height: 40px; 
-            background: rgba(0,0,0,0.95); 
-            border-top: 1px solid #111; 
-            display: flex; align-items: center; justify-content: center; 
-            font-size: 8px; color: #444; letter-spacing: 3px; 
-            z-index: 2000; flex-shrink: 0; 
-            margin-top: auto;
+            width: 100%; height: 40px; background: rgba(0,0,0,0.95); border-top: 1px solid #111; 
+            display: flex; align-items: center; justify-content: center; font-size: 8px; color: #444; letter-spacing: 3px; 
+            z-index: 2000; flex-shrink: 0; margin-top: auto;
         }
 
         .side-panel { position: fixed; top: 80px; right: 25px; display: flex; flex-direction: column; gap: 10px; z-index: 2005; }
@@ -166,17 +161,15 @@
             </div>
             <div id="info-tr" class="modal-body">
                 <b>NEXUS RECON v1.2</b><br><br>
-                Bu modül, IP ve Alan Adı (Domain) üzerinden gerçek zamanlı istihbarat toplamak için tasarlanmış bir <b>OSINT</b> istasyonudur.<br><br>
-                <b>GİZLİLİK:</b> Sorguladığınız hiçbir veri sunucularımıza kaydedilmez (Zero-Log Policy).<br>
-                <b>VERİ:</b> ipapi.co üzerinden canlı coğrafi konum ve ISP bilgileri çekilir.<br>
-                <b>PİVOT:</b> Küresel siber güvenlik veritabanlarına (Shodan, VirusTotal vb.) anlık erişim sağlanır.
+                Bu modül hem <b>IP</b> hem de <b>Alan Adı</b> sorgularını destekler. <br><br>
+                <b>IP SORGUSU:</b> Canlı GeoIP ve ISP verileri getirir.<br>
+                <b>DOMAIN SORGUSU:</b> Alan adı üzerinden Shodan, Whois ve VirusTotal gibi platformlarda derinlemesine analiz imkanı sunar.
             </div>
             <div id="info-en" class="modal-body" style="display: none;">
                 <b>NEXUS RECON v1.2</b><br><br>
-                This module is an <b>OSINT</b> station designed for gathering real-time intelligence on IPs and Domains.<br><br>
-                <b>PRIVACY:</b> No queried data is ever stored on our servers (Zero-Log Policy).<br>
-                <b>DATA:</b> Live geo-location and ISP data are fetched via ipapi.co.<br>
-                <b>PIVOT:</b> Instant access to global cybersecurity databases (Shodan, VirusTotal, etc.) for advanced forensics.
+                This module supports both <b>IP</b> and <b>Domain</b> queries.<br><br>
+                <b>IP QUERY:</b> Provides live GeoIP and ISP data.<br>
+                <b>DOMAIN QUERY:</b> Enables deep analysis via Shodan, Whois, and VirusTotal platforms.
             </div>
             <button class="close-modal" onclick="closeInfo()">TERMINATE_LOG</button>
         </div>
@@ -191,7 +184,7 @@
             <h1 style="font-size: 9px; letter-spacing: 4px; color: var(--neon-blue); margin-bottom: 10px; text-align: center;">> ENTER_TARGET_COORDINATES</h1>
             
             <div class="search-bay">
-                <input type="text" id="targetInput" placeholder="IP ADDRESS OR DOMAIN..." spellcheck="false">
+                <input type="text" id="targetInput" placeholder="ENTER IP OR DOMAIN (e.g. google.com)" spellcheck="false">
                 <button class="scan-btn" onclick="startRecon()">EXECUTE SCAN</button>
             </div>
 
@@ -199,11 +192,11 @@
                 <div class="info-card">
                     <h1 style="font-size: 8px; color: var(--neon-green); margin-bottom: 15px; letter-spacing: 1px;">LOCAL_INTEL_REPORT</h1>
                     <div class="data-label">GEOGRAPHIC_LOCATION</div>
-                    <div class="data-value" id="res-country">-</div>
+                    <div class="data-value" id="res-country">AWAITING...</div>
                     <div class="data-label">CITY_COORDINATES</div>
-                    <div class="data-value" id="res-city">-</div>
+                    <div class="data-value" id="res-city">AWAITING...</div>
                     <div class="data-label">NETWORK_PROVIDER</div>
-                    <div class="data-value" id="res-isp">-</div>
+                    <div class="data-value" id="res-isp">AWAITING...</div>
                 </div>
                 <div class="info-card">
                     <h1 style="font-size: 8px; color: var(--neon-blue); margin-bottom: 15px; letter-spacing: 1px;">GLOBAL_RECON_MATRIX</h1>
@@ -222,7 +215,6 @@
         const pulse = document.getElementById('target-pulse');
         music.volume = 0.1;
 
-        // --- BİLGİ EKRANI KONTROLLERİ ---
         function openInfo() { document.getElementById('vanta-modal').style.display = 'flex'; }
         function closeInfo() { document.getElementById('vanta-modal').style.display = 'none'; }
         function setModalLang(l) {
@@ -238,41 +230,55 @@
         }
 
         async function startRecon() {
-            const input = document.getElementById('targetInput').value.trim();
+            let input = document.getElementById('targetInput').value.trim();
             if (!input) return;
+
+            // URL Temizleme (Sanitize)
+            input = input.replace(/(^\w+:|^)\/\//, '').split('/')[0];
 
             sfxScan.play();
             if (music.paused) toggleMusic();
             document.getElementById('resultsArea').style.display = 'grid';
             
+            // UI Reset
+            document.getElementById('res-country').innerText = "RESOLVING...";
+            document.getElementById('res-city').innerText = "RESOLVING...";
+            document.getElementById('res-isp').innerText = "RESOLVING...";
+            pulse.style.display = 'none';
+
+            // 1. Canlı GeoIP Denemesi
             try {
                 const response = await fetch(`https://ipapi.co/${input}/json/`);
                 const data = await response.json();
 
-                if (!data.error) {
+                if (!data.error && data.country_name) {
                     sfxSuccess.play();
                     document.getElementById('res-country').innerText = `${data.country_name} (${data.country_code})`;
                     document.getElementById('res-city').innerText = `${data.city} [LAT: ${data.latitude}, LON: ${data.longitude}]`;
                     document.getElementById('res-isp').innerText = data.org || data.asn || "UNKNOWN";
 
-                    const lat = parseFloat(data.latitude);
-                    const lon = parseFloat(data.longitude);
-                    const posX = 8 + (lon + 180) * (84 / 360);
-                    const posY = 15 + (90 - lat) * (70 / 180);
-                    
+                    const posX = 8 + (parseFloat(data.longitude) + 180) * (84 / 360);
+                    const posY = 15 + (90 - parseFloat(data.latitude)) * (70 / 180);
                     pulse.style.display = 'block';
                     pulse.style.left = posX + '%';
                     pulse.style.top = posY + '%';
+                } else {
+                    document.getElementById('res-country').innerText = "DOMAIN MODE";
+                    document.getElementById('res-city').innerText = "N/A (EXTERNAL)";
+                    document.getElementById('res-isp').innerText = "USE MATRIX LINKS";
                 }
-            } catch (e) { console.log(e); }
+            } catch (e) { 
+                document.getElementById('res-country').innerText = "OFFLINE MODE";
+            }
 
+            // 2. Pivot Matrix (Domain desteği tamdır)
             const pivots = [
-                { name: "SHODAN", url: `https://www.shodan.io/host/${input}` },
-                { name: "ABUSE_IP", url: `https://www.abuseipdb.com/check/${input}` },
+                { name: "SHODAN", url: `https://www.shodan.io/search?query=${input}` },
+                { name: "ABUSE_DB", url: `https://www.abuseipdb.com/check/${input}` },
                 { name: "VIRUSTOTAL", url: `https://www.virustotal.com/gui/search/${input}` },
                 { name: "TALOS", url: `https://www.talosintelligence.com/reputation_center/lookup?search=${input}` },
                 { name: "WHOIS", url: `https://who.is/whois/${input}` },
-                { name: "OTX", url: `https://otx.alienvault.com/indicator/ip/${input}` }
+                { name: "OTX_INTEL", url: `https://otx.alienvault.com/indicator/domain/${input}` }
             ];
 
             let html = "";
