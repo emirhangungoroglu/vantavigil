@@ -8,19 +8,20 @@
     <link rel="icon" href="assets/img/icon.png" type="image/png">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
 
         :root {
             --neon-blue: #00d2ff;
             --neon-green: #00ff41;
             --text-gray: #888888;
             --bg-dark: #020202;
-            --nav-bg: rgba(10, 10, 10, 0.96);
+            --nav-bg: rgba(10, 10, 10, 0.98);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
+            /* Arka plan görselin */
             background: var(--bg-dark) url('assets/img/background.jpeg') no-repeat center center fixed;
             background-size: cover;
             color: white;
@@ -31,100 +32,88 @@
             flex-direction: column;
         }
 
-        /* --- NAVBAR --- */
+        /* --- SIBER PARAZİT (SCANLINE) KATMANI --- */
+        body::before {
+            content: " ";
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 4px, 4px 100%;
+            z-index: 100; pointer-events: none;
+        }
+
+        /* --- PROFESYONEL GRİ NAVBAR --- */
         .navbar {
             width: 100%; height: 80px;
             background: var(--nav-bg);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             display: flex; align-items: center; padding: 0 40px;
-            position: relative; z-index: 1000;
+            position: relative; z-index: 1001;
             backdrop-filter: blur(10px);
         }
 
         .nav-left { flex: 1; display: flex; align-items: center; }
-        .main-logo { height: 60px; width: auto; filter: grayscale(0.4); transition: 0.3s; }
+        .main-logo { height: 60px; width: auto; filter: grayscale(0.5); transition: 0.3s; }
 
-        .nav-center {
-            position: absolute; left: 50%; transform: translateX(-50%); text-align: center;
-        }
+        .nav-center { position: absolute; left: 50%; transform: translateX(-50%); text-align: center; }
         .brand-text {
-            font-size: 1.8rem; letter-spacing: 12px; font-weight: 700;
+            font-size: 1.8rem; letter-spacing: 12px; font-weight: 900;
             color: var(--text-gray); text-transform: uppercase;
         }
 
         .nav-right {
-            flex: 1; text-align: right; font-size: 11px; color: #555;
-            letter-spacing: 2px; font-family: monospace;
+            flex: 1; text-align: right; font-size: 11px; font-family: monospace;
+            letter-spacing: 2px;
         }
 
-        /* --- MODÜL PANELLERİ (5'Lİ SİSTEM) --- */
+        /* Durum Işığı */
+        .status-dot {
+            display: inline-block; width: 8px; height: 8px; 
+            background: var(--neon-green); border-radius: 50%;
+            box-shadow: 0 0 10px var(--neon-green);
+            margin-right: 5px; animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+        /* --- MODÜL IZGARASI (5'Lİ) --- */
         main {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 25px; /* Kartlar arası boşluk biraz daraltıldı */
-            z-index: 10;
-            padding: 0 20px;
+            flex: 1; display: flex; align-items: center; justify-content: center; gap: 30px;
+            z-index: 10; padding: 0 20px;
         }
 
         .pack {
-            /* Kart boyutları küçültüldü */
-            width: 210px; 
-            height: 320px; 
-            position: relative; 
-            cursor: pointer;
+            width: 210px; height: 320px; position: relative; cursor: pointer;
             transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        
-        .pack:not(.locked):hover { transform: translateY(-10px) scale(1.02); }
+
+        .pack:not(.locked):hover {
+            transform: translateY(-15px) scale(1.05);
+            filter: drop-shadow(0 0 15px var(--neon-blue));
+        }
 
         .card {
             position: absolute; inset: 0;
-            background: rgba(8, 8, 8, 0.92);
-            border-radius: 15px; 
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(8, 8, 8, 0.95);
+            border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.05);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 1; backdrop-filter: blur(10px);
-            box-shadow: 0 0 30px rgba(0,0,0,0.6);
+            z-index: 1; backdrop-filter: blur(15px);
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
         }
 
-        .card-img { 
-            width: 100px; /* Görsel boyutu kartla orantılı küçültüldü */
-            filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.2)); 
-        }
+        .card-img { width: 100px; filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.2)); }
+        .card-title { margin-top: 15px; letter-spacing: 3px; color: var(--text-gray); font-size: 0.85rem; font-weight: 700; }
 
-        .card-title {
-            margin-top: 15px; 
-            letter-spacing: 3px; 
-            color: var(--text-gray); 
-            font-size: 1rem;
-        }
-
-        /* Kilitli Kart Ayarları */
-        .pack.locked {
-            cursor: not-allowed;
-            opacity: 0.6;
-        }
-        
-        .pack.locked .card {
-            background: rgba(5, 5, 5, 0.98);
-            border: 1px dashed rgba(255, 255, 255, 0.1);
-        }
-
-        .lock-text {
-            color: #222;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            margin-top: 10px;
-            text-transform: uppercase;
-        }
+        /* Kilitli Paket Tasarımı */
+        .pack.locked { opacity: 0.6; cursor: not-allowed; }
+        .pack.locked .card { background: rgba(5, 5, 5, 0.98); border-style: dashed; }
+        .lock-text { color: #1a1a1a; font-size: 0.65rem; letter-spacing: 2px; margin-top: 8px; }
 
         /* YIRTILMA KAPLAMASI (FOIL) */
         .foil {
             position: absolute; inset: -1px; z-index: 10;
             background: linear-gradient(135deg, #1a1a1a, #050505);
-            border-radius: 15px; border: 1px solid #222;
+            border-radius: 20px; border: 1px solid #222;
             transition: 1.2s cubic-bezier(0.9, 0, 0.1, 1);
             clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
         }
@@ -140,11 +129,18 @@
             display: none; flex-direction: column; align-items: center; justify-content: center;
         }
         .spinner {
-            width: 50px; height: 50px; border: 3px solid rgba(255, 255, 255, 0.05);
+            width: 60px; height: 60px; border: 3px solid rgba(255, 255, 255, 0.05);
             border-top: 3px solid var(--neon-blue); border-radius: 50%;
             animation: spin 1s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* --- FOOTER --- */
+        footer {
+            width: 100%; height: 40px; background: rgba(0,0,0,0.8);
+            border-top: 1px solid #111; display: flex; align-items: center; 
+            justify-content: center; font-size: 10px; color: #333; letter-spacing: 2px;
+        }
 
     </style>
 </head>
@@ -158,7 +154,7 @@
             <h1 class="brand-text">VANTAVIGIL</h1>
         </div>
         <div class="nav-right">
-            STATUS: <span style="color:var(--neon-green)">ONLINE</span>
+            <span class="status-dot"></span> STATUS: <span style="color:var(--neon-green)">ONLINE</span>
         </div>
     </nav>
 
@@ -174,7 +170,8 @@
         <div class="pack locked">
             <div class="card">
                 <img src="assets/img/logo.png" class="card-img" style="opacity: 0.05;" alt="Logo">
-                <div class="lock-text">ENCRYPTED</div>
+                <h2 class="card-title" style="color:#1a1a1a">COMING SOON</h2>
+                <div class="lock-text">ENCRYPTED_LINK</div>
             </div>
             <div class="foil"></div>
         </div>
@@ -182,7 +179,8 @@
         <div class="pack locked">
             <div class="card">
                 <img src="assets/img/logo.png" class="card-img" style="opacity: 0.05;" alt="Logo">
-                <div class="lock-text">ENCRYPTED</div>
+                <h2 class="card-title" style="color:#1a1a1a">COMING SOON</h2>
+                <div class="lock-text">ENCRYPTED_LINK</div>
             </div>
             <div class="foil"></div>
         </div>
@@ -190,7 +188,8 @@
         <div class="pack locked">
             <div class="card">
                 <img src="assets/img/logo.png" class="card-img" style="opacity: 0.05;" alt="Logo">
-                <div class="lock-text">ENCRYPTED</div>
+                <h2 class="card-title" style="color:#1a1a1a">COMING SOON</h2>
+                <div class="lock-text">ENCRYPTED_LINK</div>
             </div>
             <div class="foil"></div>
         </div>
@@ -198,18 +197,24 @@
         <div class="pack locked">
             <div class="card">
                 <img src="assets/img/logo.png" class="card-img" style="opacity: 0.05;" alt="Logo">
-                <div class="lock-text">ENCRYPTED</div>
+                <h2 class="card-title" style="color:#1a1a1a">COMING SOON</h2>
+                <div class="lock-text">ENCRYPTED_LINK</div>
             </div>
             <div class="foil"></div>
         </div>
     </main>
 
+    <footer>
+        VANTAVIGIL SECURITY OPERATIONS CENTER // INTERNAL ACCESS ONLY
+    </footer>
+
     <div id="loading-screen">
         <div class="spinner"></div>
-        <p style="margin-top:20px; letter-spacing:5px; color:var(--neon-blue); font-size:10px;">AUTHORIZING ACCESS...</p>
+        <p style="margin-top:20px; letter-spacing:5px; color:var(--neon-blue); font-size:12px;">AUTHORIZING ACCESS...</p>
     </div>
 
     <script>
+        // Geri tuşu ve UI resetleme
         function resetUI() {
             document.getElementById('loading-screen').style.display = 'none';
             document.querySelectorAll('.pack').forEach(p => p.classList.remove('ripped'));
@@ -223,9 +228,7 @@
             element.classList.add('ripped');
             setTimeout(() => {
                 document.getElementById('loading-screen').style.display = 'flex';
-                setTimeout(() => {
-                    window.location.href = url;
-                }, 1800);
+                setTimeout(() => { window.location.href = url; }, 1800);
             }, 800);
         }
     </script>
