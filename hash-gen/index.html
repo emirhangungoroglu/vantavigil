@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VANTAVIGIL | FILE ANALYSIS</title>
+    <link rel="icon" href="../assets/img/icon.png" type="image/png">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        :root {
+            --neon-blue: #00d2ff;
+            --neon-green: #00ff41;
+            --neon-red: #ff3131;
+            --text-gray: #888888;
+            --panel-bg: rgba(10, 10, 10, 0.95);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #020202 url('../assets/img/background.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            color: white; font-family: 'Orbitron', sans-serif;
+            min-height: 100vh; overflow-x: hidden;
+        }
+
+        /* Scanline Parazit Efekti */
+        body::after {
+            content: ""; position: fixed; inset: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 4px; z-index: 100; pointer-events: none;
+        }
+
+        /* Navbar */
+        .navbar {
+            width: 100%; height: 80px; background: var(--panel-bg);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex; align-items: center; padding: 0 40px; backdrop-filter: blur(10px);
+        }
+        .main-logo { height: 50px; cursor: pointer; filter: grayscale(0.5); }
+
+        /* Container */
+        .container {
+            max-width: 900px; margin: 40px auto; padding: 30px;
+            background: var(--panel-bg); border: 1px solid #111;
+            border-radius: 20px; backdrop-filter: blur(20px); z-index: 5; position: relative;
+        }
+
+        h1 { font-size: 1.2rem; letter-spacing: 5px; color: var(--neon-blue); margin-bottom: 25px; text-transform: uppercase; }
+
+        /* Dosya Yükleme Alanı */
+        .drop-zone {
+            width: 100%; height: 150px; border: 2px dashed #222;
+            border-radius: 15px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            cursor: pointer; transition: 0.3s; background: rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+        .drop-zone:hover { border-color: var(--neon-blue); background: rgba(0, 210, 255, 0.05); }
+        .drop-zone p { color: #555; font-size: 12px; letter-spacing: 2px; }
+
+        /* Hash Sonuçları */
+        .results-grid {
+            display: grid; gap: 15px; margin-bottom: 30px;
+        }
+        .result-item {
+            background: #000; border: 1px solid #111; padding: 15px;
+            border-radius: 10px; display: flex; flex-direction: column; gap: 5px;
+        }
+        .label { font-size: 10px; color: var(--neon-blue); letter-spacing: 2px; }
+        .value { font-family: monospace; font-size: 13px; color: #ccc; word-break: break-all; }
+
+        /* Karşılaştırma Alanı */
+        .verifier-box {
+            border-top: 1px solid #222; padding-top: 25px; margin-top: 20px;
+        }
+        input {
+            width: 100%; background: #000; border: 1px solid #222;
+            padding: 15px; color: var(--neon-green); font-family: monospace;
+            border-radius: 8px; margin-bottom: 15px; outline: none;
+        }
+        input:focus { border-color: var(--neon-green); }
+
+        .status-msg {
+            padding: 15px; border-radius: 8px; font-size: 12px;
+            text-align: center; letter-spacing: 2px; display: none;
+        }
+        .match { background: rgba(0, 255, 65, 0.1); color: var(--neon-green); border: 1px solid var(--neon-green); }
+        .mismatch { background: rgba(255, 49, 49, 0.1); color: var(--neon-red); border: 1px solid var(--neon-red); }
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <img src="../assets/img/logo.png" class="main-logo" onclick="window.location.href='/vantavigil'">
+        <div style="flex:1; text-align:center; letter-spacing:10px; color:#444;">ANALYSIS_CENTER</div>
+    </nav>
+
+    <div class="container">
+        <h1>> FILE_INTEGRITY_CHECK</h1>
+
+        <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+            <p id="fileName">SÜRÜKLE BIRAK VEYA DOSYA SEÇ</p>
+            <input type="file" id="fileInput" hidden onchange="handleFile(this.files[0])">
+        </div>
+
+        <div class="results-grid">
+            <div class="result-item">
+                <span class="label">MD5_HASH</span>
+                <span class="value" id="md5-val">-</span>
+            </div>
+            <div class="result-item">
+                <span class="label">SHA-256_HASH</span>
+                <span class="value" id="sha256-val">-</span>
+            </div>
+        </div>
+
+        <div class="verifier-box">
+            <h1>> HASH_VERIFIER (AUTO_DETECT)</h1>
+            <input type="text" id="hashInput" placeholder="Karşılaştırmak istediğiniz Hash'i yapıştırın..." oninput="verifyHash()">
+            <div id="statusBox" class="status-msg"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentHashes = { md5: '', sha256: '' };
+
+        async function handleFile(file) {
+            if (!file) return;
+            document.getElementById('fileName').innerText = `SEÇİLDİ: ${file.name.toUpperCase()}`;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const rawData = CryptoJS.lib.WordArray.create(e.target.result);
+                
+                // Hashleri Hesapla
+                currentHashes.md5 = CryptoJS.MD5(rawData).toString();
+                currentHashes.sha256 = CryptoJS.SHA256(rawData).toString();
+
+                // Ekrana Yazdır
+                document.getElementById('md5-val').innerText = currentHashes.md5;
+                document.getElementById('sha256-val').innerText = currentHashes.sha256;
+                
+                verifyHash(); // Dosya yüklendiğinde otomatik karşılaştırmayı tetikle
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function verifyHash() {
+            const input = document.getElementById('hashInput').value.trim().toLowerCase();
+            const statusBox = document.getElementById('statusBox');
+            
+            if (!input || !currentHashes.md5) {
+                statusBox.style.display = 'none';
+                return;
+            }
+
+            statusBox.style.display = 'block';
+            let detectedType = "";
+
+            // --- OTOMATİK ALGILAMA MANTIĞI ---
+            // MD5 = 32 karakter | SHA-256 = 64 karakter
+            if (input.length === 32) detectedType = "MD5";
+            else if (input.length === 64) detectedType = "SHA-256";
+            else detectedType = "UNKNOWN_LENGTH";
+
+            // --- KARŞILAŞTIRMA MANTIĞI ---
+            let isMatch = false;
+            if (detectedType === "MD5" && input === currentHashes.md5) isMatch = true;
+            if (detectedType === "SHA-256" && input === currentHashes.sha256) isMatch = true;
+
+            if (isMatch) {
+                statusBox.className = 'status-msg match';
+                statusBox.innerText = `MATCH CONFIRMED: ${detectedType} SIGNATURE IS VALID`;
+            } else {
+                statusBox.className = 'status-msg mismatch';
+                statusBox.innerText = detectedType === "UNKNOWN_LENGTH" 
+                    ? "INVALID HASH LENGTH" 
+                    : `MISMATCH DETECTED: FILE DOES NOT MATCH ${detectedType} SIGNATURE`;
+            }
+        }
+
+        // Sürükle Bırak Desteği
+        const dropZone = document.getElementById('dropZone');
+        dropZone.ondragover = (e) => { e.preventDefault(); dropZone.style.borderColor = 'var(--neon-blue)'; };
+        dropZone.ondragleave = () => { dropZone.style.borderColor = '#222'; };
+        dropZone.ondrop = (e) => {
+            e.preventDefault();
+            const file = e.dataTransfer.files[0];
+            handleFile(file);
+        };
+    </script>
+</body>
+</html>
