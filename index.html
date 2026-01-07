@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VANTAVIGIL | MENU</title>
+    <title>VANTAVIGIL | SECURE_ACCESS</title>
     
     <link rel="icon" href="assets/img/icon.png" type="image/png">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;600&display=swap');
 
         :root {
             --neon-blue: #00d2ff;
             --neon-green: #00ff41;
-            --text-gray: #888888; /* İstediğin gri tonu */
+            --text-gray: #888888; 
             --bg-dark: #020202;
             --nav-bg: #0a0a0a;
         }
@@ -30,10 +30,19 @@
             flex-direction: column;
         }
 
-        /* --- PROFESYONEL GRİ NAVBAR --- */
+        /* --- DINAMIK ARKA PLAN CANVAS --- */
+        #canvas-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle, #0a0a0a 0%, #020202 100%);
+        }
+
+        /* --- PROFESYONEL GRIMSI NAVBAR --- */
         .navbar {
             width: 100%;
-            height: 80px; /* Daha dengeli yükseklik */
+            height: 80px;
             background: var(--nav-bg);
             border-bottom: 1px solid #1a1a1a;
             display: flex;
@@ -43,17 +52,14 @@
             z-index: 1000;
         }
 
-        /* Sol: Dev Logo */
         .nav-left { flex: 1; display: flex; align-items: center; }
         .main-logo {
-            height: 60px; /* Navbar ile uyumlu ama baskın boyut */
+            height: 60px; /* Navbar ile uyumlu ama baskın */
             width: auto;
-            filter: grayscale(0.5); /* Hafif grimsi/metalik dokunuş */
+            filter: grayscale(0.5);
             transition: 0.3s;
         }
-        .main-logo:hover { filter: grayscale(0) drop-shadow(0 0 10px var(--neon-blue)); }
 
-        /* Orta: Gri ve Profesyonel Yazı */
         .nav-center {
             position: absolute;
             left: 50%;
@@ -64,27 +70,27 @@
             font-size: 1.8rem;
             letter-spacing: 12px;
             font-weight: 700;
-            color: var(--text-gray); /* Gri yazı */
+            color: var(--text-gray); /* İstediğin Gri Yazı */
             text-transform: uppercase;
-            margin: 0;
         }
 
         .nav-right {
             flex: 1;
             text-align: right;
             font-size: 11px;
-            color: #444; /* Daha sönük gri */
+            color: #444;
             letter-spacing: 2px;
             font-family: monospace;
         }
 
-        /* --- MODÜLLER --- */
+        /* --- PANEL / MODÜL TASARIMI --- */
         main {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 50px;
+            z-index: 5;
         }
 
         .pack {
@@ -96,26 +102,28 @@
 
         .card {
             position: absolute; inset: 0;
-            background: #080808; border-radius: 20px;
+            background: rgba(8, 8, 8, 0.9); /* Arka planın hafif görünmesi için */
+            border-radius: 20px;
             border: 1px solid #111;
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
             z-index: 1;
+            backdrop-filter: blur(5px);
         }
         .card-img { width: 150px; filter: grayscale(0.2) drop-shadow(0 0 20px rgba(0, 210, 255, 0.2)); }
 
-        /* Yırtılma Kaplaması */
+        /* YIRTILMA KAPLAMASI (FOIL) */
         .foil {
             position: absolute; inset: -1px; z-index: 10;
             background: linear-gradient(135deg, #1a1a1a, #050505);
             border-radius: 20px; border: 1px solid #222;
-            transition: 1s cubic-bezier(0.9, 0, 0.1, 1);
+            transition: 1.2s cubic-bezier(0.9, 0, 0.1, 1);
             clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
         }
 
         .ripped .foil {
             clip-path: polygon(100% 100%, 100% 100%, 100% 100%, 100% 100%);
-            opacity: 0; transform: scale(1.1);
+            opacity: 0; transform: scale(1.1) rotate(5deg);
         }
 
         /* --- LOADING OVERLAY --- */
@@ -140,6 +148,8 @@
 </head>
 <body>
 
+    <canvas id="canvas-bg"></canvas>
+
     <nav class="navbar">
         <div class="nav-left">
             <img src="assets/img/logo.png" alt="Vantavigil" class="main-logo">
@@ -150,7 +160,7 @@
         </div>
 
         <div class="nav-right">
-            STATUS: <span style="color:var(--neon-green)">ONLINE</span>
+            UPLINK: <span style="color:var(--neon-green)">STABLE</span>
         </div>
     </nav>
 
@@ -175,26 +185,82 @@
     </div>
 
     <script>
-        // Sayfa gösterildiğinde (geri tuşu dahil) her şeyi sıfırla
+        // --- 1. PLEXUS ARKA PLAN SCRIPT ---
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            for (let i = 0; i < 80; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4
+                });
+            }
+        }
+
+        function drawCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p, i) => {
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                
+                ctx.fillStyle = 'rgba(0, 210, 255, 0.2)';
+                ctx.beginPath(); ctx.arc(p.x, p.y, 1.2, 0, Math.PI*2); ctx.fill();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if (dist < 150) {
+                        ctx.strokeStyle = `rgba(0, 210, 255, ${1 - dist/150 - 0.8})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+                    }
+                }
+            });
+            requestAnimationFrame(drawCanvas);
+        }
+
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+        drawCanvas();
+
+        // --- 2. GERI TUSU VE UI RESET SCRIPT ---
         window.onpageshow = function(event) {
             document.getElementById('loading-screen').style.display = 'none';
             document.querySelectorAll('.pack').forEach(p => p.classList.remove('ripped'));
         };
 
+        // --- 3. MODUL ACILIS SCRIPT ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playRipSound() {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(100, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+        }
+
         function launchModule(element, url) {
             if (element.classList.contains('ripped')) return;
-
-            // Yırtılma Başlat
+            
+            playRipSound();
             element.classList.add('ripped');
 
             setTimeout(() => {
                 document.getElementById('loading-screen').style.display = 'flex';
-                
                 setTimeout(() => {
-                    // Normal yönlendirme (Scriptimiz geri dönüşü hallediyor)
                     window.location.href = url;
-                }, 1800);
-            }, 800);
+                }, 2000);
+            }, 1000);
         }
     </script>
 </body>
