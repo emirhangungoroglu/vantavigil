@@ -3,126 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VANTAVIGIL | MODULE SELECTOR</title>
+    <title>VANTAVIGIL | SECURE DEPLOYMENT</title>
     <style>
         :root {
             --neon-blue: #00d2ff;
             --neon-green: #00ff41;
-            --bg: #050505;
-            --card-bg: #111;
+            --cyber-purple: #bc00ff;
+            --glass: rgba(255, 255, 255, 0.05);
         }
 
         body {
-            margin: 0; background: var(--bg); color: white;
+            margin: 0; background: #020202; color: white;
             font-family: 'Segoe UI', sans-serif;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            min-height: 100vh; overflow: hidden;
-        }
-
-        .header { margin-bottom: 50px; text-align: center; }
-        .header h1 { letter-spacing: 10px; color: var(--neon-blue); text-shadow: 0 0 15px var(--neon-blue); }
-
-        /* PANEL GRID */
-        .module-grid {
-            display: flex; gap: 30px; perspective: 1000px;
-        }
-
-        /* PAKET TASARIMI */
-        .pack {
-            width: 220px; height: 320px;
-            position: relative; cursor: pointer;
-            transition: transform 0.3s;
-        }
-
-        .pack:hover { transform: translateY(-10px); }
-
-        /* YIRTILACAK ÜST KISIM */
-        .pack-top {
-            position: absolute; top: 0; left: 0; width: 100%; height: 50%;
-            background: linear-gradient(135deg, #222, #333);
-            border: 1px solid #444; border-bottom: none;
-            z-index: 5;
             display: flex; align-items: center; justify-content: center;
-            /* Yırtılma efekti için jagged edge (tırtıklı alt kenar) */
-            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 85% 90%, 70% 100%, 50% 90%, 30% 100%, 15% 90%, 0% 100%);
-            transition: transform 0.8s cubic-bezier(0.5, 0, 0.5, 1);
+            height: 100vh; overflow: hidden;
+            perspective: 2000px;
         }
 
-        /* ALT KISIM (SABİT) */
-        .pack-bottom {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 50%;
-            background: linear-gradient(135deg, #222, #333);
-            border: 1px solid #444; border-top: none;
-            z-index: 4;
-            clip-path: polygon(0% 0%, 15% 10%, 30% 0%, 50% 10%, 70% 0%, 85% 10%, 100% 0%, 100% 100%, 0% 100%);
+        /* Arka Plan Hareketli Grid */
+        .bg-grid {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
+                        repeating-linear-gradient(0deg, transparent 0, transparent 49px, rgba(0, 210, 255, 0.05) 50px),
+                        repeating-linear-gradient(90deg, transparent 0, transparent 49px, rgba(0, 210, 255, 0.05) 50px);
+            z-index: -1; transform: rotateX(20deg);
         }
 
-        /* İÇERİK (KART) */
-        .content-card {
-            position: absolute; top: 10%; left: 5%; width: 90%; height: 80%;
-            background: #000; border: 1px solid var(--neon-blue);
+        .container { display: flex; gap: 40px; }
+
+        /* PAKET ANA YAPI */
+        .pack {
+            width: 260px; height: 400px;
+            position: relative; cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.4s ease;
+        }
+
+        .pack:hover { transform: translateY(-15px) rotateY(10deg); }
+
+        /* KART (İÇERİK) */
+        .card {
+            position: absolute; inset: 5px;
+            background: linear-gradient(135deg, #111, #000);
+            border: 1px solid var(--neon-blue);
+            border-radius: 10px;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 2; transition: 0.5s;
+            z-index: 1; overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.2);
         }
 
-        /* YIRTILMA ANİMASYONU AKTİF */
-        .pack.ripped .pack-top {
-            transform: translateY(-150%) rotate(-10deg);
-            opacity: 0;
+        /* YIRTILACAK KATMAN (FOIL) */
+        .foil {
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, #1a1a1a 0%, #444 50%, #1a1a1a 100%);
+            z-index: 10; border-radius: 10px;
+            border: 2px solid #333;
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.5s;
         }
 
-        .pack.ripped .content-card {
-            border-color: var(--neon-green);
-            box-shadow: 0 0 20px var(--neon-green);
+        .foil::after {
+            content: "VANTAVIGIL"; letter-spacing: 5px; color: #666; font-size: 14px;
         }
 
-        /* MODÜL BİLGİLERİ */
-        .mod-title { font-weight: bold; letter-spacing: 2px; margin-top: 10px; }
-        .mod-status { font-size: 10px; color: #666; }
-        .lock-icon { font-size: 30px; opacity: 0.3; }
+        /* YIRTILMA EFEKTİ (SOL PARÇA) */
+        .tear-left {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: inherit; z-index: 11;
+            clip-path: polygon(0 0, 100% 0, 0 100%); /* İlk aşama */
+            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-        /* KİLİTLİ PANEL */
-        .locked { cursor: not-allowed; filter: grayscale(1); }
+        /* YIRTILMA EFEKTİ (SAĞ PARÇA) */
+        .tear-right {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: inherit; z-index: 11;
+            clip-path: polygon(100% 0, 100% 100%, 0 100%);
+            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* AKTİF YIRTILMA ANİMASYONU */
+        .pack.opened .tear-left {
+            transform: translateX(-150%) rotate(-45deg);
+        }
+
+        .pack.opened .tear-right {
+            transform: translateX(150%) rotate(45deg);
+        }
+
+        .pack.opened .card {
+            animation: cardGlow 2s infinite alternate;
+        }
+
+        @keyframes cardGlow {
+            from { box-shadow: 0 0 20px var(--neon-blue); }
+            to { box-shadow: 0 0 50px var(--neon-green); border-color: var(--neon-green); }
+        }
+
+        /* GÖRSEL ÖĞELER */
+        .card-image {
+            width: 80%; height: 50%;
+            background: #080808; border-radius: 5px;
+            margin-bottom: 20px; position: relative;
+            overflow: hidden; border: 1px solid #222;
+        }
+
+        /* Encoder İkonu (placeholder) */
+        .bolt { font-size: 50px; color: var(--neon-green); filter: drop-shadow(0 0 10px var(--neon-green)); }
+
+        .title { font-weight: bold; font-size: 1.2rem; letter-spacing: 2px; }
+        .status { font-size: 10px; color: var(--neon-blue); margin-top: 5px; }
+
+        /* Kilitli Panel Modu */
+        .locked .card { border-color: #333; filter: grayscale(1); }
+        .locked-text { color: #444; font-size: 12px; margin-top: 10px; }
 
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>VANTAVIGIL</h1>
-        <p style="color: #444;">SELECT SECURE MODULE</p>
-    </div>
+    <div class="bg-grid"></div>
 
-    <div class="module-grid">
+    <div class="container">
         
-        <div class="pack" onclick="tearPack(this, '/encoder')">
-            <div class="pack-top"><span style="color:#555">SECURE</span></div>
-            <div class="content-card">
-                <div style="font-size: 40px;">⚡</div>
-                <div class="mod-title">ENCODER</div>
-                <div class="mod-status">ACTIVE_v1.0</div>
+        <div class="pack" id="encoder-pack" onclick="openModule(this, '/vantavigil/encoder')">
+            <div class="card">
+                <div class="card-image" id="img-encoder">
+                    <div style="display:flex; height:100%; align-items:center; justify-content:center;">
+                        <span class="bolt">⚡</span>
+                    </div>
+                </div>
+                <div class="title">ENCODER</div>
+                <div class="status">DECRYPTION_READY</div>
             </div>
-            <div class="pack-bottom"></div>
-        </div>
-
-        <div class="pack locked" onclick="alert('Module encrypted. Stay tuned.')">
-            <div class="pack-top"><span style="color:#555">LOCKED</span></div>
-            <div class="content-card">
-                <div class="lock-icon">🔒</div>
-                <div class="mod-title">LOG_ANALYSIS</div>
-                <div class="mod-status">COMING_SOON</div>
-            </div>
-            <div class="pack-bottom"></div>
+            <div class="foil tear-left"></div>
+            <div class="foil tear-right"></div>
         </div>
 
         <div class="pack locked">
-            <div class="pack-top"><span style="color:#555">LOCKED</span></div>
-            <div class="content-card">
-                <div class="lock-icon">🔒</div>
-                <div class="mod-title">INTEL_FEED</div>
-                <div class="mod-status">COMING_SOON</div>
+            <div class="card">
+                <div class="card-image"></div>
+                <div class="title">ROOT_SCAN</div>
+                <div class="locked-text">ENCRYPTED_DATA</div>
             </div>
-            <div class="pack-bottom"></div>
+            <div class="foil"></div>
+        </div>
+
+        <div class="pack locked">
+            <div class="card">
+                <div class="card-image"></div>
+                <div class="title">THREAT_MAP</div>
+                <div class="locked-text">ENCRYPTED_DATA</div>
+            </div>
+            <div class="foil"></div>
         </div>
 
     </div>
@@ -130,43 +163,55 @@
     <script>
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
+        // Gerçekçi Yırtılma Sesi (White Noise + Crackle)
         function playRipSound() {
-            const osc = audioCtx.createOscillator();
-            const noise = audioCtx.createBufferSource();
             const bufferSize = audioCtx.sampleRate * 0.5;
             const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
             const data = buffer.getChannelData(0);
-            
             for (let i = 0; i < bufferSize; i++) {
-                data[i] = Math.random() * 2 - 1;
+                data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
             }
 
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = buffer;
             const filter = audioCtx.createBiquadFilter();
             filter.type = 'lowpass';
-            filter.frequency.value = 1000;
-
+            filter.frequency.value = 800;
+            
             const gain = audioCtx.createGain();
-            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
 
-            noise.buffer = buffer;
             noise.connect(filter);
             filter.connect(gain);
             gain.connect(audioCtx.destination);
             noise.start();
         }
 
-        function tearPack(element, targetUrl) {
-            if (element.classList.contains('ripped')) return;
+        function openModule(element, url) {
+            if (element.classList.contains('opened') || element.classList.contains('locked')) return;
 
             playRipSound();
-            element.classList.add('ripped');
+            element.classList.add('opened');
 
-            // 1.5 saniye sonra yönlendir
+            // Görsel bir patlama efekti (opsiyonel sarsıntı)
+            element.style.animation = "shake 0.5s";
+
             setTimeout(() => {
-                window.location.href = targetUrl;
-            }, 1500);
+                // Encoder sayfasına yönlendirme
+                window.location.href = url;
+            }, 2500); 
         }
     </script>
+
+    <style>
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            50% { transform: translate(-1px, 2px) rotate(1deg); }
+            100% { transform: translate(1px, -2px) rotate(-0deg); }
+        }
+    </style>
 </body>
 </html>
