@@ -30,16 +30,16 @@
             flex-direction: column;
         }
 
-        /* --- YENİ WARP ARKA PLAN CANVAS --- */
+        /* --- YAVAŞLATILMIŞ WARP ARKA PLAN --- */
         #canvas-warp {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: -1; /* En arkada */
+            z-index: -1;
             background: #000;
         }
 
-        /* --- PROFESYONEL NAVBAR --- */
+        /* --- GRİMSİ PROFESYONEL NAVBAR --- */
         .navbar {
             width: 100%; height: 80px;
             background: var(--nav-bg);
@@ -77,17 +77,16 @@
 
         .card {
             position: absolute; inset: 0;
-            background: rgba(8, 8, 8, 0.9); /* Arka planın hafif görünmesi için yarı saydam */
+            background: rgba(8, 8, 8, 0.9);
             border-radius: 20px; border: 1px solid #111;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             z-index: 1; backdrop-filter: blur(5px);
         }
         .card-img { width: 150px; filter: grayscale(0.2) drop-shadow(0 0 20px rgba(0, 210, 255, 0.2)); }
 
-        /* Yırtılma Kaplaması */
         .foil {
             position: absolute; inset: -1px; z-index: 10;
-            background: linear-gradient(135deg, #1a1a1a, #050505);
+            background: linear-gradient(145deg, #1a1a1a, #050505);
             border-radius: 20px; border: 1px solid #222;
             transition: 1.2s cubic-bezier(0.9, 0, 0.1, 1);
             clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
@@ -144,33 +143,30 @@
 
     <div id="loading-screen">
         <div class="spinner"></div>
-        <p style="margin-top:20px; letter-spacing:5px; color:var(--text-gray); font-size:12px;">INITIATING WARP JUMP...</p>
+        <p style="margin-top:20px; letter-spacing:5px; color:var(--text-gray); font-size:12px;">AUTHORIZING ACCESS...</p>
     </div>
 
     <script>
-        // --- YENİ WARP DRIVE EFEKTİ SCRIPT ---
+        // --- SMOOTH WARP DRIVE SCRIPT ---
         const canvas = document.getElementById('canvas-warp');
         const ctx = canvas.getContext('2d');
         
         let width, height, cx, cy;
         let stars = [];
-        const numStars = 400; // Yıldız sayısı
-        const speed = 15;     // Hız faktörü
+        const numStars = 350; 
+        const speed = 2.5; // Hız ciddi oranda düşürüldü (Takip edilebilir olması için)
 
         class Star {
-            constructor() {
-                this.reset();
-            }
+            constructor() { this.reset(); }
             reset() {
-                this.x = (Math.random() - 0.5) * width * 2; // Geniş alana yay
+                this.x = (Math.random() - 0.5) * width * 2;
                 this.y = (Math.random() - 0.5) * height * 2;
-                this.z = Math.random() * width; // Derinlik
-                this.pz = this.z; // Önceki Z konumu (çizgi için)
+                this.z = Math.random() * width;
+                this.pz = this.z;
             }
             update() {
-                this.pz = this.z; // Önceki konumu kaydet
-                this.z -= speed;  // Bize doğru yaklaştır
-                // Ekrandan çıkarsa arkaya at
+                this.pz = this.z;
+                this.z -= speed;
                 if (this.z < 1) {
                     this.reset();
                     this.z = width;
@@ -178,23 +174,17 @@
                 }
             }
             draw() {
-                // Perspektif hesaplaması
                 const sx = (this.x / this.z) * cx + cx;
                 const sy = (this.y / this.z) * cy + cy;
-                
-                // Önceki konumun perspektifi (çizgi kuyruğu için)
                 const psx = (this.x / this.pz) * cx + cx;
                 const psy = (this.y / this.pz) * cy + cy;
 
-                // Yakınlaştıkça kalınlaşan ve parlayan çizgi
-                const size = (1 - this.z / width) * 4;
+                const size = (1 - this.z / width) * 3;
                 const opacity = (1 - this.z / width);
 
                 ctx.beginPath();
-                ctx.moveTo(psx, psy); // Kuyruk başlangıcı
-                ctx.lineTo(sx, sy);   // Mevcut konum
-                
-                // Referans görseldeki gibi mavimsi beyaz renk
+                ctx.moveTo(psx, psy);
+                ctx.lineTo(sx, sy);
                 ctx.strokeStyle = `rgba(200, 230, 255, ${opacity})`;
                 ctx.lineWidth = size;
                 ctx.lineCap = 'round';
@@ -205,18 +195,14 @@
         function init() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
-            cx = width / 2; // Merkez X
-            cy = height / 2; // Merkez Y
+            cx = width / 2; cy = height / 2;
             stars = [];
-            for (let i = 0; i < numStars; i++) {
-                stars.push(new Star());
-            }
+            for (let i = 0; i < numStars; i++) stars.push(new Star());
         }
 
         function animate() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.8)'; // Hafif iz bırakarak temizle (motion trail)
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.85)'; 
             ctx.fillRect(0, 0, width, height);
-            
             for (const star of stars) {
                 star.update();
                 star.draw();
@@ -225,24 +211,20 @@
         }
 
         window.addEventListener('resize', init);
-        init();
-        animate();
+        init(); animate();
 
-        // --- UI RESET (GERİ TUŞU HATASI İÇİN) ---
+        // UI Reset
         window.onpageshow = function(event) {
             document.getElementById('loading-screen').style.display = 'none';
             document.querySelectorAll('.pack').forEach(p => p.classList.remove('ripped'));
         };
 
-        // --- PAKET AÇMA ---
         function launchModule(element, url) {
             if (element.classList.contains('ripped')) return;
             element.classList.add('ripped');
             setTimeout(() => {
                 document.getElementById('loading-screen').style.display = 'flex';
-                setTimeout(() => {
-                    window.location.href = url;
-                }, 1800);
+                setTimeout(() => { window.location.href = url; }, 1800);
             }, 800);
         }
     </script>
