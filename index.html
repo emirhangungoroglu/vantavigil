@@ -14,7 +14,6 @@
             --neon-blue: #00d2ff;
             --neon-green: #00ff41;
             --bg-dark: #020202;
-            --nav-bg: rgba(0, 0, 0, 0.95);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,51 +28,51 @@
             flex-direction: column;
         }
 
-        /* --- PROFESYONEL NAVBAR --- */
+        /* --- PROFESYONEL NAVBAR (TAM MERKEZ VE DEV LOGO) --- */
         .navbar {
             width: 100%;
-            height: 120px; /* Navbar biraz daha genişletildi */
-            background: var(--nav-bg);
+            height: 130px; /* Navbar derinliği artırıldı */
+            background: rgba(0, 0, 0, 0.98);
             border-bottom: 2px solid #111;
             display: flex;
             align-items: center;
-            padding: 0 40px;
+            padding: 0 60px;
             position: relative;
+            z-index: 1000;
         }
 
-        /* Sol Logo: Devasa Boyut */
-        .nav-left {
-            flex: 1;
-        }
+        /* Sol: Dev Logo */
+        .nav-left { flex: 1; display: flex; align-items: center; }
         .main-logo {
-            height: 90px; /* İstediğin gibi büyütüldü */
+            height: 100px; /* Devasa Logo */
             width: auto;
             filter: drop-shadow(0 0 15px var(--neon-blue));
         }
 
-        /* Orta Yazı: Tam Merkez ve Profesyonel */
+        /* Orta: Tam Merkezlenmiş Profesyonel Yazı */
         .nav-center {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            white-space: nowrap;
+            text-align: center;
         }
         .brand-text {
-            font-size: 2.8rem; /* Büyük ve etkileyici */
-            letter-spacing: 18px;
+            font-size: 3rem; /* Çok daha büyük */
+            letter-spacing: 20px;
             font-weight: 900;
-            background: linear-gradient(to bottom, #fff, #666);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(0, 210, 255, 0.2);
+            color: #fff;
+            text-transform: uppercase;
+            text-shadow: 0 0 30px rgba(0, 210, 255, 0.4);
+            margin: 0;
         }
 
         .nav-right {
             flex: 1;
             text-align: right;
-            font-size: 12px;
+            font-size: 13px;
             color: var(--neon-green);
             letter-spacing: 2px;
+            font-family: monospace;
         }
 
         /* --- MODÜLLER --- */
@@ -82,55 +81,55 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 50px;
+            gap: 60px;
         }
 
         .pack {
             width: 320px; height: 460px;
             position: relative; cursor: pointer;
-            transition: 0.4s;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .pack:hover { transform: translateY(-10px) scale(1.02); }
+        .pack:hover { transform: translateY(-15px) scale(1.03); }
 
         .card {
             position: absolute; inset: 0;
-            background: #080808; border-radius: 25px;
-            border: 1px solid #222;
+            background: #080808; border-radius: 30px;
+            border: 1px solid #1a1a1a;
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
             z-index: 1;
         }
-
-        .card-img { width: 180px; filter: drop-shadow(0 0 20px var(--neon-blue)); }
+        .card-img { width: 180px; filter: drop-shadow(0 0 25px var(--neon-blue)); }
 
         /* Yırtılma Kaplaması */
         .foil {
             position: absolute; inset: -1px; z-index: 10;
-            background: linear-gradient(135deg, #1a1a1a, #000);
-            border-radius: 25px; border: 2px solid #333;
-            transition: 1s cubic-bezier(0.9, 0, 0.1, 1);
+            background: linear-gradient(145deg, #222, #000);
+            border-radius: 30px; border: 2px solid #333;
+            transition: 1.2s cubic-bezier(0.9, 0, 0.1, 1);
             clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
         }
 
+        /* Yırtılma Efekti */
         .ripped .foil {
             clip-path: polygon(100% 100%, 100% 100%, 100% 100%, 100% 100%);
-            opacity: 0; transform: scale(1.1);
+            opacity: 0; transform: scale(1.15) rotate(5deg);
         }
 
         /* --- LOADING OVERLAY --- */
         #loading-screen {
             position: fixed; inset: 0;
             background: #000; z-index: 9999;
-            display: none; flex-direction: column;
-            align-items: center; justify-content: center;
+            display: none; /* JS ile açılacak */
+            flex-direction: column; align-items: center; justify-content: center;
         }
 
         .spinner {
-            width: 100px; height: 100px;
-            border: 4px solid rgba(0, 210, 255, 0.1);
+            width: 80px; height: 80px;
+            border: 4px solid rgba(0, 210, 255, 0.05);
             border-top: 4px solid var(--neon-blue);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 0.8s linear infinite;
         }
 
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -149,54 +148,65 @@
         </div>
 
         <div class="nav-right">
-            SYSTEM_STATUS: <span style="color:white">ONLINE</span>
+            UPLINK: <span style="color:white">ESTABLISHED</span>
         </div>
     </nav>
 
     <main>
-        <div class="pack" id="encoder-module" onclick="launchModule(this, '/vantavigil/encoder')">
+        <div class="pack" onclick="launchModule(this, '/vantavigil/encoder')">
             <div class="card">
                 <img src="assets/img/logo.png" class="card-img" alt="Logo">
-                <h2 style="margin-top:20px; letter-spacing:5px; color:var(--neon-blue);">ENCODER</h2>
+                <h2 style="margin-top:25px; letter-spacing:8px; color:var(--neon-blue); font-size:1.5rem;">ENCODER</h2>
             </div>
             <div class="foil"></div>
         </div>
         
-        <div class="pack" style="opacity: 0.3; cursor: not-allowed;">
-            <div class="card"><h2 style="color:#333;">LOCKED</h2></div>
+        <div class="pack" style="opacity: 0.2; cursor: not-allowed;">
+            <div class="card"><h2 style="color:#222;">ENCRYPTED</h2></div>
             <div class="foil"></div>
         </div>
     </main>
 
     <div id="loading-screen">
         <div class="spinner"></div>
-        <p style="margin-top:30px; letter-spacing:5px; color:var(--neon-blue);">ESTABLISHING SECURE UPLINK...</p>
+        <p style="margin-top:30px; letter-spacing:8px; color:var(--neon-blue); font-size:14px;">CONNECTING TO VANTAVIGIL CORE...</p>
     </div>
 
     <script>
-        // Geri tuşu kontrolü: Eğer kullanıcı geri gelirse yükleme ekranını göstermeden içeriği aç
-        window.addEventListener('pageshow', (event) => {
-            if (event.persisted) {
-                window.location.reload(); // Sayfayı temizle
-            }
-        });
+        /**
+         * GERİ TUŞU HATASINI ÇÖZEN KRİTİK KOD
+         * Tarayıcı "Geri" tuşuyla gelirse veya sayfa her yüklendiğinde
+         * loading ekranını zorla kapatır ve kartları resetler.
+         */
+        function resetPage() {
+            document.getElementById('loading-screen').style.display = 'none';
+            document.querySelectorAll('.pack').forEach(p => {
+                p.classList.remove('ripped');
+            });
+        }
+
+        // Sayfa yüklendiğinde ve geri tuşuna basıldığında çalışır
+        window.addEventListener('pageshow', resetPage);
+        window.addEventListener('load', resetPage);
 
         function launchModule(element, url) {
             if (element.classList.contains('ripped')) return;
 
-            // Yırtılma Animasyonu
+            // Ses motorunu başlat (tarayıcı izni için)
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+            // 1. Yırtılma Animasyonu
             element.classList.add('ripped');
 
             setTimeout(() => {
-                // Loading Overlay'i göster
+                // 2. Loading Overlay'i göster
                 document.getElementById('loading-screen').style.display = 'flex';
 
                 setTimeout(() => {
-                    // KRİTİK NOKTA: window.location.replace kullanıyoruz!
-                    // Bu sayede tarayıcı geçmişine bu loading sayfası eklenmez.
+                    // 3. Yönlendirme (Geçmişi kirletmemesi için replace kullanıyoruz)
                     window.location.replace(url);
-                }, 2000);
-            }, 800);
+                }, 2200);
+            }, 1000);
         }
     </script>
 </body>
