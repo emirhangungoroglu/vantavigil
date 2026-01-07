@@ -73,14 +73,13 @@
 
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
-        /* --- SAĞ YAN KONTROLLER (SIDEBAR CONTROLS) --- */
+        /* --- SIDEBAR CONTROLS --- */
         .side-controls {
             position: fixed; top: 100px; right: 40px;
             display: flex; flex-direction: column; align-items: flex-end; gap: 15px;
             z-index: 1005;
         }
 
-        /* VANTAVIGIL ? Butonu */
         #info-trigger {
             background: rgba(0,0,0,0.8);
             border: 1px solid var(--neon-blue);
@@ -92,12 +91,11 @@
         }
         #info-trigger:hover { background: var(--neon-blue); color: black; box-shadow: 0 0 20px var(--neon-blue); }
 
-        /* YENİ KARE SES BUTONU (Geliştirilmiş Görsellik) */
         #music-toggle {
             background: rgba(0,0,0,0.8);
             border: 1px solid var(--neon-blue);
             color: var(--neon-blue);
-            width: 50px; height: 50px; /* Tam kare yapıldı */
+            width: 50px; height: 50px;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; transition: 0.3s; backdrop-filter: blur(5px);
             font-size: 18px;
@@ -144,7 +142,7 @@
         }
 
         .card-img { width: 100px; filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.2)); }
-        .card-title { margin-top: 15px; letter-spacing: 3px; color: var(--text-gray); font-size: 0.85rem; font-weight: 700; }
+        .card-title { margin-top: 15px; letter-spacing: 3px; color: var(--text-gray); font-size: 0.85rem; font-weight: 700; text-align: center; padding: 0 10px; }
 
         .pack.locked { opacity: 0.6; cursor: not-allowed; }
         .pack.locked .card { background: rgba(5, 5, 5, 0.98); border-style: dashed; }
@@ -205,7 +203,7 @@
             <div class="card">
                 <img src="assets/img/logo.png" class="card-img" alt="Encoder">
                 <h2 class="card-title">ENCODER</h2>
-                <span style="font-size: 8px; color: #222; margin-top: 5px;">CLICK TO ACCESS</span>
+                <span style="font-size: 8px; color: #444; margin-top: 5px;">CLICK TO ACCESS</span>
             </div>
             <div class="foil"></div>
         </div>
@@ -214,12 +212,20 @@
             <div class="card">
                 <img src="assets/img/logo.png" class="card-img" alt="Hash Gen">
                 <h2 class="card-title">HASH GEN</h2>
-                <span style="font-size: 8px; color: #222; margin-top: 5px;">CLICK TO ACCESS</span>
+                <span style="font-size: 8px; color: #444; margin-top: 5px;">CLICK TO ACCESS</span>
             </div>
             <div class="foil"></div>
         </div>
 
-        <div class="pack locked"><div class="card"><h2 class="card-title" style="color:#111">COMING SOON</h2></div><div class="foil"></div></div>
+        <div class="pack" onclick="launchModule(this, '/vantavigil/nexus-recon')">
+            <div class="card">
+                <img src="assets/img/logo.png" class="card-img" alt="Nexus Recon">
+                <h2 class="card-title">NEXUS RECON</h2>
+                <span style="font-size: 8px; color: var(--neon-blue); margin-top: 5px;">IP & DOMAIN INTEL</span>
+            </div>
+            <div class="foil"></div>
+        </div>
+
         <div class="pack locked"><div class="card"><h2 class="card-title" style="color:#111">COMING SOON</h2></div><div class="foil"></div></div>
         <div class="pack locked"><div class="card"><h2 class="card-title" style="color:#111">COMING SOON</h2></div><div class="foil"></div></div>
     </main>
@@ -230,7 +236,6 @@
         const music = document.getElementById('bg-theme');
         music.volume = 0.1;
 
-        // Modal ve Dil Fonksiyonları
         function toggleModal(show) { document.getElementById('info-modal').style.display = show ? 'flex' : 'none'; }
         function setLang(lang) {
             document.getElementById('content-tr').style.display = lang === 'tr' ? 'block' : 'none';
@@ -239,7 +244,6 @@
             document.getElementById('btn-en').classList.toggle('active', lang === 'en');
         }
 
-        // Müzik Toggle
         function toggleMusic() {
             if (music.paused) {
                 music.play();
@@ -250,11 +254,9 @@
             }
         }
 
-        // İki Aşamalı Kart Mantığı
         function launchModule(element, url) {
             if (element.classList.contains('locked')) return;
 
-            // İlk tıklamada müziği otomatik başlat
             if (music.paused) {
                 music.play().then(() => {
                     document.getElementById('music-icon').innerText = '🔊';
