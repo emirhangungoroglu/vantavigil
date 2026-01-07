@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VANTAVIGIL | SECURE_ACCESS</title>
+    <title>VANTAVIGIL | MENU</title>
     
     <link rel="icon" href="assets/img/icon.png" type="image/png">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
         :root {
             --neon-blue: #00d2ff;
             --neon-green: #00ff41;
+            --text-gray: #888888; /* İstediğin gri tonu */
             --bg-dark: #020202;
+            --nav-bg: #0a0a0a;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,15 +30,15 @@
             flex-direction: column;
         }
 
-        /* --- PROFESYONEL NAVBAR (TAM MERKEZ VE DEV LOGO) --- */
+        /* --- PROFESYONEL GRİ NAVBAR --- */
         .navbar {
             width: 100%;
-            height: 140px; /* Navbar derinliği ideal seviyede */
-            background: rgba(0, 0, 0, 0.98);
-            border-bottom: 2px solid #1a1a1a;
+            height: 80px; /* Daha dengeli yükseklik */
+            background: var(--nav-bg);
+            border-bottom: 1px solid #1a1a1a;
             display: flex;
             align-items: center;
-            padding: 0 60px;
+            padding: 0 40px;
             position: relative;
             z-index: 1000;
         }
@@ -44,38 +46,36 @@
         /* Sol: Dev Logo */
         .nav-left { flex: 1; display: flex; align-items: center; }
         .main-logo {
-            height: 110px; /* İstediğin gibi devasa yapıldı */
+            height: 60px; /* Navbar ile uyumlu ama baskın boyut */
             width: auto;
-            filter: drop-shadow(0 0 20px rgba(0, 210, 255, 0.4));
+            filter: grayscale(0.5); /* Hafif grimsi/metalik dokunuş */
+            transition: 0.3s;
         }
+        .main-logo:hover { filter: grayscale(0) drop-shadow(0 0 10px var(--neon-blue)); }
 
-        /* Orta: Tam Merkezlenmiş Profesyonel Yazı */
+        /* Orta: Gri ve Profesyonel Yazı */
         .nav-center {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
             text-align: center;
-            width: 60%;
         }
         .brand-text {
-            font-size: 3.5rem; /* Devasa ve profesyonel font boyutu */
-            letter-spacing: 25px; /* Kurumsal boşluklandırma */
-            font-weight: 900;
-            color: #fff;
+            font-size: 1.8rem;
+            letter-spacing: 12px;
+            font-weight: 700;
+            color: var(--text-gray); /* Gri yazı */
             text-transform: uppercase;
-            text-shadow: 0 0 40px rgba(0, 210, 255, 0.5);
             margin: 0;
-            display: inline-block;
         }
 
         .nav-right {
             flex: 1;
             text-align: right;
-            font-size: 14px;
-            color: var(--neon-green);
-            letter-spacing: 3px;
+            font-size: 11px;
+            color: #444; /* Daha sönük gri */
+            letter-spacing: 2px;
             font-family: monospace;
-            text-shadow: 0 0 10px var(--neon-green);
         }
 
         /* --- MODÜLLER --- */
@@ -84,53 +84,52 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 60px;
+            gap: 50px;
         }
 
         .pack {
-            width: 320px; height: 460px;
+            width: 300px; height: 440px;
             position: relative; cursor: pointer;
             transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .pack:hover { transform: translateY(-20px) scale(1.05); }
+        .pack:hover { transform: translateY(-10px); }
 
         .card {
             position: absolute; inset: 0;
-            background: #080808; border-radius: 30px;
-            border: 1px solid #1a1a1a;
+            background: #080808; border-radius: 20px;
+            border: 1px solid #111;
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
             z-index: 1;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
         }
-        .card-img { width: 190px; filter: drop-shadow(0 0 30px var(--neon-blue)); }
+        .card-img { width: 150px; filter: grayscale(0.2) drop-shadow(0 0 20px rgba(0, 210, 255, 0.2)); }
 
-        /* Yırtılma Kaplaması (Sol Üstten Sağa) */
+        /* Yırtılma Kaplaması */
         .foil {
-            position: absolute; inset: -2px; z-index: 10;
-            background: linear-gradient(145deg, #222, #000);
-            border-radius: 30px; border: 2px solid #333;
-            transition: 1.2s cubic-bezier(0.9, 0, 0.1, 1);
+            position: absolute; inset: -1px; z-index: 10;
+            background: linear-gradient(135deg, #1a1a1a, #050505);
+            border-radius: 20px; border: 1px solid #222;
+            transition: 1s cubic-bezier(0.9, 0, 0.1, 1);
             clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
         }
 
         .ripped .foil {
             clip-path: polygon(100% 100%, 100% 100%, 100% 100%, 100% 100%);
-            opacity: 0; transform: scale(1.2) rotate(5deg);
+            opacity: 0; transform: scale(1.1);
         }
 
         /* --- LOADING OVERLAY --- */
         #loading-screen {
             position: fixed; inset: 0;
             background: #000; z-index: 9999;
-            display: none; 
+            display: none;
             flex-direction: column; align-items: center; justify-content: center;
         }
 
         .spinner {
-            width: 90px; height: 90px;
-            border: 5px solid rgba(0, 210, 255, 0.05);
-            border-top: 5px solid var(--neon-blue);
+            width: 60px; height: 60px;
+            border: 3px solid rgba(255, 255, 255, 0.05);
+            border-top: 3px solid var(--text-gray);
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -151,7 +150,7 @@
         </div>
 
         <div class="nav-right">
-            NETWORK: <span style="color:white">SECURED</span>
+            STATUS: <span style="color:var(--neon-green)">ONLINE</span>
         </div>
     </nav>
 
@@ -159,59 +158,42 @@
         <div class="pack" onclick="launchModule(this, '/vantavigil/encoder')">
             <div class="card">
                 <img src="assets/img/logo.png" class="card-img" alt="Logo">
-                <h2 style="margin-top:30px; letter-spacing:10px; color:var(--neon-blue); font-size:1.6rem;">ENCODER</h2>
+                <h2 style="margin-top:20px; letter-spacing:5px; color:var(--text-gray); font-size:1.2rem;">ENCODER</h2>
             </div>
             <div class="foil"></div>
         </div>
         
-        <div class="pack" style="opacity: 0.15; cursor: not-allowed;">
-            <div class="card"><h2 style="color:#222; letter-spacing: 5px;">LOCKED</h2></div>
+        <div class="pack" style="opacity: 0.1; cursor: not-allowed;">
+            <div class="card"><h2 style="color:#222;">LOCKED</h2></div>
             <div class="foil"></div>
         </div>
     </main>
 
     <div id="loading-screen">
         <div class="spinner"></div>
-        <p style="margin-top:40px; letter-spacing:10px; color:var(--neon-blue); font-size:16px;">ACCESSING SECURE DATA PACK...</p>
+        <p style="margin-top:20px; letter-spacing:5px; color:var(--text-gray); font-size:12px;">AUTHORIZING ACCESS...</p>
     </div>
 
     <script>
-        /**
-         * GERİ TUŞU DÖNGÜSÜNÜ KIRAN SİHİRLİ KOD
-         */
-        function forceResetUI() {
-            // Sayfa yüklendiğinde veya geri gelindiğinde loading'i gizle
-            document.getElementById('loading-screen').style.display = 'none';
-            // Yırtılmış paketleri eski haline getir
-            document.querySelectorAll('.pack').forEach(p => {
-                p.classList.remove('ripped');
-            });
-        }
-
-        // Sayfa her gösterildiğinde (geri tuşu dahil) UI'ı sıfırla
+        // Sayfa gösterildiğinde (geri tuşu dahil) her şeyi sıfırla
         window.onpageshow = function(event) {
-            forceResetUI();
+            document.getElementById('loading-screen').style.display = 'none';
+            document.querySelectorAll('.pack').forEach(p => p.classList.remove('ripped'));
         };
-
-        // Sayfa ilk yüklendiğinde UI'ı sıfırla
-        window.onload = forceResetUI;
 
         function launchModule(element, url) {
             if (element.classList.contains('ripped')) return;
 
-            // 1. Yırtılma Animasyonunu Başlat
+            // Yırtılma Başlat
             element.classList.add('ripped');
 
-            // 2. Kısa bir bekleme sonrası Loading ekranını aç
             setTimeout(() => {
                 document.getElementById('loading-screen').style.display = 'flex';
-
-                // 3. Yönlendirme yap
+                
                 setTimeout(() => {
-                    // href kullanıyoruz çünkü kullanıcı geri geldiğinde bu sayfayı görmeli
-                    // ama resetPage fonksiyonumuz sayesinde donmuş değil, taze halini görecek.
+                    // Normal yönlendirme (Scriptimiz geri dönüşü hallediyor)
                     window.location.href = url;
-                }, 2000);
+                }, 1800);
             }, 800);
         }
     </script>
